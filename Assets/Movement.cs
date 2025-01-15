@@ -17,9 +17,12 @@ public class Movement : MonoBehaviour
     public float groundDistance = 0.4f; // 检测地面的范围
     private LayerMask floorMask; // 定义地面的层级
 
+    private PlayerInputController inputController; // 引用输入控制器
+
     private void Start()
     {
         controller = GetComponent<CharacterController>();
+        inputController = GetComponent<PlayerInputController>(); // 获取输入控制器
         floorMask = LayerMask.GetMask("floor"); // 设置“floor”层级
     }
 
@@ -35,7 +38,7 @@ public class Movement : MonoBehaviour
         }
 
         // 获取输入
-        var input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+        var input = inputController.GetMovementInput();
 
         // 计算移动方向
         var direction = transform.right * input.x + transform.forward * input.y;
@@ -45,7 +48,7 @@ public class Movement : MonoBehaviour
         controller.Move(direction * speed * Time.deltaTime);
 
         // 跳跃逻辑
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && inputController.IsJumping())
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); // 计算跳跃初速度
         }
