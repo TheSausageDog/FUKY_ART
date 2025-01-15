@@ -133,8 +133,8 @@ public class PickUpScript : MonoBehaviour
 
             float XaxisRotation = inputController.GetMouseInput().x * rotationSensitivity;
             float YaxisRotation = inputController.GetMouseInput().y * rotationSensitivity;
-            heldObj.transform.Rotate(Vector3.down, XaxisRotation,Space.World);
-            heldObj.transform.Rotate(Vector3.right, YaxisRotation,Space.World);
+            heldObj.transform.Rotate(-CameraPos.up, XaxisRotation,Space.World);
+            heldObj.transform.Rotate(CameraPos.right, YaxisRotation,Space.World);
         }
         else
         {
