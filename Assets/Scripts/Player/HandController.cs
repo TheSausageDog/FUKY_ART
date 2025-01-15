@@ -74,14 +74,30 @@ public class HandController : MonoBehaviour
     {
         if (playerBlackBoard.isHeldObj)
         {
-            var newPosition = Vector3.Lerp(playerBlackBoard.heldObjRigidBody.transform.position, handTarget.position, speed * Time.fixedDeltaTime);
-            playerBlackBoard.heldObjRigidBody.MovePosition(newPosition);
-            
-            hand.position = hand.position-pickUpPos.position+playerBlackBoard.heldObjRigidBody.transform.position;
+            // 计算目标位置与当前物体位置之间的距离
+            float distanceToTarget = Vector3.Distance(playerBlackBoard.heldObjRigidBody.transform.position, handTarget.position);
+        
+            // 计算目标位置与当前物体位置之间的方向
+            Vector3 directionToTarget = (handTarget.position - playerBlackBoard.heldObjRigidBody.transform.position).normalized;
+        
+            // 动态调整速度：距离越远，速度越快
+            float dynamicSpeed = speed * distanceToTarget;
 
+            // 计算目标速度
+            Vector3 targetVelocity = directionToTarget * dynamicSpeed;
+
+            // 设置刚体速度
+            playerBlackBoard.heldObjRigidBody.velocity = targetVelocity;
+
+            // 同时调整手的位置，使其始终与物体位置对齐
+            hand.position = hand.position - pickUpPos.position + playerBlackBoard.heldObjRigidBody.transform.position;
+
+            // 保持手的旋转
             hand.rotation = handTarget.rotation;
         }
     }
+
+
 
     private void MoveHandTarget()
     {

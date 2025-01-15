@@ -38,7 +38,7 @@ public class PickUpScript : MonoBehaviour
         
         playerBlackBoard = GetComponent<PlayerBlackBoard>();
     }
-
+    
     void Update()
     {
         if (inputController == null) return;
@@ -124,6 +124,7 @@ public class PickUpScript : MonoBehaviour
     {
         heldObj.transform.position = holdPos.transform.position;
     }
+    
 
     void RotateObject()
     {
