@@ -56,9 +56,12 @@ public class HandController : MonoBehaviour
             // hand.position = hand.position-pickUpPos.position+playerBlackBoard.heldObjRigidBody.transform.position;
             //
             // hand.rotation = handTarget.rotation;
+            
+            hand.gameObject.SetActive(false);
         }
         else
         {
+            hand.gameObject.SetActive(true);
             hand.position = Vector3.Lerp(hand.position, handTarget.position, speed * Time.deltaTime);
             hand.rotation = handTarget.rotation;
         }

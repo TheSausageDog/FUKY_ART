@@ -85,7 +85,7 @@ public class PickUpScript : MonoBehaviour
             if (inputController.IsThrowPressed() && canDrop)
             {
                 StopClipping();
-                ThrowObject();
+                DropObject();   
             }
         }
     }
@@ -107,17 +107,18 @@ public class PickUpScript : MonoBehaviour
         }
     }
 
-    // void DropObject()
-    // {
-    //     Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
-    //     heldObj.layer = 0;
-    //     heldObjRb.isKinematic = false;
-    //     heldObjRb.freezeRotation = false;
-    //     heldObj.transform.parent = null;
-    //     heldObj = null;
-    //     playerBlackBoard.isHeldObj = false;
-    //     playerBlackBoard.heldObjRigidBody = null;
-    // }
+    void DropObject()
+    {
+        Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
+        heldObj.layer = 0;
+        heldObjRb.isKinematic = false;
+        heldObjRb.freezeRotation = false;
+        heldObjRb.useGravity = true;
+        heldObj.transform.parent = null;
+        heldObj = null;
+        playerBlackBoard.isHeldObj = false;
+        playerBlackBoard.heldObjRigidBody = null;
+    }
 
     void MoveObject()
     {
@@ -132,8 +133,8 @@ public class PickUpScript : MonoBehaviour
 
             float XaxisRotation = inputController.GetMouseInput().x * rotationSensitivity;
             float YaxisRotation = inputController.GetMouseInput().y * rotationSensitivity;
-            heldObj.transform.Rotate(Vector3.down, XaxisRotation);
-            heldObj.transform.Rotate(Vector3.right, YaxisRotation);
+            heldObj.transform.Rotate(Vector3.down, XaxisRotation,Space.World);
+            heldObj.transform.Rotate(Vector3.right, YaxisRotation,Space.World);
         }
         else
         {
@@ -164,11 +165,11 @@ public class PickUpScript : MonoBehaviour
         // {
         //     heldObj.transform.position = CameraPos.transform.position + new Vector3(0f, -0.5f, 0f);
         // }
-        Collider[] hitColliders = Physics.OverlapSphere(handPos.position, pickUpRange);
-        if (hitColliders.Length > 1)
-        {
-            heldObj.transform.position = CameraPos.transform.position + new Vector3(0f, -0.5f, 0f);
-        }
+        // Collider[] hitColliders = Physics.OverlapSphere(handPos.position, pickUpRange);
+        // if (hitColliders.Length > 1)
+        // {
+        //     heldObj.transform.position = CameraPos.transform.position + new Vector3(0f, -0.5f, 0f);
+        // }
     }
 
     private void OnDrawGizmos()
