@@ -11,7 +11,7 @@ public class PickUpScript : MonoBehaviour
     public float pickUpRange = 5f;
     private float rotationSensitivity = 1f;
 
-    private GameObject heldObj;
+    private BasePickableItem heldObj;
     private Rigidbody heldObjRb;
     private bool canDrop = true;
     private int LayerNumber;
@@ -39,47 +39,15 @@ public class PickUpScript : MonoBehaviour
         playerBlackBoard = GetComponent<PlayerBlackBoard>();
     }
     
+    private BasePickableItem currentHandObj; // 当前处于手部范围内的物体
+
     void Update()
     {
         if (inputController == null) return;
 
-        // 检测捡起/丢弃
-        if (inputController.IsPickUpPressed())
-        {
-            if (heldObj == null)
-            {
-                // RaycastHit hit;
-                // if (Physics.Raycast(CameraPos.transform.position,CameraPos.transform.TransformDirection(Vector3.forward), out hit, pickUpRange))
-                // {
-                //     if (hit.transform.gameObject.tag == "canPickUp")
-                //     {
-                //         PickUpObject(hit.transform.gameObject);
-                //     }
-                // }
-                
-                Collider[] hitColliders = Physics.OverlapSphere(handPos.position, pickUpRange);
-                foreach (var hit in hitColliders)
-                {
-                    if (hit.transform.gameObject.tag == "canPickUp")
-                    {
-                        PickUpObject(hit.transform.gameObject);
-                        return;
-                    }
-                }
-            }
-            // else
-            // {
-            //     if (canDrop)
-            //     {
-            //         StopClipping();
-            //         DropObject();
-            //     }
-            // }
-        }
-
         if (heldObj != null)
         {
-            //MoveObject();
+            // MoveObject();
             RotateObject();
 
             if (inputController.IsThrowPressed() && canDrop)
@@ -88,29 +56,79 @@ public class PickUpScript : MonoBehaviour
                 DropObject();   
             }
         }
+        else
+        {
+            // -----------------------------
+            // 持续检测周围的物体，并调用 OnHandEnter/OnHandExit
+            // -----------------------------
+            BasePickableItem newTarget = null;
+            Collider[] hitColliders = Physics.OverlapSphere(handPos.position, pickUpRange);
+            foreach (var hit in hitColliders)
+            {
+                if (hit.transform.gameObject.CompareTag("canPickUp"))
+                {
+                    newTarget = hit.transform.gameObject.GetComponent<BasePickableItem>();
+                    break; // 取第一个检测到的物体
+                }
+            }
+    
+            // 当检测目标变化时：离开原有目标或接触到新的目标
+            if (newTarget != currentHandObj)
+            {
+                if (currentHandObj != null)
+                {
+                    // 离开原有物体
+                    currentHandObj.OnHandExit();
+                }
+                if (newTarget != null)
+                {
+                    // 新物体进入范围
+                    newTarget.OnHandEnter();
+                }
+                currentHandObj = newTarget;
+            }
+
+            // -----------------------------
+            // 原始拾取/投掷逻辑保持不变
+            // -----------------------------
+            if (inputController.IsPickUpPressed())
+            {
+                if (heldObj == null)
+                {
+                    // 当按下拾取时，拾取检测到的物体（与原逻辑一致：选择第一个符合条件的物体）
+                    if (newTarget != null)
+                    {
+                        PickUpObject(newTarget);
+                        // 拾取后可以将 currentHandObj 清空或置 null，以防后续继续触发 OnHandExit（视具体需求而定）
+                        currentHandObj = null;
+                        return;
+                    }
+                }
+            }
+        }
+
     }
 
-    void PickUpObject(GameObject pickUpObj)
+    void PickUpObject(BasePickableItem pickUpObj)
     {
-        if (pickUpObj.GetComponent<Rigidbody>())
-        {
+
             heldObj = pickUpObj;
-            heldObjRb = pickUpObj.GetComponent<Rigidbody>();
-            //heldObjRb.isKinematic = true;
-            heldObjRb.freezeRotation = true;
-            heldObjRb.useGravity = false;
-            heldObjRb.transform.parent = holdPos.transform.parent.parent;
-            heldObj.layer = LayerNumber;
+            heldObjRb =heldObj. rb;
+            heldObj.OnPickup(holdPos);
+            heldObj.gameObject.layer = LayerNumber;
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
             playerBlackBoard.isHeldObj = true;
             playerBlackBoard.heldObjRigidBody = heldObjRb;
-        }
+        
+        
     }
 
     void DropObject()
     {
+
+        heldObj.OnThrow();
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
-        heldObj.layer = 0;
+        heldObj.gameObject.layer = 0;
         heldObjRb.isKinematic = false;
         heldObjRb.freezeRotation = false;
         heldObjRb.useGravity = true;
@@ -118,6 +136,9 @@ public class PickUpScript : MonoBehaviour
         heldObj = null;
         playerBlackBoard.isHeldObj = false;
         playerBlackBoard.heldObjRigidBody = null;
+        
+
+        
     }
 
     void MoveObject()
@@ -146,7 +167,7 @@ public class PickUpScript : MonoBehaviour
     void ThrowObject()
     {
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
-        heldObj.layer = 0;
+        heldObj.gameObject.layer = 0;
         heldObjRb.isKinematic = false;
         heldObjRb.freezeRotation = false;
         heldObjRb.useGravity = true;
