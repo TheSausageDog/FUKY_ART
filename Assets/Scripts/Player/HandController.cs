@@ -67,7 +67,7 @@ public class HandController : MonoBehaviour
         }
     
         // 控制 handTarget 的移动
-        if(playerInputController.IsMoveHandHeld())MoveHandTarget();
+        if(playerInputController.IsMoveHandHeld()|| playerBlackBoard.holdingKnife)MoveHandTarget();
     }
 
     private void FixedUpdate()
@@ -101,8 +101,9 @@ public class HandController : MonoBehaviour
 
     private void MoveHandTarget()
     {
+        if(mainCamera==null)return;
         // 如果没有持有物体，则允许鼠标移动 handTarget
-        if (!playerBlackBoard.isHeldObj && mainCamera != null)
+        if (!playerBlackBoard.isHeldObj  || playerBlackBoard.holdingKnife)
         {
             // 获取鼠标输入
             Vector2 mouseInput = playerInputController.GetMouseInput();
@@ -127,5 +128,10 @@ public class HandController : MonoBehaviour
             Vector3 clampedWorldPosition = mainCamera.transform.TransformPoint(newLocalPosition);
             handTarget.position = clampedWorldPosition;
         }
+    }
+
+    public void MoveHandTarget(Vector3 position)
+    {
+        handTarget.localPosition = position;
     }
 }

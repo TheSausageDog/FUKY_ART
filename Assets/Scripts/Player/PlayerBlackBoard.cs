@@ -10,4 +10,6 @@ public class PlayerBlackBoard : MonoBehaviour
 {
     [NonSerialized] public bool isHeldObj=false;
     [NonSerialized] public Rigidbody heldObjRigidBody;
+    [NonSerialized] public bool holdingKnife;
+    [NonSerialized] public Vector3 knifeOrginPos;
 }

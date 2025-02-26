@@ -6,6 +6,7 @@ public class Look : MonoBehaviour
     private float xRotation = 0f; // 当前X轴的旋转角度
 
     private PlayerInputController inputController; // 输入控制器
+    private PlayerBlackBoard blackboard;
     
     [SerializeField]private Transform playerCamera;
 
@@ -13,6 +14,7 @@ public class Look : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        blackboard = GetComponent<PlayerBlackBoard>();
 
         // 获取 PlayerInputController
         inputController = GetComponent<PlayerInputController>();
@@ -24,7 +26,7 @@ public class Look : MonoBehaviour
 
     private void Update()
     {
-        if (inputController == null || inputController.IsMoveHandHeld()) return;
+        if (inputController == null || inputController.IsMoveHandHeld() || blackboard.holdingKnife) return;
 
         // 获取鼠标输入
         var input = inputController.GetMouseInput() * (sensitivity * Time.deltaTime);

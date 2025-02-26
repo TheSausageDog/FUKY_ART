@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class PickUpScript : MonoBehaviour
@@ -9,6 +10,7 @@ public class PickUpScript : MonoBehaviour
     public Transform holdPos;
     public float throwForce = 500f;
     public float pickUpRange = 5f;
+
     private float rotationSensitivity = 1f;
 
     private BasePickableItem heldObj;
@@ -17,13 +19,23 @@ public class PickUpScript : MonoBehaviour
     private int LayerNumber;
 
     private PlayerInputController inputController; // 引用 PlayerInputController
+    private HandController _handController;
 
 
     [Header("手部相关")]
     //[Tooltip("检查半径，与手距离小于这个的就会被拾取")][SerializeField] private float checkRadius; 
     [SerializeField] private Transform handPos; 
     [SerializeField] private Transform CameraPos;
+    [SerializeField] private float CameraFieldOfViewOrgin;
+    [SerializeField] private float CameraFieldOfViewOffset;
     private PlayerBlackBoard playerBlackBoard;
+    
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+        _handController = GetComponent<HandController>();
+    }
 
     void Start()
     {
@@ -40,6 +52,7 @@ public class PickUpScript : MonoBehaviour
     }
     
     private BasePickableItem currentHandObj; // 当前处于手部范围内的物体
+    private Camera _camera;
 
     void Update()
     {
@@ -109,6 +122,7 @@ public class PickUpScript : MonoBehaviour
 
     }
 
+    
     void PickUpObject(BasePickableItem pickUpObj)
     {
 
@@ -119,12 +133,23 @@ public class PickUpScript : MonoBehaviour
             Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
             playerBlackBoard.isHeldObj = true;
             playerBlackBoard.heldObjRigidBody = heldObjRb;
-        
-        
+            _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
+
+            if (pickUpObj is Knife)
+            {
+                playerBlackBoard.holdingKnife = true;
+                playerBlackBoard.knifeOrginPos = _handController.handTarget.localPosition;
+            }
+
     }
 
     void DropObject()
     {
+        if (heldObj is Knife)
+        {
+            playerBlackBoard.holdingKnife = false;
+            _handController.MoveHandTarget(playerBlackBoard.knifeOrginPos); 
+        }
 
         heldObj.OnThrow();
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
@@ -136,9 +161,8 @@ public class PickUpScript : MonoBehaviour
         heldObj = null;
         playerBlackBoard.isHeldObj = false;
         playerBlackBoard.heldObjRigidBody = null;
-        
+        _camera.DOFieldOfView(CameraFieldOfViewOrgin, 0.5f);
 
-        
     }
 
     void MoveObject()
