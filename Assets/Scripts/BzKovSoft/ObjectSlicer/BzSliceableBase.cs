@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using BzKovSoft.ObjectSlicer.EventHandlers;
 using BzKovSoft.ObjectSlicer.Polygon;
-using OutLine;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -33,13 +32,7 @@ namespace BzKovSoft.ObjectSlicer
 			if (this == null)  // if this component was destroyed
 				return null;
 
-			var outlines = GetComponentsInChildren<Outline>();
-			foreach (var outline in outlines)
-			{
-				// 如果只想禁用： outline.enabled = false;
-				// 这里演示直接移除:
-				outline.enabled = false;
-			}
+
 			
 			if (waitIfBusy)
 			{
@@ -134,10 +127,7 @@ namespace BzKovSoft.ObjectSlicer
 				events[i].ObjectSliced(gameObject, resultGameObjects, result, sliceData);
 			}
 			Profiler.EndSample();
-			foreach (var objs in result.resultObjects)
-			{
-				objs.gameObject.GetComponent<Outline>().enabled = true;
-			}
+
 			return result;
 		}
 

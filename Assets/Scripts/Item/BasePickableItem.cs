@@ -8,22 +8,29 @@ using UnityEngine;
 public class BasePickableItem : MonoBehaviour
 {
     public Rigidbody rb;
-    public Outline outline;
     public void Awake()
     {
         rb= GetComponent<Rigidbody>();
-        outline= GetComponent<Outline>();
     }
     
     
 
     public virtual void OnHandEnter()
     {
-        outline.OutlineColor=Color.white;
+        gameObject.layer= LayerMask.NameToLayer("Outline");
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer= LayerMask.NameToLayer("Outline");
+        }
     }
     public virtual void OnHandExit()
     {
-        outline.OutlineColor=Color.clear;
+
+        gameObject.layer= LayerMask.NameToLayer("Default");
+        foreach (Transform child in transform)
+        {
+            child.gameObject.layer= LayerMask.NameToLayer("Default");
+        }
     }
     
     public virtual void OnPickup(Transform holdPos)
@@ -31,7 +38,8 @@ public class BasePickableItem : MonoBehaviour
         rb.freezeRotation = true;
         rb.useGravity = false;
         rb.transform.parent = holdPos.transform.parent.parent;
-        
+
+
         //heldObjRb.isKinematic = true;
 
     }
