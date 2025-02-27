@@ -9,6 +9,7 @@ public class PickUpScript : MonoBehaviour
     public GameObject player;
     public Transform holdPos;
     public float throwForce = 500f;
+    // pickUpRange 现在仅用于调试绘制Gizmos或设置Trigger范围，不再用来做检测
     public float pickUpRange = 5f;
 
     private float rotationSensitivity = 1f;
@@ -20,16 +21,16 @@ public class PickUpScript : MonoBehaviour
 
     private PlayerInputController inputController; // 引用 PlayerInputController
     private HandController _handController;
-
+    private Camera _camera;
 
     [Header("手部相关")]
-    //[Tooltip("检查半径，与手距离小于这个的就会被拾取")][SerializeField] private float checkRadius; 
-    [SerializeField] private Transform handPos; 
+    [SerializeField] private Transform handPos;
     [SerializeField] private Transform CameraPos;
     [SerializeField] private float CameraFieldOfViewOrgin;
     [SerializeField] private float CameraFieldOfViewOffset;
     private PlayerBlackBoard playerBlackBoard;
     
+    private BasePickableItem currentHandObj; // 当前处于手部范围内的物体
 
     private void Awake()
     {
@@ -51,96 +52,80 @@ public class PickUpScript : MonoBehaviour
         playerBlackBoard = GetComponent<PlayerBlackBoard>();
     }
     
-    private BasePickableItem currentHandObj; // 当前处于手部范围内的物体
-    private Camera _camera;
-
     void Update()
     {
         if (inputController == null) return;
 
         if (heldObj != null)
         {
-            // MoveObject();
+            // 持有物体时执行旋转逻辑
             RotateObject();
 
             if (inputController.IsThrowPressed() && canDrop)
             {
-                StopClipping();
+                //StopClipping();
                 DropObject();   
             }
         }
         else
         {
-            // -----------------------------
-            // 持续检测周围的物体，并调用 OnHandEnter/OnHandExit
-            // -----------------------------
-            BasePickableItem newTarget = null;
-            Collider[] hitColliders = Physics.OverlapSphere(handPos.position, pickUpRange);
-            foreach (var hit in hitColliders)
+            // 当按下拾取按钮且当前有目标物体时拾取
+            if (inputController.IsPickUpPressed() && currentHandObj != null)
             {
-                if (hit.transform.gameObject.CompareTag("canPickUp"))
-                {
-                    newTarget = hit.transform.gameObject.GetComponent<BasePickableItem>();
-                    break; // 取第一个检测到的物体
-                }
+                PickUpObject(currentHandObj);
+                currentHandObj = null; // 拾取后清空当前手部目标
             }
-    
-            // 当检测目标变化时：离开原有目标或接触到新的目标
-            if (newTarget != currentHandObj)
-            {
-                if (currentHandObj != null)
-                {
-                    // 离开原有物体
-                    currentHandObj.OnHandExit();
-                }
-                if (newTarget != null)
-                {
-                    // 新物体进入范围
-                    newTarget.OnHandEnter();
-                }
-                currentHandObj = newTarget;
-            }
+        }
+    }
 
-            // -----------------------------
-            // 原始拾取/投掷逻辑保持不变
-            // -----------------------------
-            if (inputController.IsPickUpPressed())
+    // 使用Trigger检测进入拾取范围的物体
+    public void OnHandTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("canPickUp"))
+        {
+            BasePickableItem item = other.GetComponent<BasePickableItem>();
+            if (item != null)
             {
-                if (heldObj == null)
+                // 如果当前没有目标，则设置并调用 OnHandEnter
+                if (currentHandObj == null)
                 {
-                    // 当按下拾取时，拾取检测到的物体（与原逻辑一致：选择第一个符合条件的物体）
-                    if (newTarget != null)
-                    {
-                        PickUpObject(newTarget);
-                        // 拾取后可以将 currentHandObj 清空或置 null，以防后续继续触发 OnHandExit（视具体需求而定）
-                        currentHandObj = null;
-                        return;
-                    }
+                    currentHandObj = item;
+                    currentHandObj.OnHandEnter();
                 }
             }
         }
-
     }
 
-    
+    // 当物体离开触发区域时
+    public void OnHandTriggerExit(Collider other)
+    {
+        if (other.CompareTag("canPickUp"))
+        {
+            BasePickableItem item = other.GetComponent<BasePickableItem>();
+            if (item != null && item == currentHandObj)
+            {
+                currentHandObj.OnHandExit();
+                currentHandObj = null;
+            }
+        }
+    }
+
     void PickUpObject(BasePickableItem pickUpObj)
     {
+        heldObj = pickUpObj;
+        heldObjRb = heldObj.rb;
+        heldObj.OnPickup(holdPos);
+        heldObj.gameObject.layer = LayerNumber;
+        Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
+        playerBlackBoard.isHeldObj = true;
+        playerBlackBoard.heldObjRigidBody = heldObjRb;
+        _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
 
-            heldObj = pickUpObj;
-            heldObjRb =heldObj. rb;
-            heldObj.OnPickup(holdPos);
-            heldObj.gameObject.layer = LayerNumber;
-            Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
-            playerBlackBoard.isHeldObj = true;
-            playerBlackBoard.heldObjRigidBody = heldObjRb;
-            _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
-
-            if (pickUpObj is Knife)
-            {
-                playerBlackBoard.holdingKnife = true;
-                playerBlackBoard.knifeOrginPos = _handController.handTarget.localPosition;
-            }
-
+        if (pickUpObj is Knife)
+        {
+            playerBlackBoard.holdingKnife = true;
+            playerBlackBoard.knifeOrginPos = _handController.handTarget.localPosition;
+        }
     }
 
     void DropObject()
@@ -148,7 +133,7 @@ public class PickUpScript : MonoBehaviour
         if (heldObj is Knife)
         {
             playerBlackBoard.holdingKnife = false;
-            _handController.MoveHandTarget(playerBlackBoard.knifeOrginPos); 
+            _handController.MoveHandTarget(playerBlackBoard.knifeOrginPos);
         }
 
         heldObj.OnThrow();
@@ -162,25 +147,17 @@ public class PickUpScript : MonoBehaviour
         playerBlackBoard.isHeldObj = false;
         playerBlackBoard.heldObjRigidBody = null;
         _camera.DOFieldOfView(CameraFieldOfViewOrgin, 0.5f);
-
     }
-
-    void MoveObject()
-    {
-        heldObj.transform.position = holdPos.transform.position;
-    }
-    
 
     void RotateObject()
     {
         if (inputController.IsRotateHeld())
         {
             canDrop = false;
-
             float XaxisRotation = inputController.GetMouseInput().x * rotationSensitivity;
             float YaxisRotation = inputController.GetMouseInput().y * rotationSensitivity;
-            heldObj.transform.Rotate(-CameraPos.up, XaxisRotation,Space.World);
-            heldObj.transform.Rotate(CameraPos.right, YaxisRotation,Space.World);
+            heldObj.transform.Rotate(-CameraPos.up, XaxisRotation, Space.World);
+            heldObj.transform.Rotate(CameraPos.right, YaxisRotation, Space.World);
         }
         else
         {
@@ -204,23 +181,16 @@ public class PickUpScript : MonoBehaviour
 
     void StopClipping()
     {
-        //var clipRange = Vector3.Distance(heldObj.transform.position, transform.position);
-        // RaycastHit[] hits;
-        // hits = Physics.RaycastAll(transform.position, transform.TransformDirection(Vector3.forward), clipRange);
-        // if (hits.Length > 1)
-        // {
-        //     heldObj.transform.position = CameraPos.transform.position + new Vector3(0f, -0.5f, 0f);
-        // }
-        // Collider[] hitColliders = Physics.OverlapSphere(handPos.position, pickUpRange);
-        // if (hitColliders.Length > 1)
-        // {
-        //     heldObj.transform.position = CameraPos.transform.position + new Vector3(0f, -0.5f, 0f);
-        // }
+        // 如果需要，添加防止穿模的逻辑
     }
 
+    // 可选：在编辑器中绘制拾取范围，方便调试
     private void OnDrawGizmos()
     {
-        Gizmos.color= Color.red;
-        Gizmos.DrawWireSphere(handPos.position, pickUpRange);
+        if(handPos != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(handPos.position, pickUpRange);
+        }
     }
 }

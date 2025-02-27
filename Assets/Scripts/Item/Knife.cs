@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Aya.Events;
 using DG.Tweening;
 using UnityEngine;
 
@@ -7,6 +9,7 @@ public class Knife : BasePickableItem
 {
 
     public BoxCollider Collider;
+    
     public override void OnPickup(Transform holdPos)
     {
         base.OnPickup(holdPos);
@@ -19,4 +22,7 @@ public class Knife : BasePickableItem
         base.OnThrow();
         //Collider.enabled = true;
     }
+
+
+    
 }

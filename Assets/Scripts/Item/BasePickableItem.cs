@@ -8,12 +8,14 @@ using UnityEngine;
 public class BasePickableItem : MonoBehaviour
 {
     public Rigidbody rb;
-    public void Awake()
+    public virtual void Awake()
     {
         rb= GetComponent<Rigidbody>();
     }
-    
-    
+
+    public virtual void Start()
+    {
+    }
 
     public virtual void OnHandEnter()
     {
