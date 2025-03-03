@@ -20,10 +20,10 @@ MonoBehaviour:
   smoothingIterations: 1
   smoothingIntensity: 0.8
   bevel: 1
-  materialType: 1
+  materialType: 0
   customFluidMaterial: {fileID: 0}
   customUnderwaterMaterial: {fileID: 0}
-  reflectionCubemap: {fileID: 0}
+  reflectionCubemap: {fileID: 8900000, guid: 5ca1e3973dc1e7945b8b5b6ace3dd3dd, type: 3}
   smoothness: 0.9
   metallic: 0
   turbidity: {r: 0, g: 0, b: 0, a: 0}
