@@ -16,7 +16,7 @@ public class Standard : MonoBehaviour
         foreach (var taste in Tastes)
         {
             var newTaste = taste;
-            newTaste.tasteValue *= volume;
+            newTaste.tasteValue /= volume;
             list.Add(newTaste);
         }
         

@@ -8,8 +8,8 @@ public class PickUpScript : MonoBehaviour
 {
     public GameObject player;
     public Transform holdPos;
-    public float throwForce = 500f;
-    // pickUpRange 现在仅用于调试绘制Gizmos或设置Trigger范围，不再用来做检测
+    //public float throwForce = 500f;
+
     public float pickUpRange = 5f;
 
     private float rotationSensitivity = 1f;
@@ -30,7 +30,7 @@ public class PickUpScript : MonoBehaviour
     [SerializeField] private float CameraFieldOfViewOffset;
     private PlayerBlackBoard playerBlackBoard;
     
-    private BasePickableItem currentHandObj; // 当前处于手部范围内的物体
+    public BasePickableItem currentHandObj; // 当前处于手部范围内的物体
 
     private void Awake()
     {
@@ -79,7 +79,7 @@ public class PickUpScript : MonoBehaviour
     }
 
     // 使用Trigger检测进入拾取范围的物体
-    public void OnHandTriggerEnter(Collider other)
+    public void OnHandTriggerEnter(GameObject other)
     {
         if (other.CompareTag("canPickUp"))
         {
@@ -97,7 +97,7 @@ public class PickUpScript : MonoBehaviour
     }
 
     // 当物体离开触发区域时
-    public void OnHandTriggerExit(Collider other)
+    public void OnHandTriggerExit(GameObject other)
     {
         if (other.CompareTag("canPickUp"))
         {
@@ -112,6 +112,8 @@ public class PickUpScript : MonoBehaviour
 
     void PickUpObject(BasePickableItem pickUpObj)
     {
+        if(Vector3.Distance(pickUpObj.transform.position, transform.position) > pickUpRange) return;
+        
         heldObj = pickUpObj;
         heldObjRb = heldObj.rb;
         heldObj.OnPickup(holdPos);
@@ -165,32 +167,34 @@ public class PickUpScript : MonoBehaviour
         }
     }
 
-    void ThrowObject()
-    {
-        Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
-        heldObj.gameObject.layer = 0;
-        heldObjRb.isKinematic = false;
-        heldObjRb.freezeRotation = false;
-        heldObjRb.useGravity = true;
-        heldObj.transform.parent = null;
-        heldObjRb.AddForce(transform.forward * throwForce);
-        heldObj = null;
-        playerBlackBoard.isHeldObj = false;
-        playerBlackBoard.heldObjRigidBody = null;
-    }
+    // void ThrowObject()
+    // {
+    //     Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), false);
+    //     heldObj.gameObject.layer = 0;
+    //     heldObjRb.isKinematic = false;
+    //     heldObjRb.freezeRotation = false;
+    //     heldObjRb.useGravity = true;
+    //     heldObj.transform.parent = null;
+    //     heldObjRb.AddForce(transform.forward * throwForce);
+    //     heldObj = null;
+    //     playerBlackBoard.isHeldObj = false;
+    //     playerBlackBoard.heldObjRigidBody = null;
+    // }
 
     void StopClipping()
     {
-        // 如果需要，添加防止穿模的逻辑
+
     }
 
-    // 可选：在编辑器中绘制拾取范围，方便调试
     private void OnDrawGizmos()
     {
         if(handPos != null)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(handPos.position, pickUpRange);
+            // Gizmos.color = Color.red;
+            // Gizmos.DrawWireSphere(handPos.position, pickUpRange);
+            
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, pickUpRange);
         }
     }
 }

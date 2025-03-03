@@ -6999,7 +6999,7 @@ MonoBehaviour:
   player: {fileID: 1676074884}
   holdPos: {fileID: 196115778}
   throwForce: 500
-  pickUpRange: 0.29
+  pickUpRange: 5.9
   handPos: {fileID: 196115778}
   CameraPos: {fileID: 330585546}
   CameraFieldOfViewOrgin: 71.3
