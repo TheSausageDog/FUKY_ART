@@ -25,6 +25,11 @@ public class Food : BasePickableItem
     {
         base.Awake();
 
+        CalculateTaste();
+    }
+
+    public void CalculateTaste()
+    {
         var list = FoodManager.Instance.GetStandardValue(foodType);
         
         volume = VolumeCalculator.CalculateVolumes(gameObject);

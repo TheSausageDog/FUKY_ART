@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Threading.Tasks;
+using UnityEngine;
 
 namespace BzKovSoft.ObjectSlicer
 {
@@ -20,6 +21,19 @@ namespace BzKovSoft.ObjectSlicer
 			}
 
 			return null;
+		}
+
+		public override async Task<BzSliceTryResult> SliceAsync(Plane plane, object sliceData)
+		{
+			var res =  await base.SliceAsync(plane, sliceData);
+			
+			
+			if (TryGetComponent<Food>(out Food food))
+			{
+				food.CalculateTaste();
+			}
+
+			return res;
 		}
 	}
 }

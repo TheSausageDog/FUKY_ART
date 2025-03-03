@@ -26,7 +26,7 @@ namespace BzKovSoft.ObjectSlicer
 		public bool waitIfBusy;
 		public bool objectGrouping;
 
-		public async Task<BzSliceTryResult> SliceAsync(Plane plane, object sliceData)
+		public virtual async Task<BzSliceTryResult> SliceAsync(Plane plane, object sliceData)
 		{
 
 			if (this == null)  // if this component was destroyed
