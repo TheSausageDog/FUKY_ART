@@ -59,7 +59,7 @@ public class Bowl : MonoBehaviour
          foreach (var taste in list)
          {
              info += $"当前食物味道：{taste.tasteType}\n";
-             info += $"值为：{taste.tasteValue}\n";
+             info += $"值为：{taste.tasteValue:F}\n";
          }
          text.text = info;
      }

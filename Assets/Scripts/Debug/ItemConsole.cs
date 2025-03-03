@@ -26,12 +26,12 @@ public class ItemConsole : MonoListener
         if (item is Food food)
         {
             info += $"当前食物的种类：{food.foodType}\n";
-            info += $"当前食物的体积：{food.volume}\n";
+            info += $"当前食物的体积：{food.volume:F}\n";
 
             foreach (var taste in food.Tastes)
             {
                 info += $"当前食物味道：{taste.tasteType}\n";
-                info += $"值为：{taste.tasteValue}\n";
+                info += $"值为：{taste.tasteValue:F}\n";
             }
         }
         
