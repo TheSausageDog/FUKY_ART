@@ -29,7 +29,7 @@ public class HandTrigger : MonoBehaviour
     private void FixedUpdate()
     {
         var dir = transform.position - mainCamera.transform.position;
-        int count=Physics.RaycastNonAlloc(mainCamera.transform.position, dir, hits,10f);
+        int count=Physics.RaycastNonAlloc(mainCamera.transform.position, dir, hits,pick.pickUpRange);
         for (int i = 0; i < count; i++)
         {
             if (hits[i].collider.gameObject.CompareTag("canPickUp"))
