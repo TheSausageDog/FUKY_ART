@@ -1,28 +1,46 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class FoodManager : SingletonMono<FoodManager>
 {
-    public List<FoodStandard> foodValueStandard = new List<FoodStandard>();
+    private List<Standard> foodValueStandard = new List<Standard>();
 
-
-    public float GetStandardValue(FoodType foodType)
+    protected override void Awake()
     {
-        var obj=foodValueStandard.Find(s =>  s.foodType == foodType );
-
-        return VolumeCalculator.CalculateVolumes(obj.standard);
+        base.Awake();
+        
+        GetAllStandard();
     }
 
-    public void Start()
+    private void GetAllStandard()
     {
-        Debug.Log(GetStandardValue(FoodType.Meat));
+        foodValueStandard=FindObjectsOfType<Standard>().ToList();
     }
+
+    public List<Taste> GetStandardValue(FoodType foodType)
+    {
+        var obj=foodValueStandard.Find(s =>  s.FoodType == foodType );
+
+        return obj.GetAllTastes();
+    }
+    
 }
+
 [Serializable]
-public struct FoodStandard
+public struct Taste
 {
-    public FoodType foodType;
-    public GameObject standard;
+    public TasteType tasteType;
+    public float tasteValue;
+}
+public enum TasteType
+{
+    Sour,
+    Sweet,
+    Bitter,
+    Spicy,
+    Salty,
+    Fresh
 }

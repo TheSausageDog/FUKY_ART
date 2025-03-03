@@ -34,5 +34,7 @@ public class PlayerBlackBoard : MonoListener
 public enum EventType
 {
     OnKnifeTouchBegin,
-    OnKnifeTouchEnd
+    OnKnifeTouchEnd,
+    OnItemPickUp,
+    OnItemDrop
 }

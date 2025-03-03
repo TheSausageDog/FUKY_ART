@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Aya.Events;
 using BzKovSoft.ObjectSlicer;
 using OutLine;
 using UnityEngine;
@@ -41,7 +42,7 @@ public class BasePickableItem : MonoBehaviour
         rb.useGravity = false;
         rb.transform.parent = holdPos.transform.parent.parent;
 
-
+        UEvent.Dispatch(EventType.OnItemPickUp,this);
         //heldObjRb.isKinematic = true;
 
     }
@@ -52,6 +53,6 @@ public class BasePickableItem : MonoBehaviour
         rb.useGravity = false;
         rb.transform.parent = null;
         //heldObjRb.isKinematic = true;
-
+        UEvent.Dispatch(EventType.OnItemDrop);
     }
 }

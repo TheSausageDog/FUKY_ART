@@ -9,10 +9,10 @@ using UnityEngine;
 
 public class Food : BasePickableItem
 {
-    public float FoodValue;
+    public List<Taste> Tastes;
     
     public FoodType foodType;
-
+    public float volume;
     [HideInInspector]public float knifeDepth => VolumeCalculator.CalculateWorldBounds(gameObject).size.y * 0.5f;
 
     private void OnDrawGizmosSelected()
@@ -25,9 +25,18 @@ public class Food : BasePickableItem
     {
         base.Awake();
 
-        FoodValue = VolumeCalculator.CalculateVolumes(gameObject) / FoodManager.Instance.GetStandardValue(foodType);
+        var list = FoodManager.Instance.GetStandardValue(foodType);
+        
+        volume = VolumeCalculator.CalculateVolumes(gameObject);
+        
+        Tastes = new List<Taste>();
 
-        //knifeDepth = VolumeCalculator.CalculateWorldBounds(gameObject).size.y * 0.5f;
+        foreach (var taste in list)
+        {
+            var newTaste = taste;
+            newTaste.tasteValue *= volume;
+            Tastes.Add(newTaste);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
