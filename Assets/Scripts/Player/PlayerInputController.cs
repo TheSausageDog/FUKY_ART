@@ -41,6 +41,10 @@ public class PlayerInputController : MonoBehaviour
     {
         return Input.GetKeyDown(KeyCode.Mouse0);
     }
+    public bool IsPickUpPressing()
+    {
+        return Input.GetKey(KeyCode.Mouse0);
+    }
 
     // 检查是否按下投掷键
     public bool IsThrowPressed()

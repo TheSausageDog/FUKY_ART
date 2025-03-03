@@ -17,7 +17,7 @@ public class ItemConsole : MonoListener
         }
     }
 
-    [Listen(EventType.OnItemPickUp)]
+    [Listen(EventType.OnItemPicked)]
     private void OnPickUpItem(BasePickableItem item)
     {
         string info = "";

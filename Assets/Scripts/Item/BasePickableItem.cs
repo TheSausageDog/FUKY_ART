@@ -9,6 +9,8 @@ using UnityEngine;
 public class BasePickableItem : MonoBehaviour
 {
     public Rigidbody rb;
+
+    public float PickDelay;
     public virtual void Awake()
     {
         rb= GetComponent<Rigidbody>();
@@ -42,7 +44,7 @@ public class BasePickableItem : MonoBehaviour
         rb.useGravity = false;
         rb.transform.parent = holdPos.transform.parent.parent;
 
-        UEvent.Dispatch(EventType.OnItemPickUp,this);
+        UEvent.Dispatch(EventType.OnItemPicked,this);
         //heldObjRb.isKinematic = true;
 
     }

@@ -35,9 +35,10 @@ public class HandTrigger : MonoBehaviour
             if (hits[i].collider.gameObject.CompareTag("canPickUp"))
             {
                 pick.OnHandTriggerEnter(hits[i].collider.gameObject);
+//                Debug.Log(hits[i].collider.gameObject.name);
                 return;
             }
         }
-        pick.OnHandTriggerExit(pick.gameObject);
+        if(pick.currentHandObj!=null)pick.OnHandTriggerExit(pick.currentHandObj.gameObject);
     }
 }

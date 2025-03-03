@@ -35,6 +35,7 @@ public enum EventType
 {
     OnKnifeTouchBegin,
     OnKnifeTouchEnd,
-    OnItemPickUp,
-    OnItemDrop
+    OnItemPicked,
+    OnItemDrop,
+    OnPickingItem
 }

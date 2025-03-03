@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Aya.Events;
 using DG.Tweening;
 using UnityEngine;
 
@@ -8,7 +9,7 @@ public class PickUpScript : MonoBehaviour
 {
     public GameObject player;
     public Transform holdPos;
-    //public float throwForce = 500f;
+    // public float throwForce = 500f;
 
     public float pickUpRange = 5f;
 
@@ -31,6 +32,9 @@ public class PickUpScript : MonoBehaviour
     private PlayerBlackBoard playerBlackBoard;
     
     public BasePickableItem currentHandObj; // 当前处于手部范围内的物体
+
+    // 用于计时长按拾取的计时器
+    private float pickUpTimer = 0f;
 
     private void Awake()
     {
@@ -58,23 +62,66 @@ public class PickUpScript : MonoBehaviour
 
         if (heldObj != null)
         {
-            // 持有物体时执行旋转逻辑
+            // 已持有物体时，允许旋转等操作
             RotateObject();
 
             if (inputController.IsThrowPressed() && canDrop)
             {
-                //StopClipping();
                 DropObject();   
             }
         }
         else
         {
-            // 当按下拾取按钮且当前有目标物体时拾取
-            if (inputController.IsPickUpPressed() && currentHandObj != null)
+            HandlePickUpInput();
+        }
+        if(currentHandObj!=null && currentHandObj.PickDelay!=0)UEvent.Dispatch(EventType.OnPickingItem,(float)pickUpTimer/currentHandObj.PickDelay);
+        else UEvent.Dispatch(EventType.OnPickingItem,(float)0);
+        
+    }
+
+    /// <summary>
+    /// 处理拾取输入：当当前手部目标存在且鼠标持续按下时，累计时间，达到目标的PickDelay后拾取
+    /// </summary>
+    void HandlePickUpInput()
+    {
+        if (currentHandObj != null)
+        {
+            // 如果鼠标拾取键按下，则累计时间
+            if (inputController.IsPickUpPressing()&& currentHandObj.PickDelay!=0)
+            {
+                pickUpTimer += Time.deltaTime;
+                
+                // 当累计时间达到物体要求的延时后执行拾取
+                if (pickUpTimer >= currentHandObj.PickDelay)
+                {
+                    PickUpObject(currentHandObj);
+                    // 拾取后清空目标和重置计时器
+                    currentHandObj = null;
+                    pickUpTimer = 0f;
+
+                }
+
+            }
+            else if (currentHandObj.PickDelay == 0&&inputController.IsPickUpPressed())
             {
                 PickUpObject(currentHandObj);
-                currentHandObj = null; // 拾取后清空当前手部目标
+                // 拾取后清空目标和重置计时器
+                currentHandObj = null;
+                pickUpTimer = 0f;
+
             }
+            else
+            {
+                // 如果中途松开，则重置计时器
+                pickUpTimer = 0f;
+
+            }
+        }
+        else
+        {
+            // 没有目标时也重置计时器
+            pickUpTimer = 0f;
+
         }
     }
 
@@ -86,9 +133,16 @@ public class PickUpScript : MonoBehaviour
             BasePickableItem item = other.GetComponent<BasePickableItem>();
             if (item != null)
             {
-                // 如果当前没有目标，则设置并调用 OnHandEnter
+                // 如果当前没有目标，则直接设置并调用 OnHandEnter
                 if (currentHandObj == null)
                 {
+                    currentHandObj = item;
+                    currentHandObj.OnHandEnter();
+                }
+                else
+                {
+                    // 如果已有目标，则先退出上一个目标，再设置新的目标
+                    OnHandTriggerExit(currentHandObj.gameObject);
                     currentHandObj = item;
                     currentHandObj.OnHandEnter();
                 }
@@ -106,21 +160,37 @@ public class PickUpScript : MonoBehaviour
             {
                 currentHandObj.OnHandExit();
                 currentHandObj = null;
+                //pickUpTimer = 0f;
             }
         }
     }
 
+    /// <summary>
+    /// 执行拾取物体逻辑
+    /// </summary>
+    /// <param name="pickUpObj">待拾取的物体，需满足范围条件</param>
     void PickUpObject(BasePickableItem pickUpObj)
     {
-        if(Vector3.Distance(pickUpObj.transform.position, transform.position) > pickUpRange) return;
+        // 检查物体是否在允许拾取的范围内
+        if (Vector3.Distance(pickUpObj.transform.position, transform.position) > pickUpRange)
+        {
+            Debug.LogWarning("物体超出拾取范围！");
+            return;
+        }
         
         heldObj = pickUpObj;
         heldObjRb = heldObj.rb;
+        
+        // 调用物体自身的拾取逻辑（例如设置父物体、禁用物理等）
         heldObj.OnPickup(holdPos);
         heldObj.gameObject.layer = LayerNumber;
+        
+        // 忽略玩家与物体的碰撞
         Physics.IgnoreCollision(heldObj.GetComponent<Collider>(), player.GetComponent<Collider>(), true);
         playerBlackBoard.isHeldObj = true;
         playerBlackBoard.heldObjRigidBody = heldObjRb;
+        
+        // 调整相机视野
         _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
 
         if (pickUpObj is Knife)
@@ -183,16 +253,13 @@ public class PickUpScript : MonoBehaviour
 
     void StopClipping()
     {
-
+        // 实现防止穿模的逻辑（如有需要）
     }
 
     private void OnDrawGizmos()
     {
-        if(handPos != null)
+        if (handPos != null)
         {
-            // Gizmos.color = Color.red;
-            // Gizmos.DrawWireSphere(handPos.position, pickUpRange);
-            
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, pickUpRange);
         }
