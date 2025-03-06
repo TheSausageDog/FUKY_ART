@@ -29,11 +29,59 @@ public class FoodManager : SingletonMono<FoodManager>
     
 }
 
+public class AllTaste
+{
+    public List<Taste> Tastes;
+
+    public AllTaste(List<Taste> tastes)
+    {
+        Tastes = tastes;
+    }
+
+    public float GetTasteValue(TasteType tasteType)
+    {
+        var target=Tastes.Find(t => t.tasteType == tasteType);
+        if (target != default)
+        {
+            return -1;
+        }
+        return target.tasteValue;
+    }
+    
+    
+}
+
 [Serializable]
-public struct Taste
+public struct Taste : IEquatable<Taste>
 {
     public TasteType tasteType;
     public float tasteValue;
+
+
+    public static bool operator ==(Taste taste1,Taste taste2)
+    {
+        return taste1.Equals(taste2);
+    }
+    public static bool operator !=(Taste taste1,Taste taste2)
+    {
+        return !taste1.Equals(taste2);
+    }
+
+    
+    public bool Equals(Taste other)
+    {
+        return tasteType == other.tasteType && tasteValue.Equals(other.tasteValue);
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is Taste other && Equals(other);
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine((int)tasteType, tasteValue);
+    }
 }
 public enum TasteType
 {

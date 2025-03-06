@@ -30,14 +30,15 @@ public class Bowl : MonoBehaviour
      {
          var size = Physics.OverlapSphereNonAlloc(checkCenter.position, checkRadius, results);
          var list = new List<Taste>();
-         
+         var foodVolumeDic = new Dictionary<FoodType,float>();
+         string info = " ";
          for (int i = 0; i < size; i++)
          {
              if (results[i].CompareTag("canPickUp"))
              {
                  if (results[i].TryGetComponent<Food>(out Food food))
                  {
-                     food.Tastes.ForEach(taste =>
+                     food.Tastes.Tastes.ForEach(taste =>
                      {
                          if (list.FindIndex(t => t.tasteType == taste.tasteType) != -1)
                          {
@@ -51,16 +52,29 @@ public class Bowl : MonoBehaviour
                              list.Add(taste);
                          }
                      });
+                     if (foodVolumeDic.ContainsKey(food.foodType))
+                     {
+                         foodVolumeDic[food.foodType] += food.volume;
+                     }
+                     else foodVolumeDic.Add(food.foodType, food.volume);
+                     
                  }
              }
          }
 
-         string info = " ";
+         foreach (var kvp in foodVolumeDic)
+         {
+             info += $"包含食物类型：{kvp.Key}\n";
+             info += $"体积为：{kvp.Value:F}\n";
+         }
+
          foreach (var taste in list)
          {
              info += $"当前食物味道：{taste.tasteType}\n";
              info += $"值为：{taste.tasteValue:F}\n";
          }
+         
+         
          text.text = info;
      }
 

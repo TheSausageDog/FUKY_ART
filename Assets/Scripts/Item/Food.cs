@@ -9,7 +9,7 @@ using UnityEngine;
 
 public class Food : BasePickableItem
 {
-    public List<Taste> Tastes;
+    [NonSerialized]public AllTaste Tastes;
     
     public FoodType foodType;
     public float volume;
@@ -34,14 +34,16 @@ public class Food : BasePickableItem
         
         volume = VolumeCalculator.CalculateVolumes(gameObject);
         
-        Tastes = new List<Taste>();
+        var tastes = new List<Taste>();
 
         foreach (var taste in list)
         {
             var newTaste = taste;
             newTaste.tasteValue *= volume;
-            Tastes.Add(newTaste);
+            tastes.Add(newTaste);
         }
+        
+        Tastes = new AllTaste(tastes);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -64,10 +66,10 @@ public class Food : BasePickableItem
     }
 
     private Plane cutPlane;
-    public Vector3 knifePos;
-    public Vector3 knifeDir;
-    public BzKnife Knife;
-    public float timer;
+    [NonSerialized]public Vector3 knifePos;
+    [NonSerialized]public Vector3 knifeDir;
+    [NonSerialized]public BzKnife Knife;
+    [NonSerialized]public float timer;
     private void Update()
     {
         if (knifePos != Vector3.zero)

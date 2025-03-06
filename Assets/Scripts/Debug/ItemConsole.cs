@@ -28,7 +28,7 @@ public class ItemConsole : MonoListener
             info += $"当前食物的种类：{food.foodType}\n";
             info += $"当前食物的体积：{food.volume:F}\n";
 
-            foreach (var taste in food.Tastes)
+            foreach (var taste in food.Tastes.Tastes)
             {
                 info += $"当前食物味道：{taste.tasteType}\n";
                 info += $"值为：{taste.tasteValue:F}\n";
