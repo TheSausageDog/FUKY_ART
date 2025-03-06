@@ -75,8 +75,11 @@ public class Bowl : MonoBehaviour
              info += $"当前食物味道：{taste.tasteType}\n";
              info += $"值为：{taste.tasteValue:F}\n";
          }
+         Debug.Log(RecipeManager.Instance);
+         Debug.Log(testRecipeName);
 
          var rating=RecipeManager.Instance.GetRecipe(testRecipeName).EvaluateRecipe(foodVolumeDic, list);
+         
 
          info += $"评分：{rating}\n";
          
