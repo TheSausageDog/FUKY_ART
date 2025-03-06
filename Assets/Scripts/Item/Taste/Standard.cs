@@ -8,8 +8,9 @@ public class Standard : MonoBehaviour
 {
     public FoodType FoodType;
     [SerializeField]private List<Taste> Tastes;
-    private List<Taste> res;
-
+    [HideInInspector][SerializeField]private List<Taste> res;
+    [NonSerialized]public bool inited;
+    
     public async void Awake()
     {
         res = await InitAllTastes();
@@ -31,6 +32,8 @@ public class Standard : MonoBehaviour
             newTaste.tasteValue /= volume;
             list.Add(newTaste);
         }
+        
+        inited = true;
         
         return list;
         

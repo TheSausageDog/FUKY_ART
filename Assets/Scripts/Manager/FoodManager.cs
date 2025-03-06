@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class FoodManager : SingletonMono<FoodManager>
@@ -20,10 +21,12 @@ public class FoodManager : SingletonMono<FoodManager>
         foodValueStandard=FindObjectsOfType<Standard>().ToList();
     }
 
-    public List<Taste> GetStandardValue(FoodType foodType)
+    public async UniTask<List<Taste>> GetStandardValue(FoodType foodType)
     {
         var obj=foodValueStandard.Find(s =>  s.FoodType == foodType );
 
+        await UniTask.WaitUntil(()=>obj.inited);
+        
         return obj.GetAllTastes();
     }
     

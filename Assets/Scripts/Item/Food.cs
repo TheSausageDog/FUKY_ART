@@ -33,7 +33,7 @@ public class Food : BasePickableItem
     {
         await UniTask.Delay(TimeSpan.FromSeconds(1f));
         
-        var list = FoodManager.Instance.GetStandardValue(foodType);
+        var list = await FoodManager.Instance.GetStandardValue(foodType);
         
         volume = await VolumeCalculator.CalculateVolumesAsync(gameObject);
         
