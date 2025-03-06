@@ -33,7 +33,11 @@ public class ItemConsole : MonoListener
                 info += $"当前食物味道：{taste.tasteType}\n";
                 info += $"值为：{Mathf.Max(0.01f,taste.tasteValue):F}\n";
             }
+            
+            info += food.cutted ? "当前食物被切过了" : "当前食物未被切过\n";
         }
+        
+        
         
         consoleText.text = info;
     } 

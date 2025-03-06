@@ -27,10 +27,7 @@ public class Recipe : ScriptableObject
                 tasteTotals[taste.tasteType] = taste.tasteValue;
         }
 
-        foreach (var food in foods)
-        {
-            if (!food.cutted) return RecipeRating.差;
-        }
+  
         
         // 检查食材要求
         foreach (var requirement in ingredientRequirements)
@@ -39,6 +36,11 @@ public class Recipe : ScriptableObject
             {
                 return RecipeRating.差;
             }
+        }
+        
+        foreach (var food in foods)
+        {
+            if (!food.cutted &&ingredientRequirements.Find(requirement => (food.foodType == requirement.foodType)).needToCut) return RecipeRating.差;
         }
         
         // 检查味道要求
@@ -85,6 +87,9 @@ public struct IngredientRequirement
     
     [Tooltip("该食材的最佳数量范围（最小值，最大值），用于获得优秀评级。")]
     public Vector2 goodRange;
+
+    [Tooltip("是否需要被切")]
+    public bool needToCut;
 }
 
 [Serializable]
