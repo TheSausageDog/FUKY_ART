@@ -41,6 +41,11 @@ public class Recipe : ScriptableObject
         foreach (var food in foods)
         {
             if (!food.cutted &&ingredientRequirements.Find(requirement => (food.foodType == requirement.foodType)).needToCut) return RecipeRating.差;
+
+            if(food.volume > ingredientRequirements.Find(requirement => (food.foodType == requirement.foodType)).singleGeneralRange.y || food.volume < ingredientRequirements.Find(requirement => (food.foodType == requirement.foodType)).singleGeneralRange.x)
+            {
+                return RecipeRating.差;
+            }
         }
         
         // 检查味道要求
@@ -71,6 +76,14 @@ public class Recipe : ScriptableObject
                 isExcellent = false;
             }
         }
+
+        foreach (var food in foods)
+        {
+            if (food.volume > ingredientRequirements.Find(requirement => (food.foodType == requirement.foodType)).singleGoodRange.y || food.volume < ingredientRequirements.Find(requirement => (food.foodType == requirement.foodType)).singleGoodRange.x)
+            {
+                isExcellent = false;
+            }
+        }
         
         return isExcellent ? RecipeRating.优秀 : RecipeRating.一般;
     }
@@ -88,6 +101,13 @@ public struct IngredientRequirement
     [Tooltip("该食材的最佳数量范围（最小值，最大值），用于获得优秀评级。")]
     public Vector2 goodRange;
 
+    [Tooltip("该食材的每个可接受数量范围（最小值，最大值）。")]
+    public Vector2 singleGeneralRange;
+    
+    [Tooltip("该食材的每个最佳数量范围（最小值，最大值），用于获得优秀评级。")]
+    public Vector2 singleGoodRange;
+
+    
     [Tooltip("是否需要被切")]
     public bool needToCut;
 }

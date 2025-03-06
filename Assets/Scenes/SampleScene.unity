@@ -171,6 +171,9 @@ MonoBehaviour:
   Tastes:
   - tasteType: 0
     tasteValue: 1
+  res:
+  - tasteType: 0
+    tasteValue: 0.10099991
 --- !u!1001 &45909522
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -579,6 +582,9 @@ MonoBehaviour:
   Tastes:
   - tasteType: 0
     tasteValue: 1
+  res:
+  - tasteType: 0
+    tasteValue: 0.10099991
 --- !u!1001 &227442160
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1279,6 +1285,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 1
   volume: 0
+  cutted: 0
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -1669,6 +1676,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 0
   volume: 0
+  cutted: 0
 --- !u!1 &616761576 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: c34dabbb397117e4fa3e0dae271fa971,
@@ -1768,6 +1776,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 0
   volume: 0
+  cutted: 0
 --- !u!1 &654126609 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 35b853cfa9c41bd4b825eae65b19321b,
@@ -1867,6 +1876,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 1
   volume: 0
+  cutted: 0
 --- !u!1001 &655451713
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2377,6 +2387,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 4
   volume: 0
+  cutted: 0
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -2543,6 +2554,9 @@ MonoBehaviour:
   Tastes:
   - tasteType: 0
     tasteValue: 1
+  res:
+  - tasteType: 0
+    tasteValue: 0.10099991
 --- !u!1 &877397827
 GameObject:
   m_ObjectHideFlags: 0
@@ -2675,6 +2689,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 4
   volume: 0
+  cutted: 0
 --- !u!1 &897955396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2844,6 +2859,9 @@ MonoBehaviour:
   Tastes:
   - tasteType: 0
     tasteValue: 1
+  res:
+  - tasteType: 0
+    tasteValue: 0.10099991
 --- !u!1001 &933791286
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3632,6 +3650,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 3
   volume: 0
+  cutted: 0
 --- !u!1 &1068722586 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 7c0bb51c78b46eb4c86e2407bc62e071,
@@ -3731,6 +3750,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 3
   volume: 0
+  cutted: 0
 --- !u!1 &1121577328
 GameObject:
   m_ObjectHideFlags: 0
@@ -4514,6 +4534,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 0
   volume: 0
+  cutted: 0
 --- !u!1 &1310761925 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5d5326bd703c82d4e8947b187e332a5b,
@@ -4613,6 +4634,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 4
   volume: 0
+  cutted: 0
 --- !u!1 &1319267517
 GameObject:
   m_ObjectHideFlags: 0
@@ -4662,6 +4684,9 @@ MonoBehaviour:
   Tastes:
   - tasteType: 0
     tasteValue: 1
+  res:
+  - tasteType: 0
+    tasteValue: 0.10099991
 --- !u!1 &1343985916 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d3a700db46917f149afd28d7def9f935,
@@ -7512,6 +7537,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 3
   volume: 0
+  cutted: 0
 --- !u!1001 &1745381553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8022,6 +8048,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 1
   volume: 0
+  cutted: 0
 --- !u!1 &1914313274
 GameObject:
   m_ObjectHideFlags: 0
