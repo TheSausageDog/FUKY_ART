@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class BasePickableItem : MonoBehaviour
 {
-    public Rigidbody rb;
+    [NonSerialized]public Rigidbody rb;
 
     public float PickDelay;
     public virtual void Awake()

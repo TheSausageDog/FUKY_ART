@@ -9,6 +9,7 @@ public class Bowl : MonoBehaviour
 {
     public Transform checkCenter;
     public float checkRadius;
+    public string testRecipeName;
     
     public Text text;
     private Camera cam;
@@ -32,6 +33,7 @@ public class Bowl : MonoBehaviour
          var list = new List<Taste>();
          var foodVolumeDic = new Dictionary<FoodType,float>();
          string info = " ";
+         info+="菜品: " + testRecipeName + "\n";
          for (int i = 0; i < size; i++)
          {
              if (results[i].CompareTag("canPickUp"))
@@ -73,7 +75,10 @@ public class Bowl : MonoBehaviour
              info += $"当前食物味道：{taste.tasteType}\n";
              info += $"值为：{taste.tasteValue:F}\n";
          }
-         
+
+         var rating=RecipeManager.Instance.GetRecipe(testRecipeName).EvaluateRecipe(foodVolumeDic, list);
+
+         info += $"评分：{rating}\n";
          
          text.text = info;
      }

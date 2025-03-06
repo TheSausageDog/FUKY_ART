@@ -30,7 +30,7 @@ public static class VolumeCalculator
             totalVolume += meshVolume;
         }
 //        Debug.Log("所有子物体总体积约为: " + totalVolume);
-        return totalVolume;
+        return totalVolume * 10;
     }
     /// <summary>
     /// 计算物体在世界坐标系中的包围盒

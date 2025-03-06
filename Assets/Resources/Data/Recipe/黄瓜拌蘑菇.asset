@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1cb425eb832f1f4c9dc9bfba92e9b83, type: 3}
+  m_Name: "\u9EC4\u74DC\u62CC\u8611\u83C7"
+  m_EditorClassIdentifier: 
+  ingredientRequirements:
+  - foodType: 4
+    generalRange: {x: 0.5, y: 1}
+    goodRange: {x: 0, y: 1.5}
+  - foodType: 1
+    generalRange: {x: 0.5, y: 1}
+    goodRange: {x: 0, y: 1.5}
+  - foodType: 3
+    generalRange: {x: 0.5, y: 1}
+    goodRange: {x: 0, y: 1.5}
+  tasteRequirements:
+  - tasteType: 0
+    generalRange: {x: 0.5, y: 1}
+    goodRange: {x: 0, y: 1.5}
