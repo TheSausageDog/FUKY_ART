@@ -45,7 +45,6 @@ public class BasePickableItem : MonoBehaviour
         rb.freezeRotation = true;
         rb.useGravity = false;
         rb.transform.parent = holdPos.transform.parent.parent;
-
         UEvent.Dispatch(EventType.OnItemPicked, this);
     }
     
