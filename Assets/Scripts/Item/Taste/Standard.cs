@@ -11,7 +11,7 @@ public class Standard : MonoBehaviour
     [HideInInspector][SerializeField]private List<Taste> res;
     [NonSerialized]public bool inited;
     
-    public async void Awake()
+    public async void Start()
     {
         res = await InitAllTastes();
     }

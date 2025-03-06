@@ -31,7 +31,6 @@ public class Food : BasePickableItem
 
     public async void CalculateTaste()
     {
-        await UniTask.Delay(TimeSpan.FromSeconds(1f));
         
         var list = await FoodManager.Instance.GetStandardValue(foodType);
         
