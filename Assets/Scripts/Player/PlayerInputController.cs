@@ -63,4 +63,13 @@ public class PlayerInputController : MonoBehaviour
         return Input.GetKey(KeyCode.LeftAlt);
     }
 
+    public bool IsAlternateActionPressing()
+    {
+        return Input.GetKey(KeyCode.U);
+    }
+
+    public bool IsAlternateActionPressed()
+    {
+        return Input.GetKeyDown(KeyCode.U);
+    }
 }

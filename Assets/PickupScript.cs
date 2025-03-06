@@ -264,4 +264,4 @@ public class PickUpScript : MonoBehaviour
             Gizmos.DrawWireSphere(transform.position, pickUpRange);
         }
     }
-}
+} 

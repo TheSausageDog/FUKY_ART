@@ -8,12 +8,14 @@ using UnityEngine;
 
 public class BasePickableItem : MonoBehaviour
 {
-    [NonSerialized]public Rigidbody rb;
+    [NonSerialized]
+    public Rigidbody rb;
 
     public float PickDelay;
+
     public virtual void Awake()
     {
-        rb= GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
     }
 
     public virtual void Start()
@@ -22,19 +24,19 @@ public class BasePickableItem : MonoBehaviour
 
     public virtual void OnHandEnter()
     {
-        gameObject.layer= LayerMask.NameToLayer("Outline");
+        gameObject.layer = LayerMask.NameToLayer("Outline");
         foreach (Transform child in transform)
         {
-            child.gameObject.layer= LayerMask.NameToLayer("Outline");
+            child.gameObject.layer = LayerMask.NameToLayer("Outline");
         }
     }
+
     public virtual void OnHandExit()
     {
-
-        gameObject.layer= LayerMask.NameToLayer("Default");
+        gameObject.layer = LayerMask.NameToLayer("Default");
         foreach (Transform child in transform)
         {
-            child.gameObject.layer= LayerMask.NameToLayer("Default");
+            child.gameObject.layer = LayerMask.NameToLayer("Default");
         }
     }
     
@@ -44,9 +46,7 @@ public class BasePickableItem : MonoBehaviour
         rb.useGravity = false;
         rb.transform.parent = holdPos.transform.parent.parent;
 
-        UEvent.Dispatch(EventType.OnItemPicked,this);
-        //heldObjRb.isKinematic = true;
-
+        UEvent.Dispatch(EventType.OnItemPicked, this);
     }
     
     public virtual void OnThrow()
@@ -54,7 +54,17 @@ public class BasePickableItem : MonoBehaviour
         rb.freezeRotation = true;
         rb.useGravity = false;
         rb.transform.parent = null;
-        //heldObjRb.isKinematic = true;
         UEvent.Dispatch(EventType.OnItemDrop);
+    }
+    
+    // 新增备用交互方法，便于未来扩展
+    public virtual void OnAlternateAction()
+    {
+        Debug.Log("备用交互（短按）触发：" + gameObject.name);
+    }
+    
+    public virtual void OnAlternateActionLongPress()
+    {
+        Debug.Log("备用交互（长按）触发：" + gameObject.name);
     }
 }

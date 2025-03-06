@@ -14,15 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ingredientRequirements:
   - foodType: 4
-    generalRange: {x: 0.5, y: 1}
-    goodRange: {x: 0, y: 1.5}
+    generalRange: {x: 0, y: 1.5}
+    goodRange: {x: 0.5, y: 1}
   - foodType: 1
-    generalRange: {x: 0.5, y: 1}
-    goodRange: {x: 0, y: 1.5}
+    generalRange: {x: 0, y: 1.5}
+    goodRange: {x: 0.5, y: 1}
   - foodType: 3
-    generalRange: {x: 0.5, y: 1}
-    goodRange: {x: 0, y: 1.5}
+    generalRange: {x: 0, y: 1.5}
+    goodRange: {x: 0.5, y: 1}
   tasteRequirements:
   - tasteType: 0
-    generalRange: {x: 0.5, y: 1}
-    goodRange: {x: 0, y: 1.5}
+    generalRange: {x: 0, y: 1.5}
+    goodRange: {x: 0.5, y: 1}
