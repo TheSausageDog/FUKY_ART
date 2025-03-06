@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Aya.Events;
 using BzKovSoft.ObjectSlicer;
 using BzKovSoft.ObjectSlicer.Samples;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class Food : BasePickableItem
@@ -21,18 +22,20 @@ public class Food : BasePickableItem
         Gizmos.DrawWireCube(transform.position, VolumeCalculator.CalculateWorldBounds(gameObject).size);
     }
 
+
     public override void Start()
     {
-        base.Awake();
-
+        base.Start();
         CalculateTaste();
     }
 
-    public void CalculateTaste()
+    public async void CalculateTaste()
     {
+        await UniTask.Delay(TimeSpan.FromSeconds(1f));
+        
         var list = FoodManager.Instance.GetStandardValue(foodType);
         
-        volume = VolumeCalculator.CalculateVolumes(gameObject);
+        volume = await VolumeCalculator.CalculateVolumesAsync(gameObject);
         
         var tastes = new List<Taste>();
 
@@ -92,17 +95,24 @@ public class Food : BasePickableItem
 
     }
 
+    public bool cutted;
     async void HandleSlice(Plane plane)
     {
         var tempSlicer = GetComponent<IBzMeshSlicer>();
         var results =await tempSlicer.SliceAsync(plane);
         gameObject.layer = LayerMask.NameToLayer("Default");
+        cutted = true;
         if (results != null && results.resultObjects!=null)
         {
             foreach (var resultObject in results.resultObjects)
             {
                 resultObject.gameObject.layer = LayerMask.NameToLayer("Default");
+                if(resultObject.gameObject.TryGetComponent(out Food food))
+                {
+                    food.cutted = true;
+                }
             }
+            
         }
         knifePos = Vector3.zero;
         Knife.OnFoodExit(this);

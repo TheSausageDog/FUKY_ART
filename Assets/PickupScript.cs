@@ -128,6 +128,7 @@ public class PickUpScript : MonoBehaviour
     // 使用Trigger检测进入拾取范围的物体
     public void OnHandTriggerEnter(GameObject other)
     {
+//        Debug.Log(other.name);
         if (other.CompareTag("canPickUp"))
         {
             BasePickableItem item = other.GetComponent<BasePickableItem>();

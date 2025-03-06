@@ -34,12 +34,14 @@ public class Bowl : MonoBehaviour
          var foodVolumeDic = new Dictionary<FoodType,float>();
          string info = " ";
          info+="菜品: " + testRecipeName + "\n";
+         List<Food> foodList = new List<Food>();
          for (int i = 0; i < size; i++)
          {
              if (results[i].CompareTag("canPickUp"))
              {
                  if (results[i].TryGetComponent<Food>(out Food food))
                  {
+                     foodList.Add(food);
                      food.Tastes.Tastes.ForEach(taste =>
                      {
                          if (list.FindIndex(t => t.tasteType == taste.tasteType) != -1)
@@ -67,18 +69,18 @@ public class Bowl : MonoBehaviour
          foreach (var kvp in foodVolumeDic)
          {
              info += $"包含食物类型：{kvp.Key}\n";
-             info += $"体积为：{kvp.Value:F}\n";
+             info += $"体积为：{Mathf.Max(0.01f,kvp.Value):F}\n";
          }
 
          foreach (var taste in list)
          {
              info += $"当前食物味道：{taste.tasteType}\n";
-             info += $"值为：{taste.tasteValue:F}\n";
+             info += $"值为：{Mathf.Max(0.01f,taste.tasteValue):F}\n";
          }
-         Debug.Log(RecipeManager.Instance);
-         Debug.Log(testRecipeName);
+//         Debug.Log(RecipeManager.Instance);
+        // Debug.Log(testRecipeName);
 
-         var rating=RecipeManager.Instance.GetRecipe(testRecipeName).EvaluateRecipe(foodVolumeDic, list);
+         var rating=RecipeManager.Instance.GetRecipe(testRecipeName).EvaluateRecipe(foodVolumeDic, list,foodList);
          
 
          info += $"评分：{rating}\n";

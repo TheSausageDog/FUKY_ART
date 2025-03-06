@@ -5252,6 +5252,8 @@ GameObject:
   - component: {fileID: 1485456401}
   - component: {fileID: 1485456400}
   - component: {fileID: 1485456402}
+  - component: {fileID: 1485456403}
+  - component: {fileID: 1485456404}
   m_Layer: 0
   m_Name: ---Manager---
   m_TagString: Untagged
@@ -5298,6 +5300,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46cc5863c2c805b4599be8d677a4bf7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1485456403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485456399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42636797dc222e468dcd71b4c0ec7ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  voxelComputeShader: {fileID: 7200000, guid: ca51cb3c63a105e409b22cc469cee0ef, type: 3}
+  voxelSize: 0.01
+--- !u!114 &1485456404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485456399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adc8de37321448e4ea0993acbd5890d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTasksPerFrame: 3
 --- !u!1 &1504377280
 GameObject:
   m_ObjectHideFlags: 0

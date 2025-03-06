@@ -13,7 +13,7 @@ public class Recipe : ScriptableObject
     [Tooltip("所需味道及其允许的强度范围。")]
     public List<TasteRequirement> tasteRequirements;
     
-    public RecipeRating EvaluateRecipe(Dictionary<FoodType,float> foodValues,List<Taste> allTaste)
+    public RecipeRating EvaluateRecipe(Dictionary<FoodType,float> foodValues,List<Taste> allTaste,List<Food> foods)
     {
         Dictionary<FoodType, float> foodCount = foodValues;
         Dictionary<TasteType, float> tasteTotals = new Dictionary<TasteType, float>();
@@ -26,7 +26,11 @@ public class Recipe : ScriptableObject
             else
                 tasteTotals[taste.tasteType] = taste.tasteValue;
         }
-        
+
+        foreach (var food in foods)
+        {
+            if (!food.cutted) return RecipeRating.差;
+        }
         
         // 检查食材要求
         foreach (var requirement in ingredientRequirements)

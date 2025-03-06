@@ -1,0 +1,75 @@
+// VoxelVolumeGPU.compute
+#pragma kernel CSMain
+
+struct Triangle
+{
+    float3 v0;
+    float3 v1;
+    float3 v2;
+};
+
+RWStructuredBuffer<int> results;         // 每个采样点的检测结果（0 或 1）
+StructuredBuffer<Triangle> triangles;      // 网格三角形数据
+
+// 参数常量缓冲区，用于传入包围盒最小点、体素大小及网格维度
+cbuffer VoxelParams
+{
+    float3 boundsMin;  // 包围盒最小点
+    float voxelSize;   // 体素大小
+    int gridDimX;      // X 方向采样数量
+    int gridDimY;      // Y 方向采样数量
+    int gridDimZ;      // Z 方向采样数量
+};
+
+// Möller–Trumbore 算法判断射线与三角形是否相交
+bool RayIntersectsTriangle(float3 origin, float3 dir, Triangle tri)
+{
+    float3 edge1 = tri.v1 - tri.v0;
+    float3 edge2 = tri.v2 - tri.v0;
+    float3 h = cross(dir, edge2);
+    float a = dot(edge1, h);
+    if (abs(a) < 1e-5)
+        return false;
+    float f = 1.0 / a;
+    float3 s = origin - tri.v0;
+    float u = f * dot(s, h);
+    if (u < 0 || u > 1)
+        return false;
+    float3 q = cross(s, edge1);
+    float v = f * dot(dir, q);
+    if (v < 0 || (u + v) > 1)
+        return false;
+    float t = f * dot(edge2, q);
+    return t > 1e-5;
+}
+
+[numthreads(64, 1, 1)]
+void CSMain(uint id : SV_DispatchThreadID)
+{
+    // 总采样点数
+    int totalSamples = gridDimX * gridDimY * gridDimZ;
+    if (id >= totalSamples)
+        return;
+
+    // 由线程 id 计算采样点在三维网格中的坐标索引
+    int xIndex = id % gridDimX;
+    int yIndex = (id / gridDimX) % gridDimY;
+    int zIndex = id / (gridDimX * gridDimY);
+
+    // 计算采样点的 world 坐标（基于包围盒最小点偏移）
+    float3 pos = boundsMin + float3(xIndex * voxelSize, yIndex * voxelSize, zIndex * voxelSize);
+
+    // 固定射线方向（例如向右）
+    float3 rayDir = float3(1, 0, 0);
+    int hitCount = 0;
+    // 对所有三角形检测射线相交情况
+    for (uint i = 0; i < triangles.Length; i++)
+    {
+        if (RayIntersectsTriangle(pos, rayDir, triangles[i]))
+        {
+            hitCount++;
+        }
+    }
+    // 根据奇偶规则确定采样点是否在网格内部
+    results[id] = (hitCount % 2 == 1) ? 1 : 0;
+}

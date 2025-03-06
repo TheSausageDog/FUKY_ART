@@ -15,21 +15,24 @@ public class HandTrigger : MonoBehaviour
          mainCamera = Camera.main;
      }
 
-     private void OnTriggerEnter(Collider other)
-    {
-        pick.OnHandTriggerEnter(other.gameObject);
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        pick.OnHandTriggerExit(other.gameObject);
-    }
+    //  private void OnTriggerEnter(Collider other)
+    // {
+    //     pick.OnHandTriggerEnter(other.gameObject);
+    // }
+    //
+    // private void OnTriggerExit(Collider other)
+    // {
+    //     pick.OnHandTriggerExit(other.gameObject);
+    // }
 
     RaycastHit[] hits = new RaycastHit[128];
     private void FixedUpdate()
     {
         var dir = transform.position - mainCamera.transform.position;
         int count=Physics.RaycastNonAlloc(mainCamera.transform.position, dir, hits,pick.pickUpRange);
+        
+        Array.Sort(hits, 0, count, Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
+        
         for (int i = 0; i < count; i++)
         {
             if (hits[i].collider.gameObject.CompareTag("canPickUp"))
