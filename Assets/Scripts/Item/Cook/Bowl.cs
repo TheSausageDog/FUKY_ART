@@ -42,6 +42,9 @@ public class Bowl : MonoBehaviour
                  if (results[i].TryGetComponent<Food>(out Food food))
                  {
                      foodList.Add(food);
+                     
+                     if(food.Tastes==null)continue;
+                     
                      food.Tastes.Tastes.ForEach(taste =>
                      {
                          if (list.FindIndex(t => t.tasteType == taste.tasteType) != -1)
