@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class Pepper : MonoBehaviour
@@ -19,20 +20,16 @@ public class Pepper : MonoBehaviour
         else if(!isUp && Vector3.Angle(transform.up,-Vector3.up) > angleTreshold)
         {
             isUp = true;
-            EndDrop();
         }
     }
 
-    private void StartDrop()
+    private async void StartDrop()
     {
         Debug.Log("start");
         particleGenerator.StartGeneration();
-    }
-    private void EndDrop()
-    {
-        
-        Debug.Log("end");
-        
+        await UniTask.Delay(TimeSpan.FromSeconds(0.5f));
         particleGenerator.StopGeneration();
     }
+    
+
 }

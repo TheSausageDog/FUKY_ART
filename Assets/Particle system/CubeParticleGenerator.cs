@@ -222,6 +222,8 @@ public class CubeParticleGenerator : MonoBehaviour
         Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.DrawCube(Vector3.zero, new Vector3(planeSize.x, 0.01f, planeSize.y));
     }
+
+
 }
 
 // Helper component to handle particle fade out
