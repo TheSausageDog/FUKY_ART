@@ -14,6 +14,8 @@ public class Bowl : MonoBehaviour
     public Text text;
     private Camera cam;
 
+    private float pepperAmount = 0;
+    
     private void Awake()
     {
         cam = Camera.main;
@@ -27,9 +29,17 @@ public class Bowl : MonoBehaviour
 
      Collider[] results = new Collider[128];
      
+     HashSet<GameObject> pepperSet = new HashSet<GameObject>();
      private void CheckFood()
      {
          var size = Physics.OverlapSphereNonAlloc(checkCenter.position, checkRadius, results);
+
+         if (size == 0)
+         {
+             pepperAmount = 0;
+             return;
+         }
+         
          var list = new List<Taste>();
          var foodVolumeDic = new Dictionary<FoodType,float>();
          string info = " ";
@@ -67,6 +77,34 @@ public class Bowl : MonoBehaviour
                      
                  }
              }
+             else if (results[i].CompareTag("PepperParticle"))
+             {
+                 if(pepperSet.Contains(results[i].gameObject))continue;
+                 pepperSet.Add(results[i].gameObject);
+                 pepperAmount += 0.1f;
+             }
+         }
+         if (foodList.Count == 0)
+         {
+             pepperAmount = 0;
+         }
+         if (pepperAmount > 0)
+         {
+             FoodManager.Instance.GetStandardValue(FoodType.Pepper).ForEach(taste =>
+             {
+                 if (list.FindIndex(t => t.tasteType == taste.tasteType) != -1)
+                 {
+                     var index = list.FindIndex(t => t.tasteType == taste.tasteType);
+                     var t = list[index];
+                     t.tasteValue += taste.tasteValue * pepperAmount;
+                     list[index] = t;
+                 }
+                 else
+                 {
+                     list.Add(taste);
+                 }
+             });
+
          }
 
          foreach (var kvp in foodVolumeDic)
@@ -89,6 +127,8 @@ public class Bowl : MonoBehaviour
          info += $"评分：{rating}\n";
          
          text.text = info;
+         
+
      }
 
      private void OnDrawGizmos()

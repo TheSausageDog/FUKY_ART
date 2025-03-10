@@ -173,6 +173,7 @@ public class CubeParticleGenerator : MonoBehaviour
         // Create a cube GameObject
         GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
         cube.name = "PepperParticle";
+        cube.tag = "PepperParticle";
         
         // Set random position within plane area
         Vector3 randomOffset = new Vector3(
@@ -202,6 +203,8 @@ public class CubeParticleGenerator : MonoBehaviour
         rb.drag = drag;
         rb.angularDrag = angularDrag;
         rb.useGravity = true;
+        
+        rb.freezeRotation = true;
         
         // Add a small random rotation but only apply downward force
         rb.AddTorque(Random.insideUnitSphere * 0.5f, ForceMode.Impulse);

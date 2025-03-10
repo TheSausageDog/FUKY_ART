@@ -21,7 +21,7 @@ public class FoodManager : SingletonMono<FoodManager>
         foodValueStandard=FindObjectsOfType<Standard>().ToList();
     }
 
-    public async UniTask<List<Taste>> GetStandardValue(FoodType foodType)
+    public async UniTask<List<Taste>>  GetStandardValueAsync(FoodType foodType)
     {
         var obj=foodValueStandard.Find(s =>  s.FoodType == foodType );
 
@@ -29,7 +29,12 @@ public class FoodManager : SingletonMono<FoodManager>
         
         return obj.GetAllTastes();
     }
-    
+    public List<Taste>  GetStandardValue(FoodType foodType)
+    {
+        var obj=foodValueStandard.Find(s =>  s.FoodType == foodType );
+        
+        return obj.GetAllTastes();
+    }
 }
 
 public class AllTaste
@@ -93,5 +98,6 @@ public enum TasteType
     Bitter,
     Spicy,
     Salty,
-    Fresh
+    Fresh,
+    Pepper
 }

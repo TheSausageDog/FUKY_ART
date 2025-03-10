@@ -32,7 +32,7 @@ public class Food : BasePickableItem
     public async void CalculateTaste()
     {
         
-        var list = await FoodManager.Instance.GetStandardValue(foodType);
+        var list = await FoodManager.Instance.GetStandardValueAsync(foodType);
         
         volume = await VolumeCalculator.CalculateVolumesAsync(gameObject);
         
@@ -132,5 +132,6 @@ public enum FoodType
     Lemon,
     Meat,
     Mushroom,
-    Cucumber
+    Cucumber,
+    Pepper
 }
