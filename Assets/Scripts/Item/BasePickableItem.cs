@@ -6,16 +6,22 @@ using BzKovSoft.ObjectSlicer;
 using OutLine;
 using UnityEngine;
 
-public class BasePickableItem : MonoBehaviour
+public class BasePickableItem : MonoBehaviour,IInteractable
 {
     [NonSerialized]
     public Rigidbody rb;
 
+    public Rigidbody _rb => rb;
+    public Transform _transform => transform;
+
     public float PickDelay;
+    public float _pickDelay=>PickDelay;
+    private int LayerNumber;
 
     public virtual void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        LayerNumber = LayerMask.NameToLayer("holdLayer");
     }
 
     public virtual void Start()
@@ -39,20 +45,45 @@ public class BasePickableItem : MonoBehaviour
             child.gameObject.layer = LayerMask.NameToLayer("Default");
         }
     }
-    
-    public virtual void OnPickup(Transform holdPos)
+    public virtual void Interact(InteractionType type,params object[] args)
     {
+        if (type == InteractionType.Pick)
+        {
+            if (args[0] is Transform pickTrans && args[1] is PickUpAndInteract player)
+            {
+                OnPickup(pickTrans,player);
+            }
+        }
+        else if (type == InteractionType.Throw)
+        {
+            if (args[0] is PickUpAndInteract player)
+            {
+                OnThrow(player);
+            }
+        }
+    }
+    protected virtual void OnPickup(Transform holdPos,PickUpAndInteract player)
+    {
+        gameObject.layer = LayerNumber;
+        
+        // 忽略玩家与物体的碰撞
+        Physics.IgnoreCollision(GetComponent<Collider>(),  player.GetComponent<Collider>(), true);
+        
         rb.freezeRotation = true;
         rb.useGravity = false;
         rb.transform.parent = holdPos.transform.parent.parent;
         UEvent.Dispatch(EventType.OnItemPicked, this);
     }
     
-    public virtual void OnThrow()
+    protected virtual void OnThrow(PickUpAndInteract player)
     {
-        rb.freezeRotation = true;
-        rb.useGravity = false;
+        Physics.IgnoreCollision(GetComponent<Collider>(), player.GetComponent<Collider>(), false);
         rb.transform.parent = null;
+        gameObject.layer = 0;
+        rb.isKinematic = false;
+        rb.freezeRotation = false;
+        rb.useGravity = true;
+        
         UEvent.Dispatch(EventType.OnItemDrop);
     }
     
@@ -66,4 +97,6 @@ public class BasePickableItem : MonoBehaviour
     {
         Debug.Log("备用交互（长按）触发：" + gameObject.name);
     }
+
+  
 }

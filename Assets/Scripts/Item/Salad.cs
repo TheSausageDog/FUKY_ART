@@ -11,6 +11,7 @@ public class Salad : MonoBehaviour
     private Coroutine generationCoroutine = null;
     
     public GameObject item;
+    public Transform generatePos;
     private void Update()
     {
         if(isUp && Vector3.Angle(transform.up,-Vector3.up) < angleTreshold)
@@ -40,7 +41,7 @@ public class Salad : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(0.5f);
-            Instantiate(item, transform.position, Quaternion.identity);
+            Instantiate(item, generatePos.position, Quaternion.identity);
         }  
     }
     private void EndDrop()

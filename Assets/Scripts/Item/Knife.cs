@@ -10,18 +10,18 @@ public class Knife : BasePickableItem
 
     public BoxCollider Collider;
     
-    public override void OnPickup(Transform holdPos)
+    protected override void OnPickup(Transform holdPos,PickUpAndInteract player)
     {
-        base.OnPickup(holdPos);
+        base.OnPickup(holdPos,player);
         //Collider.enabled = false;
         transform.DORotate(new Vector3(90,3,3), 0.5f);
     }
 
-    public override void OnThrow()
-    {
-        base.OnThrow();
-        //Collider.enabled = true;
-    }
+    // protected override void OnThrow(PickUpAndInteract player)
+    // {
+    //     base.OnThrow(player);
+    //     //Collider.enabled = true;
+    // }
 
 
     

@@ -265,7 +265,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 448957d81b7f97c44b588984654018a9,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 448957d81b7f97c44b588984654018a9,
         type: 3}
@@ -671,7 +671,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5856fe6e51fad8b42abf00bbbf76651b,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 5856fe6e51fad8b42abf00bbbf76651b,
         type: 3}
@@ -681,7 +681,7 @@ PrefabInstance:
     - target: {fileID: 8164078558771037576, guid: 5856fe6e51fad8b42abf00bbbf76651b,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2073,7 +2073,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a893c7500123c424e84f21004fc840c2,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: a893c7500123c424e84f21004fc840c2,
         type: 3}
@@ -2088,7 +2088,7 @@ PrefabInstance:
     - target: {fileID: 8164078558771037576, guid: a893c7500123c424e84f21004fc840c2,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2269,11 +2269,15 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7be41767dbd02654d9baa03ef78e2110,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7be41767dbd02654d9baa03ef78e2110,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1362132313}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7be41767dbd02654d9baa03ef78e2110,
         type: 3}
@@ -3077,7 +3081,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5d5326bd703c82d4e8947b187e332a5b,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 5d5326bd703c82d4e8947b187e332a5b,
         type: 3}
@@ -3300,7 +3304,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1893d86476978c04cb35abdaa1faa574,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 1893d86476978c04cb35abdaa1faa574,
         type: 3}
@@ -3310,7 +3314,7 @@ PrefabInstance:
     - target: {fileID: 8164078558771037576, guid: 1893d86476978c04cb35abdaa1faa574,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3529,7 +3533,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: c34dabbb397117e4fa3e0dae271fa971,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: c34dabbb397117e4fa3e0dae271fa971,
         type: 3}
@@ -3732,6 +3736,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!4 &1047991760 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 7be41767dbd02654d9baa03ef78e2110,
+    type: 3}
+  m_PrefabInstance: {fileID: 762001936}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1047991761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3745,7 +3755,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   angleTreshold: 30
-  item: {fileID: 0}
+  item: {fileID: 7584611378032693016, guid: d2ff80aef82a95142abc0835120fa2c5, type: 3}
+  generatePos: {fileID: 1362132313}
 --- !u!1 &1067544506 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 5856fe6e51fad8b42abf00bbbf76651b,
@@ -4111,7 +4122,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 14383ddb1993a174cbcc4c9c2213121e,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4329,7 +4340,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: beb450789b3d10e4cbb153b0fdbe00f9,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: beb450789b3d10e4cbb153b0fdbe00f9,
         type: 3}
@@ -4339,7 +4350,7 @@ PrefabInstance:
     - target: {fileID: 8164078558771037576, guid: beb450789b3d10e4cbb153b0fdbe00f9,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4452,7 +4463,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: e18e803ad3d031343b0ee5eaee001467,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: e18e803ad3d031343b0ee5eaee001467,
         type: 3}
@@ -4462,7 +4473,7 @@ PrefabInstance:
     - target: {fileID: 8164078558771037576, guid: e18e803ad3d031343b0ee5eaee001467,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4606,7 +4617,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5ec8cb2216d117245a741ff3a551b12f,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 5ec8cb2216d117245a741ff3a551b12f,
         type: 3}
@@ -4931,6 +4942,33 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2432090755550338912, guid: d3a700db46917f149afd28d7def9f935, type: 3}
+--- !u!54 &1343985924
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343985916}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1354701967
 GameObject:
   m_ObjectHideFlags: 0
@@ -5036,6 +5074,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1354701967}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1362132312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1362132313}
+  m_Layer: 0
+  m_Name: Pos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1362132313
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362132312}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.844, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1047991760}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1401269244
 GameObject:
   m_ObjectHideFlags: 0
@@ -5332,7 +5401,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 39332c7641e6512409f1948973dc4038,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 39332c7641e6512409f1948973dc4038,
         type: 3}
@@ -5513,7 +5582,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5744,7 +5813,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 35b853cfa9c41bd4b825eae65b19321b,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 35b853cfa9c41bd4b825eae65b19321b,
         type: 3}
@@ -5754,7 +5823,7 @@ PrefabInstance:
     - target: {fileID: 8164078558771037576, guid: 35b853cfa9c41bd4b825eae65b19321b,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5852,7 +5921,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: d3a700db46917f149afd28d7def9f935,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5866,6 +5935,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1343985922}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d3a700db46917f149afd28d7def9f935,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1343985924}
   m_SourcePrefab: {fileID: 100100000, guid: d3a700db46917f149afd28d7def9f935, type: 3}
 --- !u!1 &1543234918
 GameObject:
@@ -6003,7 +6076,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 9e2830044e502954094ddd32010f30de,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 9e2830044e502954094ddd32010f30de,
         type: 3}
@@ -6246,19 +6319,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1630552408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1630552402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d872deda27b2248b4b0b2f9207774e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PickDelay: 1
 --- !u!64 &1630552410
 MeshCollider:
   m_ObjectHideFlags: 2
@@ -7433,6 +7493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77fa1d71b9faf504ea0bdd314b7c4788, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PickDelay: 1
   checkCenter: {fileID: 1246347432}
   checkRadius: 0.71
   testRecipeName: "\u9EC4\u74DC\u62CC\u8611\u83C7"
@@ -7608,7 +7669,6 @@ MonoBehaviour:
   CameraPos: {fileID: 330585546}
   CameraFieldOfViewOrgin: 71.3
   CameraFieldOfViewOffset: 80
-  currentHandObj: {fileID: 0}
 --- !u!114 &1676074894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7813,7 +7873,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b89c0b8d65bef4f4896601e7391681e2,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7831,10 +7891,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1630552403}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b89c0b8d65bef4f4896601e7391681e2,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1630552408}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: b89c0b8d65bef4f4896601e7391681e2,
         type: 3}
       insertIndex: -1
@@ -8486,7 +8542,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 7c0bb51c78b46eb4c86e2407bc62e071,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     - target: {fileID: 8164078558771037576, guid: 7c0bb51c78b46eb4c86e2407bc62e071,
         type: 3}
@@ -8496,7 +8552,7 @@ PrefabInstance:
     - target: {fileID: 8164078558771037576, guid: 7c0bb51c78b46eb4c86e2407bc62e071,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8712,7 +8768,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f65dfb0c882d59045902d44af09cd018,
         type: 3}
       propertyPath: m_TagString
-      value: canPickUp
+      value: canInteract
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

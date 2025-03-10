@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
-public class Bowl : MonoBehaviour
+public class Bowl : BasePickableItem
 {
     public Transform checkCenter;
     public float checkRadius;
@@ -16,8 +16,10 @@ public class Bowl : MonoBehaviour
 
     private float pepperAmount = 0;
     
-    private void Awake()
+    public override void Awake()
     {
+        base.Awake();
+        text.enabled = false;
         cam = Camera.main;
     }
 
@@ -27,7 +29,17 @@ public class Bowl : MonoBehaviour
          text.transform.rotation = Quaternion.LookRotation(cam.transform.forward);
      }
 
-     Collider[] results = new Collider[128];
+    public override void Interact(InteractionType type, params object[] args)
+    {
+        base.Interact(type, args);
+        if (type == InteractionType.Interact)
+        {
+            text.enabled=!text.enabled;
+        }
+    }
+
+
+    Collider[] results = new Collider[128];
      
      HashSet<GameObject> pepperSet = new HashSet<GameObject>();
      private void CheckFood()
@@ -47,7 +59,7 @@ public class Bowl : MonoBehaviour
          List<Food> foodList = new List<Food>();
          for (int i = 0; i < size; i++)
          {
-             if (results[i].CompareTag("canPickUp"))
+             if (results[i].CompareTag("canInteract"))
              {
                  if (results[i].TryGetComponent<Food>(out Food food))
                  {

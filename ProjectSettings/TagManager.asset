@@ -4,9 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - canPickUp
   - PepperParticle
   - Salad
+  - canInteract
   layers:
   - Default
   - TransparentFX

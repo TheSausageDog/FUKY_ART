@@ -6,7 +6,7 @@ using UnityEngine.Serialization;
 
 public class HandTrigger : MonoBehaviour
 {
-     public PickUpScript pick;
+     public PickUpAndInteract pick;
 
      private Camera mainCamera;
 
@@ -35,13 +35,13 @@ public class HandTrigger : MonoBehaviour
         
         for (int i = 0; i < count; i++)
         {
-            if (hits[i].collider.gameObject.CompareTag("canPickUp"))
+            if (hits[i].collider.gameObject.CompareTag("canInteract"))
             {
                 pick.OnHandTriggerEnter(hits[i].collider.gameObject);
 //                Debug.Log(hits[i].collider.gameObject.name);
                 return;
             }
         }
-        if(pick.currentHandObj!=null)pick.OnHandTriggerExit(pick.currentHandObj.gameObject);
+        if(pick.currentHandObj!=null)pick.OnHandTriggerExit(pick.currentHandObj._transform.gameObject);
     }
 }
