@@ -81,8 +81,9 @@ public class Food : BasePickableItem
         {
             Vector3 dis = Knife.transform.position - knifePos;
             var project = Vector3.Project(dis, knifeDir);
-//            Debug.Log(project);
-            if (project.magnitude > knifeDepth)
+            float dot = Vector3.Dot(project, knifeDir);
+
+            if (-dot > knifeDepth)
             {
                 HandleSlice(cutPlane);
             }
