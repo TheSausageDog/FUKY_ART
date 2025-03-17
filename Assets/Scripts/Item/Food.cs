@@ -13,9 +13,13 @@ public class Food : BasePickableItem
     [NonSerialized] public AllTaste Tastes;
 
     public FoodType foodType;
-    public float volume;
+    [NonSerialized]public float volume;
 
     public Color foodColor;
+    [Tooltip("小于这个值就不发射粒子")]
+    public float minSplashSize = 0.1f;
+    [Tooltip("大于这个值发射三个，小于这个值发射一个")]
+    public float maxSplashSize = 0.3f;
 
     private Plane cutPlane;
     [NonSerialized] public Vector3 knifePos;
@@ -23,6 +27,8 @@ public class Food : BasePickableItem
     [NonSerialized] public BzKnife Knife;
     [NonSerialized] public float timer;
     [HideInInspector] public float knifeDepth => VolumeCalculator.CalculateWorldBounds(gameObject).size.y * 0.5f;
+    
+    
 
     private void OnDrawGizmosSelected()
     {
@@ -116,7 +122,10 @@ public class Food : BasePickableItem
             }
         }
 
-        SFXManager.Instance.PlaySfx(SFXName.Food, transform.position,foodColor);
+        var count = volume < maxSplashSize ? 1 : 3;
+        count = volume < minSplashSize ? UnityEngine.Random.Range(0, 2) : 1;
+
+        SFXManager.Instance.PlaySfx(SFXName.Food, transform.position,foodColor,count);
         
         knifePos = Vector3.zero;
         Knife.OnFoodExit(this);
