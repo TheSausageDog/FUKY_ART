@@ -10,11 +10,19 @@ using UnityEngine;
 
 public class Food : BasePickableItem
 {
-    [NonSerialized]public AllTaste Tastes;
-    
+    [NonSerialized] public AllTaste Tastes;
+
     public FoodType foodType;
     public float volume;
-    [HideInInspector]public float knifeDepth => VolumeCalculator.CalculateWorldBounds(gameObject).size.y * 0.5f;
+
+    public Color foodColor;
+
+    private Plane cutPlane;
+    [NonSerialized] public Vector3 knifePos;
+    [NonSerialized] public Vector3 knifeDir;
+    [NonSerialized] public BzKnife Knife;
+    [NonSerialized] public float timer;
+    [HideInInspector] public float knifeDepth => VolumeCalculator.CalculateWorldBounds(gameObject).size.y * 0.5f;
 
     private void OnDrawGizmosSelected()
     {
@@ -31,11 +39,10 @@ public class Food : BasePickableItem
 
     public async void CalculateTaste()
     {
-        
         var list = await FoodManager.Instance.GetStandardValueAsync(foodType);
-        
+
         volume = await VolumeCalculator.CalculateVolumesAsync(gameObject);
-        
+
         var tastes = new List<Taste>();
 
         foreach (var taste in list)
@@ -44,7 +51,7 @@ public class Food : BasePickableItem
             newTaste.tasteValue *= volume;
             tastes.Add(newTaste);
         }
-        
+
         Tastes = new AllTaste(tastes);
     }
 
@@ -67,11 +74,7 @@ public class Food : BasePickableItem
         }
     }
 
-    private Plane cutPlane;
-    [NonSerialized]public Vector3 knifePos;
-    [NonSerialized]public Vector3 knifeDir;
-    [NonSerialized]public BzKnife Knife;
-    [NonSerialized]public float timer;
+
     private void Update()
     {
         if (knifePos != Vector3.zero)
@@ -83,41 +86,42 @@ public class Food : BasePickableItem
             {
                 HandleSlice(cutPlane);
             }
-            
+
             timer += Time.deltaTime;
-            if (timer > 1 && Knife!=null)
+            if (timer > 1 && Knife != null)
             {
                 Knife.OnFoodExit(this);
             }
         }
-        
-
     }
 
     public bool cutted;
+
     async void HandleSlice(Plane plane)
     {
         var tempSlicer = GetComponent<IBzMeshSlicer>();
-        var results =await tempSlicer.SliceAsync(plane);
+        var results = await tempSlicer.SliceAsync(plane);
         gameObject.layer = LayerMask.NameToLayer("Default");
         cutted = true;
-        if (results != null && results.resultObjects!=null)
+        if (results != null && results.resultObjects != null)
         {
             foreach (var resultObject in results.resultObjects)
             {
                 resultObject.gameObject.layer = LayerMask.NameToLayer("Default");
-                if(resultObject.gameObject.TryGetComponent(out Food food))
+                if (resultObject.gameObject.TryGetComponent(out Food food))
                 {
                     food.cutted = true;
                 }
             }
-            
         }
+
+        SFXManager.Instance.PlaySfx(SFXName.Food, transform.position,foodColor);
+        
         knifePos = Vector3.zero;
         Knife.OnFoodExit(this);
     }
-    
-    public void OnKnifeEnter(Plane plane,Vector3 knifePos,Vector3 knifeDir)
+
+    public void OnKnifeEnter(Plane plane, Vector3 knifePos, Vector3 knifeDir)
     {
         this.knifePos = knifePos;
         this.knifeDir = knifeDir;

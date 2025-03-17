@@ -1390,6 +1390,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 1
   volume: 0
+  foodColor: {r: 0.91291904, g: 1, b: 0, a: 1}
   cutted: 0
 --- !u!1 &410087039
 GameObject:
@@ -1781,6 +1782,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 0
   volume: 0
+  foodColor: {r: 0.63256514, g: 1, b: 0, a: 1}
   cutted: 0
 --- !u!1 &616761576 stripped
 GameObject:
@@ -1881,6 +1883,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 0
   volume: 0
+  foodColor: {r: 0.63256514, g: 1, b: 0, a: 1}
   cutted: 0
 --- !u!1 &654126609 stripped
 GameObject:
@@ -1981,6 +1984,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 1
   volume: 0
+  foodColor: {r: 0.91291904, g: 1, b: 0, a: 1}
   cutted: 0
 --- !u!1001 &655451713
 PrefabInstance:
@@ -2500,6 +2504,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 4
   volume: 0
+  foodColor: {r: 0.60946727, g: 1, b: 0, a: 1}
   cutted: 0
 --- !u!1 &832575517
 GameObject:
@@ -2822,6 +2827,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 4
   volume: 0
+  foodColor: {r: 0.60946727, g: 1, b: 0, a: 1}
   cutted: 0
 --- !u!1 &897955396
 GameObject:
@@ -3125,7 +3131,7 @@ GameObject:
   - component: {fileID: 977218557}
   - component: {fileID: 977218556}
   - component: {fileID: 977218555}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3856,6 +3862,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 3
   volume: 0
+  foodColor: {r: 1, g: 0.7501172, b: 0.5943396, a: 1}
   cutted: 0
 --- !u!1 &1068722586 stripped
 GameObject:
@@ -3956,6 +3963,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 3
   volume: 0
+  foodColor: {r: 1, g: 0.7501172, b: 0.5943396, a: 1}
   cutted: 0
 --- !u!1 &1121577328
 GameObject:
@@ -4748,6 +4756,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 0
   volume: 0
+  foodColor: {r: 0.63256514, g: 1, b: 0, a: 1}
   cutted: 0
 --- !u!1 &1310761925 stripped
 GameObject:
@@ -4848,6 +4857,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 4
   volume: 0
+  foodColor: {r: 0.60946727, g: 1, b: 0, a: 1}
   cutted: 0
 --- !u!1 &1319267517
 GameObject:
@@ -5445,7 +5455,7 @@ GameObject:
   - component: {fileID: 1478136214}
   - component: {fileID: 1478136213}
   - component: {fileID: 1478136212}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: "B\u5730\u677F "
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5552,6 +5562,7 @@ GameObject:
   - component: {fileID: 1485456402}
   - component: {fileID: 1485456403}
   - component: {fileID: 1485456404}
+  - component: {fileID: 1485456405}
   m_Layer: 0
   m_Name: ---Manager---
   m_TagString: Untagged
@@ -5625,6 +5636,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxTasksPerFrame: 3
+--- !u!114 &1485456405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1485456399}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52b7a394d766884e9f171b80b607526, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxList:
+  - name: 0
+    prefab: {fileID: 3398376922941023721, guid: 1d1017a70aac3e34eb725b6303e589c6,
+      type: 3}
 --- !u!1 &1504377280
 GameObject:
   m_ObjectHideFlags: 0
@@ -7801,6 +7828,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 3
   volume: 0
+  foodColor: {r: 1, g: 0.7501172, b: 0.5943396, a: 1}
   cutted: 0
 --- !u!1001 &1745381553
 PrefabInstance:
@@ -8116,7 +8144,7 @@ GameObject:
   - component: {fileID: 1815779234}
   - component: {fileID: 1815779233}
   - component: {fileID: 1815779232}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: "\u5899\u58C1"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8308,6 +8336,7 @@ MonoBehaviour:
   PickDelay: 0
   foodType: 1
   volume: 0
+  foodColor: {r: 0.91291904, g: 1, b: 0, a: 1}
   cutted: 0
 --- !u!1 &1914313274
 GameObject:
