@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ae1dbba2ff20914fa0953768cd56935, type: 3}
+  m_Name: T_Fridge_Ramp_01
+  m_EditorClassIdentifier: 
+  path: "D:/UnityProject/FUKY_ART/Assets/Asset/\u793A\u4F8B\u573A\u666F\u8D44\u4EA7/\u51B0\u7BB1/\u51B0\u7BB1\u672C\u4F53"
+  _GradientName: T_Fridge_Ramp_01
+  _GradientWidth: 128
+  _Gradient:
+  - serializedVersion: 2
+    key0: {r: 0.81761, g: 0.81761, b: 0.81761, a: 1}
+    key1: {r: 1, g: 0.9157331, b: 0.8459119, a: 1}
+    key2: {r: 1, g: 1, b: 1, a: 0}
+    key3: {r: 1, g: 1, b: 1, a: 0}
+    key4: {r: 1, g: 1, b: 1, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 30240
+    ctime1: 30969
+    ctime2: 31743
+    ctime3: 65535
+    ctime4: 65535
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  format: 0
