@@ -29,6 +29,7 @@ half3 _ReflectionCol;
 float4 _ReflectionSetting;
 float4 _RimCol;
 float _RimWidth,_Threshold;
+half _RimLightInShadow;
 //half _ReflectionIntensity;
 float4 _TransmissionCol;
 float _TransmissionSetting,_TransmissionUseShadow;

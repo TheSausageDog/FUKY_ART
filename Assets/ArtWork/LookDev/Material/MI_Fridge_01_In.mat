@@ -14,10 +14,12 @@ Material:
   m_ValidKeywords:
   - _SMOOTHNORMAL_TEXCOORD3
   - _UNIFORM_OUTLINE_WIDTH
-  - _USESHADOW
+  - _USE_SHADOW
+  - _USE_SSAO
   m_InvalidKeywords:
   - _HALFTONEUVZSCALE_ON
   - _SPECULARSTEP_ON
+  - _USESHADOW
   - _USEVERTEXCOLORA_ON
   - _USEVERTEXCOLORRGB_ON
   - _ZWRITE1_ON
@@ -79,6 +81,7 @@ Material:
     - _RampIntensity: 1
     - _ReflectionIntensity: 1
     - _Render: 0
+    - _RimLightInShadow: 0.2
     - _RimWidth: 0.01
     - _ShadowGain: 0
     - _SmoothNormalData: 3
@@ -92,10 +95,11 @@ Material:
     - _StencilReadMask: 255
     - _StencilTest: 0
     - _StencilWriteMask: 255
-    - _Threshold: 0.8
+    - _Threshold: 0.831
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UniformOutline: 1
+    - _UseSSAO: 1
     - _UseShadow: 1
     - _UseVertexColorA: 0
     - _UseVertexColorRGB: 0
@@ -125,7 +129,7 @@ Material:
     - _OutlineCol: {r: 0.127, g: 0.11043479, b: 0.055217396, a: 1}
     - _ReflectionCol: {r: 0.93710685, g: 0.93710685, b: 0.93710685, a: 0}
     - _ReflectionSetting: {r: 5, g: 0.17, b: 0.72, a: 0}
-    - _RimCol: {r: 2.143547, g: 2.143547, b: 2.143547, a: 0}
+    - _RimCol: {r: 1, g: 1, b: 1, a: 0}
     - _ShadowSmooth: {r: 0, g: 1, b: 0, a: 0}
     - _SpecularColor: {r: 0.24777733, g: 0.24777733, b: 0.24777733, a: 1}
     - _TransmissionCol: {r: 0, g: 0, b: 0, a: 0}

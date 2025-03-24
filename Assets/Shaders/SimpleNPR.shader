@@ -31,7 +31,8 @@
         _rimLight ("深度边缘光设置", float) = 0
         [Sub(RimLight)]    [HDR]_RimCol("边缘光颜色",Color) = (0,0,0,0)
         [Sub(RimLight)]    _RimWidth("宽度", float) = 0.01
-        [Sub(RimLight)]    _Threshold("阈值", float) = 0.8
+        [Sub(RimLight)]    _Threshold("阈值", Range(0,1)) = 0.8
+    	[Sub(RimLight)]    _RimLightInShadow("在阴影中的强度", Range(0,1)) = 0.2
         
         [Main(ReflectionCol, _, off, off)] 
         _reflectionCol ("反射光设置", float) = 0
@@ -74,7 +75,8 @@
         
         
         [Main(Preset, _, on, off)] _PresetGroup ("渲染设置", float) = 0
-        [SubToggle(Preset,_USESHADOW)]   _UseShadow ("接收投影", Float) = 1
+        [SubToggle(Preset,_USE_SHADOW)] _UseShadow ("接收投影", Float) = 1
+    	[SubToggle(Preset,_USE_SSAO)] _UseSSAO ("接收SSAO", Float) = 1
 		[Preset(Preset, LWGUI_Preset_BlendMode)] _BlendMode ("Blend Mode Preset", float) = 0
 		[SubEnum(Preset, UnityEngine.Rendering.CullMode)] _Cull ("Cull", Float) = 2
 		[SubEnum(Preset, UnityEngine.Rendering.BlendMode)] _SrcBlend ("SrcBlend", Float) = 1
@@ -122,7 +124,8 @@
             
             // Material Keywords
             #pragma shader_feature_local_fragment _ALPHA_CLIP_ON
-            #pragma shader_feature_local_fragment _USESHADOW
+            #pragma shader_feature_local_fragment _USE_SHADOW
+            #pragma shader_feature_local_fragment _USE_SSAO
             
             #pragma shader_feature_local_fragment _EMISSIVE
             #pragma shader_feature_local_fragment _NORMALMAP
@@ -136,6 +139,7 @@
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHTS
             #pragma multi_compile_fragment _ _ADDITIONAL_LIGHT_SHADOWS
             #pragma multi_compile_fragment _ _LIGHT_COOKIES
+            #pragma multi_compile_fragment _ _SCREEN_SPACE_OCCLUSION
 
             // -------------------------------------
             // Unity defined keywords
@@ -231,6 +235,18 @@
                 return specularColor;
             }
 
+            half3 MyTransmission (Light light, float3 normalWS, float3 viewDirWS)
+            {
+				half3 mainAtten = _TransmissionCol * light.color * light.distanceAttenuation * lerp(1,light.shadowAttenuation,_TransmissionUseShadow);
+				half3 hDir = normalize(light.direction) + normalWS;
+				half mainVdotL = saturate( dot( normalize(viewDirWS), -hDir ) );
+				mainVdotL = saturate(dot(pow(mainVdotL, 1.6), _TransmissionSetting.x));
+				half3 TransmissionCol = mainAtten * mainVdotL;
+            	return TransmissionCol;
+            }
+
+
+
             float4 TransformHClipToViewPortPos(float4 positionCS)
              {
                  float4 o = positionCS * 0.5f;
@@ -251,6 +267,7 @@
                     Light AdditionalLight = GetAdditionalLight(lightIndex, worldPos,1);
                     half lightAttenuation = AdditionalLight.distanceAttenuation * AdditionalLight.shadowAttenuation;
                     half3 addLightDiffuse = max(0,dot(AdditionalLight.direction,normalWS)*lightAttenuation).rrr * AdditionalLight.color.rgb;
+                	addLightDiffuse += MyTransmission(AdditionalLight, normalWS, viewDirWS);
                     half3 addLightSpecular = MySpecularTerm(_Specular1,normalWS,AdditionalLight.direction,viewDirWS) * lightAttenuation * AdditionalLight.color.rgb ;
                     mixColor += lerp(addLightDiffuse,addLightSpecular,_AddSpecular);
                 }
@@ -297,17 +314,15 @@
                 UNITY_SETUP_INSTANCE_ID(input);
                 //Make ObjectZeroWS work in Particle 
                 Light mainLight =  GetMainLight();
-                
                 //Shadow
-                #if ((_MAIN_LIGHT_SHADOWS) || (_MAIN_LIGHT_SHADOWS_CASCADE) )&& (_USESHADOW)
+                #if ((_MAIN_LIGHT_SHADOWS) || (_MAIN_LIGHT_SHADOWS_CASCADE) )&& (_USE_SHADOW)
                 // Light lighShadow = GetMainLight(shadowCoord);
                 // half ShadowAtten = lighShadow.shadowAttenuation;
                 half4 shadowCoord = TransformWorldToShadowCoord(input.positionWS);
                 ShadowSamplingData shadowSamplingData = GetMainLightShadowSamplingData();
                 half4 shadowParams = GetMainLightShadowParams();
                 half ShadowAtten = SampleShadowmap(TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture), shadowCoord, shadowSamplingData, shadowParams, false);
-                #else
-                half ShadowAtten = 1;
+            	mainLight.shadowAttenuation = ShadowAtten;
                 #endif
                 
                 //NormalMap
@@ -320,33 +335,31 @@
                 float3 normalWS = normalize(input.normalWS);
                 #endif
 
-            	// R:Specular; G:Gloss; B:Reflect; A:RampID;
+            	// TODO R:Specular; G:Gloss; B:Reflect; A:RampID;
             	half4 maskSGRI = 1;
             	half4 mainTex = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,TRANSFORM_TEX(input.uv,_MainTex))*_MainColor;
 
 				//ssao
             	float2 sceneUV = input.positionNDC.xy/input.positionNDC.w;
-            	float ssao = SAMPLE_TEXTURE2D_X(_ScreenSpaceOcclusionTexture, sampler_ScreenSpaceOcclusionTexture,sceneUV);
+            	float ssao = 1;
+            	#if (_SCREEN_SPACE_OCCLUSION) && (_USE_SSAO)
+            	ssao = SAMPLE_TEXTURE2D_X(_ScreenSpaceOcclusionTexture, sampler_ScreenSpaceOcclusionTexture,sceneUV);
+            	#endif
 				
                 half lambert = saturate(dot(normalize(mainLight.direction),normalWS));
             	half halfLambert = dot(normalize(mainLight.direction),normalWS) * 0.5 + 0.5;
-                //specular
-                half specular1 = MySpecularTerm(_Specular1,normalWS,mainLight.direction,input.viewDirWS);
-                half3 specularCol = _SpecularColor * specular1 * (saturate(lambert * ShadowAtten +_SpecularInShadow)*lambert)*_MainLightColor;
-            	//diffuseCol
-				float2 rampUV = float2(min(min(halfLambert, saturate(ShadowAtten+_ShadowGain)), lerp(1,ssao,_AmbientOcclusionParam.a)) , maskSGRI.a);
+            	
+            	//Diffuse
+				float2 rampUV = float2(min(min(halfLambert, saturate(mainLight.shadowAttenuation + _ShadowGain)), lerp(1,ssao,_AmbientOcclusionParam.a)) , maskSGRI.a);
             	half3 diffuseLight = SAMPLE_TEXTURE2D(_DiffuseRampMap,sampler_LinearClamp,rampUV);
             	diffuseLight *= mainLight.color * mainLight.distanceAttenuation;
                 diffuseLight = mainTex.rgb * diffuseLight.rgb ;
+            	//Transmission
+            	diffuseLight += MyTransmission(mainLight, normalWS, input.viewDirWS);
 
-                //TransmissionCol
-                half3 mainAtten = _TransmissionCol * mainLight.color * mainLight.distanceAttenuation * lerp(1,ShadowAtten,_TransmissionUseShadow);
-                half3 hDir = normalize(mainLight.direction) + normalWS;
-                half mainVdotL = saturate( dot( normalize(input.viewDirWS), -hDir ) );
-                mainVdotL = saturate(dot(pow(mainVdotL, 1.6), _TransmissionSetting.x));
-                half3 TransmissionCol = mainAtten * mainVdotL;
-            	TransmissionCol *= mainTex.rgb;
-                diffuseLight += TransmissionCol;
+            	//Specular
+                half specular1 = MySpecularTerm(_Specular1,normalWS,mainLight.direction,input.viewDirWS);
+                half3 specularCol = _SpecularColor * specular1 * (saturate(lambert * mainLight.shadowAttenuation +_SpecularInShadow)*lambert)*_MainLightColor;
 
                 // //RimLight & reflectCol
                 // half3 edgeLight = saturate(pow(max(0,1-dot(normalize(input.viewDirWS),normalize(input.normalWS))),_ReflectionSetting.x) * _ReflectionSetting.y) * _ReflectionCol;
@@ -355,7 +368,9 @@
                 // // half3 reflectCol = CalculateIrradianceFromReflectionProbes(reflect(-normalize(input.viewDirWS),normalWS),input.positionWS,_RimLightPowScale.z);
                 // edgeLight *= reflectCol;
 
-                //屏幕空间深度边缘光 需要开启ZPropass与描边冲突暂不支持
+                //屏幕空间深度边缘光 依赖SSAO提供的_CameraDepthTexture
+            	half3 rimLight = 0;
+            	#if (_SCREEN_SPACE_OCCLUSION)
                 float3 samplePositionVS = float3(input.positionVS.xy + input.normalVS.xy * _RimWidth, input.positionVS.z); // 保持z不变（CS.w = -VS.z）
                 float4 samplePositionCS = TransformWViewToHClip(samplePositionVS); // input.positionCS不是真正的CS 而是SV_Position屏幕坐标
                 float4 samplePositionVP = TransformHClipToViewPortPos(samplePositionCS);
@@ -366,8 +381,10 @@
                 float linearEyeOffsetDepth = LinearEyeDepth(offsetDepth, _ZBufferParams);
                 float depthDiff = linearEyeOffsetDepth - linearEyeDepth;
                 float edgeFactor = step(_Threshold, depthDiff);
-            	edgeFactor*=lambert;
-            	half3 rimLight = _RimCol * edgeFactor * mainTex.rgb;
+            	edgeFactor *= lerp(lambert * mainLight.shadowAttenuation, 1, _RimLightInShadow);
+            	rimLight = _RimCol * edgeFactor * mainTex.rgb;
+            	#endif
+            	
                 //emissiveCol
                 #ifdef _EMISSIVE
                 half3 emissiveCol = _EmissiveColor * SAMPLE_TEXTURE2D(_EmissiveTex,sampler_EmissiveTex,input.uv*_EmissiveTex_ST.xy+_EmissiveTex_ST.zw);

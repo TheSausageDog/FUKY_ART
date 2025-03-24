@@ -14,10 +14,12 @@ Material:
   m_ValidKeywords:
   - _ALPHA_CLIP_ON
   - _UNIFORM_OUTLINE_WIDTH
-  - _USESHADOW
+  - _USE_SHADOW
+  - _USE_SSAO
   m_InvalidKeywords:
   - _HALFTONEUVZSCALE_ON
   - _SPECULARSTEP_ON
+  - _USESHADOW
   - _USEVERTEXCOLORA_ON
   - _USEVERTEXCOLORRGB_ON
   - _ZWRITE1_ON
@@ -96,6 +98,7 @@ Material:
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UniformOutline: 1
+    - _UseSSAO: 1
     - _UseShadow: 1
     - _UseVertexColorA: 0
     - _UseVertexColorRGB: 0
