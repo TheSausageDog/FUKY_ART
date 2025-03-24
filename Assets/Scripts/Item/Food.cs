@@ -8,27 +8,30 @@ using BzKovSoft.ObjectSlicer.Samples;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// 食物类，表示可切割的食物对象。
+/// 继承自 BasePickableItem。
+/// </summary>
 public class Food : BasePickableItem
 {
-    [NonSerialized] public AllTaste Tastes;
+    [NonSerialized] public AllTaste Tastes; // 食物的味道属性
+    public FoodType foodType; // 食物类型
+    [NonSerialized] public float volume; // 食物体积
+    public Color foodColor; // 食物颜色
 
-    public FoodType foodType;
-    [NonSerialized]public float volume;
-
-    public Color foodColor;
     [Tooltip("小于这个值就不发射粒子")]
     public float minSplashSize = 0.1f;
     [Tooltip("大于这个值发射三个，小于这个值发射一个")]
     public float maxSplashSize = 0.3f;
 
-    private Plane cutPlane;
-    [NonSerialized] public Vector3 knifePos;
-    [NonSerialized] public Vector3 knifeDir;
-    [NonSerialized] public BzKnife Knife;
-    [NonSerialized] public float timer;
+    private Plane cutPlane; // 切割平面
+    [NonSerialized] public Vector3 knifePos; // 刀的位置
+    [NonSerialized] public Vector3 knifeDir; // 刀的方向
+    [NonSerialized] public BzKnife Knife; // 刀的引用
+    [NonSerialized] public float timer; // 计时器
+
+    public bool cutted; // 是否已切割
     [HideInInspector] public float knifeDepth => VolumeCalculator.CalculateWorldBounds(gameObject).size.y * 0.5f;
-    
-    
 
     private void OnDrawGizmosSelected()
     {
@@ -36,22 +39,23 @@ public class Food : BasePickableItem
         Gizmos.DrawWireCube(transform.position, VolumeCalculator.CalculateWorldBounds(gameObject).size);
     }
 
-
     public override void Start()
     {
         base.Start();
         CalculateTaste();
     }
 
+    /// <summary>
+    /// 计算食物的味道属性。
+    /// </summary>
     public async void CalculateTaste()
     {
-        var list = await FoodManager.Instance.GetStandardValueAsync(foodType);
-
+        var standardValues = await FoodManager.Instance.GetStandardValueAsync(foodType);
         volume = await VolumeCalculator.CalculateVolumesAsync(gameObject);
 
         var tastes = new List<Taste>();
 
-        foreach (var taste in list)
+        foreach (var taste in standardValues)
         {
             var newTaste = taste;
             newTaste.tasteValue *= volume;
@@ -80,14 +84,13 @@ public class Food : BasePickableItem
         }
     }
 
-
     private void Update()
     {
         if (knifePos != Vector3.zero)
         {
-            Vector3 dis = Knife.transform.position - knifePos;
-            var project = Vector3.Project(dis, knifeDir);
-            float dot = Vector3.Dot(project, knifeDir);
+            Vector3 distance = Knife.transform.position - knifePos;
+            Vector3 projection = Vector3.Project(distance, knifeDir);
+            float dot = Vector3.Dot(projection, knifeDir);
 
             if (-dot > knifeDepth)
             {
@@ -102,31 +105,32 @@ public class Food : BasePickableItem
         }
     }
 
-    public bool cutted;
-
+    /// <summary>
+    /// 切割处理逻辑
+    /// </summary>
     async void HandleSlice(Plane plane)
     {
-        var tempSlicer = GetComponent<IBzMeshSlicer>();
-        var results = await tempSlicer.SliceAsync(plane);
+        var slicer = GetComponent<IBzMeshSlicer>();
+        var sliceResults = await slicer.SliceAsync(plane);
         gameObject.layer = LayerMask.NameToLayer("Default");
         cutted = true;
-        if (results != null && results.resultObjects != null)
+
+        if (sliceResults != null && sliceResults.resultObjects != null)
         {
-            foreach (var resultObject in results.resultObjects)
+            foreach (var resultObject in sliceResults.resultObjects)
             {
                 resultObject.gameObject.layer = LayerMask.NameToLayer("Default");
-                if (resultObject.gameObject.TryGetComponent(out Food food))
+                if (resultObject.gameObject.TryGetComponent(out Food slicedFood))
                 {
-                    food.cutted = true;
+                    slicedFood.cutted = true;
                 }
             }
         }
 
-        var count = volume < maxSplashSize ? 1 : 3;
-        count = volume < minSplashSize ? UnityEngine.Random.Range(0, 2) : 1;
+        int splashCount = volume < maxSplashSize ? 1 : 3;
+        splashCount = volume < minSplashSize ? UnityEngine.Random.Range(0, 2) : splashCount;
 
-        SFXManager.Instance.PlaySfx(SFXName.Food, transform.position,foodColor,count);
-        
+        SFXManager.Instance.PlaySfx(SFXName.Food, transform.position, foodColor, splashCount);
         knifePos = Vector3.zero;
         Knife.OnFoodExit(this);
     }
@@ -140,6 +144,9 @@ public class Food : BasePickableItem
     }
 }
 
+/// <summary>
+/// 食物类型枚举
+/// </summary>
 public enum FoodType
 {
     Vegetable,

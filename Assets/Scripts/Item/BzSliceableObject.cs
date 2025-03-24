@@ -11,7 +11,7 @@ namespace BzKovSoft.ObjectSlicer
 		protected override AdapterAndMesh GetAdapterAndMesh(Renderer renderer)
 		{
 			var meshRenderer = renderer as MeshRenderer;
-//			Debug.Log("Get");
+
 			if (meshRenderer != null)
 			{
 				var result = new AdapterAndMesh();

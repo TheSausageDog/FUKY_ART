@@ -47,19 +47,26 @@ public class BasePickableItem : MonoBehaviour,IInteractable
     }
     public virtual void Interact(InteractionType type,params object[] args)
     {
-        if (type == InteractionType.Pick)
+
+        switch (type)
         {
-            if (args[0] is Transform pickTrans && args[1] is PickUpAndInteract player)
-            {
-                OnPickup(pickTrans,player);
-            }
-        }
-        else if (type == InteractionType.Throw)
-        {
-            if (args[0] is PickUpAndInteract player)
-            {
-                OnThrow(player);
-            }
+            case InteractionType.Pick:
+                if (args[0] is Transform pickTrans && args[1] is PickUpAndInteract player)
+                {
+                    OnPickup(pickTrans,player);
+                }
+                break;
+            case InteractionType.Throw:
+                if (args[0] is PickUpAndInteract player1)
+                {
+                    OnThrow(player1);
+                }
+                break;
+            case InteractionType.Interact:
+                OnAlternateAction();
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
     }
     protected virtual void OnPickup(Transform holdPos,PickUpAndInteract player)
@@ -87,16 +94,11 @@ public class BasePickableItem : MonoBehaviour,IInteractable
         UEvent.Dispatch(EventType.OnItemDrop);
     }
     
-    // 新增备用交互方法，便于未来扩展
     public virtual void OnAlternateAction()
     {
         Debug.Log("备用交互（短按）触发：" + gameObject.name);
     }
     
-    public virtual void OnAlternateActionLongPress()
-    {
-        Debug.Log("备用交互（长按）触发：" + gameObject.name);
-    }
 
   
 }
