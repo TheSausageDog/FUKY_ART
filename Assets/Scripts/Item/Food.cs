@@ -25,13 +25,13 @@ public class Food : BasePickableItem
     public float maxSplashSize = 0.3f;
 
     private Plane cutPlane; // 切割平面
-    [NonSerialized] public Vector3 knifePos; // 刀的位置
-    [NonSerialized] public Vector3 knifeDir; // 刀的方向
-    [NonSerialized] public BzKnife Knife; // 刀的引用
+    [NonSerialized] public Vector3 in_knifePos; // 刀的位置
+    [NonSerialized] public Vector3 in_edgeDir; // 刀的方向
+    [NonSerialized] public BzKnife knife; // 刀的引用
     [NonSerialized] public float timer; // 计时器
 
     public bool cutted; // 是否已切割
-    [HideInInspector] public float knifeDepth => VolumeCalculator.CalculateWorldBounds(gameObject).size.y * 0.5f;
+    [HideInInspector] public float cuttingDepth => VolumeCalculator.CalculateWorldBounds(gameObject).size.y * 0.5f;
 
     private void OnDrawGizmosSelected()
     {
@@ -67,42 +67,52 @@ public class Food : BasePickableItem
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent<BzKnife>(out var knife))
+        if (other.TryGetComponent<BzKnife>(out var _knife))
         {
-            if (Knife == null) Knife = knife;
-            knife.OnTouchFood(this);
+            if (knife == null)
+            {
+                Vector3 move_dir = Vector3.Normalize(transform.position - _knife.transform.position);
+                if (Vector3.Dot(move_dir, _knife.EdgeDirection) > Mathf.Epsilon)
+                {
+                    // Debug.Log(Vector3.Dot(move_dir, _knife.EdgeDirection));
+                    OnKnifeEnter(_knife);
+                }
+            }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.TryGetComponent<BzKnife>(out var knife))
+        if (other.TryGetComponent<BzKnife>(out var _knife))
         {
-            knifePos = Vector3.zero;
-            knife.OnFoodExit(this);
-            gameObject.layer = LayerMask.NameToLayer("Default");
+            OnKnifeExit(_knife);
         }
     }
 
     private void Update()
     {
-        if (knifePos != Vector3.zero)
+        if (knife != null)
         {
-            Vector3 distance = Knife.transform.position - knifePos;
-            Vector3 projection = Vector3.Project(distance, knifeDir);
-            float dot = Vector3.Dot(projection, knifeDir);
-
-            if (-dot > knifeDepth)
+            if (CheckCutted())
             {
                 HandleSlice(cutPlane);
             }
 
             timer += Time.deltaTime;
-            if (timer > 1 && Knife != null)
+            if (timer > 1 && knife != null)
             {
-                Knife.OnFoodExit(this);
+                // Knife.OnFoodExit(this);
             }
         }
+    }
+
+    protected bool CheckCutted()
+    {
+        Vector3 knife_move = knife.transform.position - in_knifePos;
+        Vector3 knife_in_dist = Vector3.Project(knife_move, in_edgeDir);
+        // float dot = Vector3.Dot(knife_in_dist, in_edgeDir);
+        // Debug.Log(knife_in_dist.magnitude + " " + dot);
+        return knife_in_dist.magnitude > cuttingDepth;
     }
 
     /// <summary>
@@ -112,7 +122,6 @@ public class Food : BasePickableItem
     {
         var slicer = GetComponent<IBzMeshSlicer>();
         var sliceResults = await slicer.SliceAsync(plane);
-        gameObject.layer = LayerMask.NameToLayer("Default");
         cutted = true;
 
         if (sliceResults != null && sliceResults.resultObjects != null)
@@ -131,16 +140,31 @@ public class Food : BasePickableItem
         splashCount = volume < minSplashSize ? UnityEngine.Random.Range(0, 2) : splashCount;
 
         SFXManager.Instance.PlaySfx(SFXName.Food, transform.position, foodColor, splashCount);
-        knifePos = Vector3.zero;
-        Knife.OnFoodExit(this);
+        OnKnifeExit(knife);
     }
 
-    public void OnKnifeEnter(Plane plane, Vector3 knifePos, Vector3 knifeDir)
+    public void OnKnifeEnter(BzKnife _knife)
     {
-        this.knifePos = knifePos;
-        this.knifeDir = knifeDir;
-        cutPlane = plane;
+        _knife.OnEnterFood(this, ref cutPlane);
+        in_knifePos = _knife.transform.position;
+        in_edgeDir = _knife.EdgeDirection;
+        // cutPlane = plane;
         timer = 0;
+        // what if have multiable knife
+        knife = _knife;
+        gameObject.layer = LayerMask.NameToLayer("Player");
+    }
+
+    public void OnKnifeExit(BzKnife _knife)
+    {
+        _knife.OnExitFood(this);
+
+        in_knifePos = Vector3.zero;
+        in_edgeDir = Vector3.zero;
+        knife = null;
+
+        // what for?
+        gameObject.layer = LayerMask.NameToLayer("Default");
     }
 }
 

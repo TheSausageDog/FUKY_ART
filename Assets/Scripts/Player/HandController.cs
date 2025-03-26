@@ -32,7 +32,7 @@ public class HandController : MonoBehaviour
     private Camera mainCamera;
 
     private Rigidbody handRb;
-    
+
     private void Start()
     {
         playerInputController = GetComponent<PlayerInputController>();
@@ -59,9 +59,9 @@ public class HandController : MonoBehaviour
             hand.position = Vector3.Lerp(hand.position, handTarget.position, speed * Time.deltaTime);
             hand.rotation = handTarget.rotation;
         }
-    
+
         // 控制 handTarget 的移动
-        if(playerInputController.IsMoveHandHeld()|| playerBlackBoard.holdingKnife)MoveHandTarget();
+        if (playerInputController.IsMoveHandHeld() || playerBlackBoard.holdingKnife) MoveHandTarget();
     }
 
     private void FixedUpdate()
@@ -70,10 +70,10 @@ public class HandController : MonoBehaviour
         {
             // 计算目标位置与当前物体位置之间的距离
             float distanceToTarget = Vector3.Distance(playerBlackBoard.heldObjRigidBody.transform.position, handTarget.position);
-        
+
             // 计算目标位置与当前物体位置之间的方向
             Vector3 directionToTarget = (handTarget.position - playerBlackBoard.heldObjRigidBody.transform.position).normalized;
-        
+
             // 动态调整速度：距离越远，速度越快
             float dynamicSpeed = speed * distanceToTarget;
 
@@ -95,57 +95,59 @@ public class HandController : MonoBehaviour
 
     private void MoveHandTarget()
     {
-        if(mainCamera==null)return;
+        if (mainCamera == null) return;
         // 如果没有持有物体，则允许鼠标移动 handTarget
-        if (!playerBlackBoard.isHeldObj  || playerBlackBoard.holdingKnife)
+        if (!playerBlackBoard.isHeldObj || playerBlackBoard.holdingKnife)
         {
             // 获取鼠标输入
             Vector2 mouseInput = playerInputController.GetMouseInput();
             float scrollInput = playerInputController.GetScrollInput();
             // 计算基于相机本地坐标系的移动量
-            Vector3 moveDelta = new Vector3(mouseInput.x * mouseSensitivity, mouseInput.y * mouseSensitivity, scrollInput * scrollSensitivity);
+            Vector3 screen_move = new Vector3(mouseInput.x * mouseSensitivity, mouseInput.y * mouseSensitivity, 0);
+            Vector3 world_move = new Vector3(0, scrollInput * scrollSensitivity, 0);
 
-            bool needLock = false;
+            // bool needLock = false;
 
             if (playerBlackBoard.moveLock != Vector3.zero)
             {
-                needLock = true;
-                
-                var length = moveDelta.y;
-                
-                moveDelta = playerBlackBoard.moveLock * length;
-            }
+                // needLock = true;
 
-            if (!needLock)
-            {
-                // 更新 handTarget 的本地位置
-                Vector3 newLocalPosition = mainCamera.transform.InverseTransformPoint(handTarget.position) + moveDelta;
-            
-                // 限制 handTarget 的本地位置
-                newLocalPosition.x = Mathf.Clamp(newLocalPosition.x, xMinMax.x, xMinMax.y);
-                newLocalPosition.y = Mathf.Clamp(newLocalPosition.y, yMinMax.x, yMinMax.y);
-                newLocalPosition.z = Mathf.Clamp(newLocalPosition.z, zMinMax.x, zMinMax.y);
+                // var length = moveDelta.y;
 
-                // 将限制后的本地位置转换回世界坐标
-                Vector3 clampedWorldPosition = mainCamera.transform.TransformPoint(newLocalPosition);
-                handTarget.position = clampedWorldPosition;
+                // moveDelta = playerBlackBoard.moveLock * length;
+                screen_move = Vector3.Project(screen_move, playerBlackBoard.moveLock);
             }
-            else
-            {
-                // 更新 handTarget 的本地位置
-                Vector3 newLocalPosition = handTarget.position + moveDelta;
+            // Debug.Log(needLock);
+            // if (!needLock)
+            // {
+            // 更新 handTarget 的本地位置
+            Vector3 newLocalPosition = mainCamera.transform.InverseTransformPoint(handTarget.position + world_move) + screen_move;
 
-                var newCameraPos = mainCamera.transform.InverseTransformPoint(newLocalPosition);
-                
-                // 限制 handTarget 的本地位置
-                newCameraPos.x = Mathf.Clamp(newCameraPos.x, xMinMax.x, xMinMax.y);
-                newCameraPos.y = Mathf.Clamp(newCameraPos.y, yMinMax.x, yMinMax.y);
-                newCameraPos.z = Mathf.Clamp(newCameraPos.z, zMinMax.x, zMinMax.y);
-                
-                Vector3 clampedWorldPosition = mainCamera.transform.TransformPoint(newCameraPos);
-                handTarget.position = clampedWorldPosition;
-            }
-            
+            // 限制 handTarget 的本地位置
+            newLocalPosition.x = Mathf.Clamp(newLocalPosition.x, xMinMax.x, xMinMax.y);
+            newLocalPosition.y = Mathf.Clamp(newLocalPosition.y, yMinMax.x, yMinMax.y);
+            newLocalPosition.z = Mathf.Clamp(newLocalPosition.z, zMinMax.x, zMinMax.y);
+
+            // 将限制后的本地位置转换回世界坐标
+            Vector3 clampedWorldPosition = mainCamera.transform.TransformPoint(newLocalPosition);
+            handTarget.position = clampedWorldPosition;
+            // }
+            // else
+            // {
+            //     // 更新 handTarget 的本地位置
+            //     Vector3 newLocalPosition = handTarget.position + moveDelta;
+
+            //     var newCameraPos = mainCamera.transform.InverseTransformPoint(newLocalPosition);
+
+            //     // 限制 handTarget 的本地位置
+            //     newCameraPos.x = Mathf.Clamp(newCameraPos.x, xMinMax.x, xMinMax.y);
+            //     newCameraPos.y = Mathf.Clamp(newCameraPos.y, yMinMax.x, yMinMax.y);
+            //     newCameraPos.z = Mathf.Clamp(newCameraPos.z, zMinMax.x, zMinMax.y);
+
+            //     Vector3 clampedWorldPosition = mainCamera.transform.TransformPoint(newCameraPos);
+            //     handTarget.position = clampedWorldPosition;
+            // }
+
 
         }
     }

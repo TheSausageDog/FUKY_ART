@@ -34,6 +34,8 @@ namespace BzKovSoft.ObjectSlicer.Samples
         {
             _previousPosition = _currentPosition;
             _currentPosition = transform.position;
+
+            // Debug.Log(cuttingFoods.Count);
         }
 
         /// <summary>
@@ -58,29 +60,32 @@ namespace BzKovSoft.ObjectSlicer.Samples
         /// </summary>
         public Vector3 MoveDirection => -transform.right;
 
+        public Vector3 EdgeDirection => transform.forward;
+
         /// <summary>
         /// 当接触食物时调用
         /// </summary>
-        public void OnTouchFood(Food food)
+        public void OnEnterFood(Food food, ref Plane plane)
         {
             if (cuttingFoods.Count == 0)
-                UEvent.Dispatch(EventType.OnKnifeTouchBegin, -transform.forward);
+                UEvent.Dispatch(EventType.OnKnifeTouchBegin, EdgeDirection);
 
             if (!cuttingFoods.Contains(food))
             {
                 cuttingFoods.Add(food);
                 Vector3 collisionPoint = GetCollisionPoint();
                 Vector3 normal = Vector3.Cross(MoveDirection, BladeDirection);
-                Plane plane = new Plane(normal, collisionPoint);
-                food.gameObject.layer = LayerMask.NameToLayer("Player");
-                food.OnKnifeEnter(plane, transform.position, -transform.forward);
+
+                plane = new Plane(normal, collisionPoint);
+
+                // food.OnKnifeEnter(plane, transform.position, -transform.forward);
             }
         }
 
         /// <summary>
         /// 当食物离开时调用
         /// </summary>
-        public void OnFoodExit(Food food)
+        public void OnExitFood(Food food)
         {
             if (cuttingFoods.Contains(food))
                 cuttingFoods.Remove(food);
