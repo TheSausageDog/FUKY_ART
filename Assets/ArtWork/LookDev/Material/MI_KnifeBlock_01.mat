@@ -81,6 +81,7 @@ Material:
     - _RampIntensity: 1
     - _ReflectionIntensity: 1
     - _Render: 0
+    - _RimLightInShadow: 0.2
     - _RimWidth: 0.01
     - _ShadowGain: 0
     - _SmoothNormalData: 3
