@@ -10,11 +10,11 @@ using UnityEngine;
 /// </summary>
 public class PlayerBlackBoard : MonoListener
 {
-    [NonSerialized] public bool isHeldObj = false;
-    [NonSerialized] public Rigidbody heldObjRigidBody;
-    [NonSerialized] public bool holdingKnife;
-    [NonSerialized] public Vector3 knifeOrginPos;
-    [NonSerialized] public Vector3 moveLock;
+    public static bool isHeldObj { protected set; get; } = false;
+    [NonSerialized] public static Rigidbody heldObjRigidBody;
+    [NonSerialized] public static bool holdingKnife;
+    [NonSerialized] public static Vector3 knifeOrginPos;
+    [NonSerialized] public static Vector3 moveLock;
 
     [Listen(EventType.OnKnifeTouchBegin)]
     private void OnKnifeTouchBegin(Vector3 dir)
@@ -25,6 +25,17 @@ public class PlayerBlackBoard : MonoListener
     private void OnKnifeTouchEnd()
     {
         moveLock = Vector3.zero;
+    }
+
+    [Listen(EventType.OnItemPicked)]
+    private void OnItemPicked(BasePickableItem item)
+    {
+        isHeldObj = true;
+    }
+    [Listen(EventType.OnItemDrop)]
+    private void OnItemDrop()
+    {
+        isHeldObj = false;
     }
 }
 

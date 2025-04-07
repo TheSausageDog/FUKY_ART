@@ -11,13 +11,9 @@ public class PlayerCrouching : MonoBehaviour
 
     private bool isCrouching = false; // 当前是否处于下蹲状态
     private Vector3 targetlocalPosition; // 相机目标位置
-    private PlayerInputController inputController; // 输入控制器
 
     private void Start()
     {
-        // 获取输入控制器
-        inputController = GetComponent<PlayerInputController>();
-
         // 初始设置相机位置为站立位置
         if (playerCamera != null && standinglocalPosition != null)
         {
@@ -32,14 +28,8 @@ public class PlayerCrouching : MonoBehaviour
 
     private void HandleCrouching()
     {
-        if (inputController == null)
-        {
-            Debug.LogError("PlayerInputController is missing!");
-            return;
-        }
-
         // 检测是否按下下蹲键
-        if (inputController.IsCrouching())
+        if (PlayerInputController.IsCrouching())
         {
             isCrouching = true;
         }
