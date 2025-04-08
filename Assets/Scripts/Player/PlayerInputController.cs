@@ -2,6 +2,22 @@ using UnityEngine;
 
 public class PlayerInputController : MonoBehaviour
 {
+    protected static bool isUplift = false;
+
+    protected static bool isRotating = false;
+
+    // public 
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            isUplift = !isUplift;
+        }
+
+        isRotating = Input.GetKey(KeyCode.LeftAlt);
+    }
+
     // 获取移动输入
     public static Vector2 GetMovementInput()
     {
@@ -52,15 +68,20 @@ public class PlayerInputController : MonoBehaviour
         return Input.GetKeyDown(KeyCode.Mouse0);
     }
 
-    // 检查是否按住旋转键
+    // 检查是否按住旋转键temp
     public static bool IsRotateHeld()
     {
-        return Input.GetKey(KeyCode.LeftAlt);
+        return isRotating;
     }
     // 检查是否移动手
     public static bool IsMoveHandHeld()
     {
-        return Input.GetKey(KeyCode.LeftAlt);
+        return isUplift;
+    }
+
+    public static bool IsLeftShiftPressed()
+    {
+        return Input.GetKeyDown(KeyCode.LeftShift);
     }
 
     public static bool IsInteractPressing()
@@ -73,8 +94,5 @@ public class PlayerInputController : MonoBehaviour
         return Input.GetKeyDown(KeyCode.U);
     }
 
-    public static bool IsLeftShiftPressed()
-    {
-        return Input.GetKeyDown(KeyCode.LeftShift);
-    }
+
 }
