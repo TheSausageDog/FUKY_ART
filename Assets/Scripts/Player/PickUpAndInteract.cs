@@ -13,6 +13,7 @@ public class PickUpAndInteract : MonoBehaviour
 {
     public Transform holdPos; // 物品持有位置
     public Transform handTarget;
+    private Vector3 handTargetOffset;
 
     public float pickUpRange = 5f; // 拾取范围
     private float rotationSensitivity = 1f; // 旋转灵敏度
@@ -46,13 +47,20 @@ public class PickUpAndInteract : MonoBehaviour
     private void Awake()
     {
         _camera = Camera.main;
+        handTargetOffset = handTarget.transform.localPosition;
     }
 
     void Update()
     {
         // 控制 handTarget 的移动
-        if (PlayerInputController.IsMoveHandHeld()) MoveHandTarget();
-
+        if (PlayerInputController.IsMoveHandHeld()) {
+            if(PlayerInputController.IsLeftShiftPressed()){
+                handTarget.localPosition = handTargetOffset;
+            } else if (!PlayerInputController.IsRotateHeld()){
+                MoveHandTarget();
+            }
+        }
+       
         if (heldObj != null)
         {
             if(heldObj.interactionType == InteractionType.Check && !PlayerInputController.IsMoveHandHeld()){
