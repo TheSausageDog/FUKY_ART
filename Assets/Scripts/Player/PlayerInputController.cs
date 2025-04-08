@@ -83,16 +83,4 @@ public class PlayerInputController : MonoBehaviour
     {
         return Input.GetKeyDown(KeyCode.LeftShift);
     }
-
-    public static bool IsInteractPressing()
-    {
-        return Input.GetKey(KeyCode.U);
-    }
-
-    public static bool IsInteractPressed()
-    {
-        return Input.GetKeyDown(KeyCode.U);
-    }
-
-
 }

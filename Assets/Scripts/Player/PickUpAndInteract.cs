@@ -55,17 +55,17 @@ public class PickUpAndInteract : MonoBehaviour
 
         if (heldObj != null)
         {
-            canDrop = false;
+            if(heldObj.interactionType == InteractionType.Check && !PlayerInputController.IsMoveHandHeld()){
+                handTarget.position = Camera.main.transform.position + Camera.main.transform.forward;
+            }
+            
             if (PlayerInputController.IsRotateHeld())
             {
                 float XaxisRotation = PlayerInputController.GetMouseInput().x * rotationSensitivity;
                 float YaxisRotation = PlayerInputController.GetMouseInput().y * rotationSensitivity;
                 heldObj._transform.Rotate(-CameraPos.up, XaxisRotation, Space.World);
                 heldObj._transform.Rotate(CameraPos.right, YaxisRotation, Space.World);
-            }
-            else if (PlayerInputController.IsMoveHandHeld())
-            {
-                // heldObj._transform.position = handTarget.transform.position;
+                canDrop = false;
             }
             else
             {
@@ -150,11 +150,6 @@ public class PickUpAndInteract : MonoBehaviour
     {
         if (currentHandObj != null)
         {
-            if (PlayerInputController.IsInteractPressed())
-            {
-                currentHandObj.Interact(InteractionType.Interact);
-            }
-
             if (PlayerInputController.IsPickUpPressing() && currentHandObj._pickDelay != 0)
             {
                 pickUpTimer += Time.deltaTime;
@@ -192,7 +187,9 @@ public class PickUpAndInteract : MonoBehaviour
 
         heldObj = pickUpObj;
         heldObjRb = heldObj._rb;
-        heldObj.Interact(InteractionType.Pick, holdPos, this);
+        
+        Physics.IgnoreCollision(heldObj._cd,  GetComponent<Collider>(), true);
+        heldObj.OnPickup(holdPos);
         PlayerBlackBoard.heldObjRigidBody = heldObjRb;
 
         _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
@@ -212,7 +209,8 @@ public class PickUpAndInteract : MonoBehaviour
             handTarget.localPosition = PlayerBlackBoard.knifeOrginPos;
         }
 
-        heldObj.Interact(InteractionType.Throw, this);
+        Physics.IgnoreCollision(heldObj._cd,  GetComponent<Collider>(), false);
+        heldObj.OnThrow();
         heldObj = null;
         PlayerBlackBoard.heldObjRigidBody = null;
         _camera.DOFieldOfView(CameraFieldOfViewOrgin, 0.5f);

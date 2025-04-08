@@ -55,14 +55,14 @@ public class Bowl : BasePickableItem
         text.transform.rotation = Quaternion.LookRotation(cam.transform.forward);
     }
 
-    public override void Interact(InteractionType type, params object[] args)
-    {
-        base.Interact(type, args);
-        if (type == InteractionType.Interact)
-        {
-            text.enabled = !text.enabled;
-        }
-    }
+    // public override void Interact(InteractionType type, params object[] args)
+    // {
+    //     base.Interact(type, args);
+    //     if (type == InteractionType.Interact)
+    //     {
+    //         text.enabled = !text.enabled;
+    //     }
+    // }
 
     public void AddLiquid(Color _liquid_color, float _liquid_volume){
         

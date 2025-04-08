@@ -4,8 +4,13 @@ using UnityEngine;
 
 public interface IInteractable 
 {
-    void Interact(InteractionType type,params object[] args);
+    InteractionType interactionType{ get; }
+
+    void OnPickup(Transform holdPos);
+    void OnThrow();
+
     Rigidbody _rb { get; }
+    Collider _cd { get; }
     Transform _transform { get; }
     float _pickDelay { get;}
 }
@@ -13,6 +18,6 @@ public interface IInteractable
 public enum InteractionType
 {
     Pick,
-    Throw,
+    Check,
     Interact
 }
