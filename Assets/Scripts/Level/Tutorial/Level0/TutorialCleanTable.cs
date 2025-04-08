@@ -14,10 +14,6 @@ public class TutorialCleanTable : TutorialStep
     public override void Start()
     {
         base.Start();
-        // foreach (var item in rubbish)
-        // {
-        //     SceneManager.MoveGameObjectToScene(item.gameObject, levelController.mainScene);
-        // }
         containRecorder = levelController.areaTrigger.Find("TableSurfaceArea").GetComponent<ContainRecorder>();
     }
 
