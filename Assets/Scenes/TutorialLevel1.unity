@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 740148215}
   - component: {fileID: 740148217}
   - component: {fileID: 740148218}
+  - component: {fileID: 740148219}
   - component: {fileID: 740148216}
   m_Layer: 0
   m_Name: LevelController
@@ -191,14 +192,29 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740148213}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e757d3b6ec4db354eb64277522514173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextStep: {fileID: 740148216}
+  nextStep: {fileID: 740148219}
   dialogText: "\u547C\u558A\u8001\u8C2D\u522B\u6478\u9C7C\u4E86\uFF0C\u8D76\u7D27\u4E0A\u5DE5\uFF0C\u6765\u5355\u4E86"
   duration: 5
+--- !u!114 &740148219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740148213}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67887e877660b8044b7ed4cacb1bb702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextStep: {fileID: 740148216}
+  dialogText: 
+  foodTrayPrefab: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
