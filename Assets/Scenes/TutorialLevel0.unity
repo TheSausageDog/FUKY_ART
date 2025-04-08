@@ -185,6 +185,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextStep: {fileID: 740148219}
+  stayObject:
+  - {fileID: 1375064278}
+  - {fileID: 781982435}
+  - {fileID: 2048243114}
+  - {fileID: 1625931204}
 --- !u!114 &740148219
 MonoBehaviour:
   m_ObjectHideFlags: 0
