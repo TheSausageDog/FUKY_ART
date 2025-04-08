@@ -65,7 +65,7 @@ public class PickUpAndInteract : MonoBehaviour
             }
             else if (PlayerInputController.IsMoveHandHeld())
             {
-                heldObj._transform.position = handTarget.transform.position;
+                // heldObj._transform.position = handTarget.transform.position;
             }
             else
             {
