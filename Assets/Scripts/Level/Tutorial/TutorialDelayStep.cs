@@ -1,19 +1,18 @@
 
 using UnityEngine;
 
-public class TutorialDialogStep : TutorialStep
+public class TutorialDelayStep : TutorialStepBase
 {
     public float duration = 2;
 
     protected float start_time;
 
-    public override void Start()
+    public virtual void Start()
     {
-        base.Start();
         start_time = Time.time;
     }
 
-    void Update()
+    public virtual void Update()
     {
         if (Time.time - start_time > duration) { EndStep(); }
     }

@@ -13,14 +13,21 @@ public class BasePickableItem : MonoBehaviour, IInteractable
     [NonSerialized]
     public Collider cd;
 
-    public virtual InteractionType interactionType{ get{ return InteractionType.Pick; } }
+    public virtual InteractionType interactionType { get { return InteractionType.Pick; } }
 
     public Rigidbody _rb => rb;
     public Collider _cd => cd;
     public Transform _transform => transform;
 
     public float PickDelay;
-    public float _pickDelay=>PickDelay;
+    public float _pickDelay => PickDelay;
+    public float objectSize = 1;
+    public float _objectSize => objectSize;
+
+    public Transform attachPoint;
+
+    public bool isPicking { get; protected set; } = false;
+
     private int LayerNumber;
 
     public virtual void Awake()
@@ -32,6 +39,11 @@ public class BasePickableItem : MonoBehaviour, IInteractable
 
     public virtual void Start()
     {
+    }
+
+    public virtual void Update()
+    {
+
     }
 
     public virtual void OnHandEnter()
@@ -55,21 +67,50 @@ public class BasePickableItem : MonoBehaviour, IInteractable
     public virtual void OnPickup(Transform holdPos)
     {
         gameObject.layer = LayerNumber;
-        
-        rb.freezeRotation = true;
-        rb.useGravity = false;
-        rb.transform.parent = holdPos.transform.parent.parent;
+
+        if (attachPoint != null)
+        {
+            rb = gameObject.AddComponent<Rigidbody>();
+        }
+        if (rb != null)
+        {
+            rb.freezeRotation = true;
+            rb.useGravity = false;
+        }
+
+        transform.parent = holdPos.transform.parent.parent;
+
+        isPicking = true;
         UEvent.Dispatch(EventType.OnItemPicked, this);
+
+
     }
-    
+
     public virtual void OnThrow()
     {
-        rb.transform.parent = null;
+        transform.parent = null;
         gameObject.layer = 0;
-        rb.isKinematic = false;
-        rb.freezeRotation = false;
-        rb.useGravity = true;
-        
+
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.freezeRotation = false;
+            rb.useGravity = true;
+        }
+        if (attachPoint != null)
+        {
+            float dist = Vector3.Distance(attachPoint.position, transform.position);
+            if (dist < 0.5)
+            {
+                Destroy(gameObject.GetComponent<Rigidbody>());
+                rb = null;
+                transform.parent = attachPoint;
+            }
+        }
+
+        isPicking = false;
         UEvent.Dispatch(EventType.OnItemDrop);
+
+
     }
 }

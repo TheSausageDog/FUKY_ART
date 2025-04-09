@@ -20,9 +20,12 @@ public class LevelController : MonoBehaviour
 
     protected bool loadingScene = false;
     protected AsyncOperation asyncOperation;
-    public Scene mainScene {get; protected set;}
+    public Scene mainScene { get; protected set; }
     protected Scene activeLevel;
     protected LoadSceneParameters loadSceneParameters;
+    protected TutorialStepBase[] levelSteps;
+    protected int nextStepIndex;
+    protected TutorialStepBase currentStep;
 
     // Start is called before the first frame update
     void Start()
@@ -36,31 +39,58 @@ public class LevelController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(loadingScene){
-            if(asyncOperation.isDone)
+        if (loadingScene)
+        {
+            if (asyncOperation.isDone)
             {
                 activeLevel = SceneManager.GetSceneByName(lastLevelName);
                 GameObject[] objects = activeLevel.GetRootGameObjects();
-                GameObject LevelController = GameObject.Find("LevelController");
-                TutorialStartStep startStep = LevelController.GetComponent<TutorialStartStep>();
-                startStep.levelController = this;
-                startStep.enabled = true;
+                GameObject levelController = GameObject.Find("LevelController");
+                levelSteps = levelController.GetComponents<TutorialStepBase>();
+                nextStepIndex = 0;
+                currentStep = null;
                 loadingScene = false;
-            }else if(asyncOperation.progress < 0.9f){
-                Debug.Log("正在加载，或许需要一个进度条UI"+asyncOperation.progress);
-            }else {
+                NectStep();
+            }
+            else if (asyncOperation.progress < 0.9f)
+            {
+                Debug.Log("正在加载，或许需要一个进度条UI" + asyncOperation.progress);
+            }
+            else
+            {
                 asyncOperation.allowSceneActivation = true;
             }
         }
     }
 
-    public void LoadNewLevel(string levelName){
+    public void LoadNewLevel(string levelName)
+    {
         asyncOperation = SceneManager.LoadSceneAsync(levelName, loadSceneParameters);
-        if(lastLevelName != null){
+        if (lastLevelName != null)
+        {
             SceneManager.UnloadSceneAsync(lastLevelName);
         }
         loadingScene = true;
         asyncOperation.allowSceneActivation = false;
         lastLevelName = levelName;
+    }
+
+    public void NectStep()
+    {
+        if (currentStep != null)
+        {
+            currentStep.enabled = false;
+        }
+        if (nextStepIndex == levelSteps.Length)
+        {
+            Debug.LogWarning("No More Next Step");
+        }
+        else
+        {
+            currentStep = levelSteps[nextStepIndex];
+            currentStep.levelController = this;
+            currentStep.enabled = true;
+            nextStepIndex++;
+        }
     }
 }

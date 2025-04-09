@@ -2442,7 +2442,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDialog: {fileID: 976294127}
   areaTrigger: {fileID: 1972598770}
-  startLevelName: TutorialLevel0
+  startLevelName: TutorialLevel1
 --- !u!4 &1860625594
 Transform:
   m_ObjectHideFlags: 0

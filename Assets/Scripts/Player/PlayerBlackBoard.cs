@@ -11,7 +11,7 @@ using UnityEngine;
 public class PlayerBlackBoard : MonoListener
 {
     public static bool isHeldObj { protected set; get; } = false;
-    [NonSerialized] public static Rigidbody heldObjRigidBody;
+    [NonSerialized] public static Transform heldTrans;
     [NonSerialized] public static bool holdingKnife;
     [NonSerialized] public static Vector3 knifeOrginPos;
     [NonSerialized] public static Vector3 moveLock;

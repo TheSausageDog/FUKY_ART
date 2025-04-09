@@ -53,20 +53,27 @@ public class PickUpAndInteract : MonoBehaviour
     void Update()
     {
         // 控制 handTarget 的移动
-        if (PlayerInputController.IsMoveHandHeld()) {
-            if(PlayerInputController.IsLeftShiftPressed()){
+        if (PlayerInputController.IsMoveHandHeld())
+        {
+            if (PlayerInputController.IsLeftShiftPressed())
+            {
                 handTarget.localPosition = handTargetOffset;
-            } else if (!PlayerInputController.IsRotateHeld()){
+            }
+            else if (!PlayerInputController.IsRotateHeld())
+            {
                 MoveHandTarget();
             }
         }
-       
+
         if (heldObj != null)
         {
-            if(heldObj.interactionType == InteractionType.Check && !PlayerInputController.IsMoveHandHeld()){
-                handTarget.position = Camera.main.transform.position + Camera.main.transform.forward;
+            if (heldObj.interactionType == InteractionType.Check && !PlayerInputController.IsMoveHandHeld())
+            {
+                heldObj._transform.position = Camera.main.transform.position + heldObj._objectSize * Camera.main.transform.forward;
+                heldObj._transform.LookAt(heldObj._transform.position + Camera.main.transform.up, -Camera.main.transform.forward);
+                // handTarget.
             }
-            
+
             if (PlayerInputController.IsRotateHeld())
             {
                 float XaxisRotation = PlayerInputController.GetMouseInput().x * rotationSensitivity;
@@ -81,6 +88,10 @@ public class PickUpAndInteract : MonoBehaviour
             }
             if (PlayerInputController.IsThrowPressed() && canDrop)
             {
+                if (heldObj.interactionType == InteractionType.Check)
+                {
+                    handTarget.localPosition = handTargetOffset;
+                }
                 DropObject();
             }
         }
@@ -195,10 +206,17 @@ public class PickUpAndInteract : MonoBehaviour
 
         heldObj = pickUpObj;
         heldObjRb = heldObj._rb;
-        
-        Physics.IgnoreCollision(heldObj._cd,  GetComponent<Collider>(), true);
+
+        // if (heldObj.interactionType == InteractionType.Check)
+        // {
+        //     heldObj._cd.enabled = false;
+        // }
+        // else
+        // {
+        Physics.IgnoreCollision(heldObj._cd, GetComponent<Collider>(), true);
+        // }
         heldObj.OnPickup(holdPos);
-        PlayerBlackBoard.heldObjRigidBody = heldObjRb;
+        PlayerBlackBoard.heldTrans = heldObj._transform;
 
         _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
 
@@ -217,10 +235,18 @@ public class PickUpAndInteract : MonoBehaviour
             handTarget.localPosition = PlayerBlackBoard.knifeOrginPos;
         }
 
-        Physics.IgnoreCollision(heldObj._cd,  GetComponent<Collider>(), false);
+        // if (heldObj.interactionType == InteractionType.Check)
+        // {
+        //     heldObj._cd.enabled = true;
+        // }
+        // else
+        // {
+        Physics.IgnoreCollision(heldObj._cd, GetComponent<Collider>(), false);
+        // }
+
         heldObj.OnThrow();
         heldObj = null;
-        PlayerBlackBoard.heldObjRigidBody = null;
+        PlayerBlackBoard.heldTrans = null;
         _camera.DOFieldOfView(CameraFieldOfViewOrgin, 0.5f);
     }
 
