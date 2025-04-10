@@ -465,11 +465,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdPos: {fileID: 1817979544}
+  handTarget: {fileID: 0}
   pickUpRange: 5.9
   handPos: {fileID: 1817979544}
   CameraPos: {fileID: 2099180082}
   CameraFieldOfViewOrgin: 71.3
   CameraFieldOfViewOffset: 80
+  mouseSensitivity: 0.1
+  scrollSensitivity: 1
+  xMinMax: {x: 0, y: 0}
+  yMinMax: {x: 0, y: 0}
+  zMinMax: {x: 0, y: 0}
 --- !u!4 &349205738
 Transform:
   m_ObjectHideFlags: 0
@@ -513,15 +519,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60ae9055a871e784abeb0b5354a48ac4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hand: {fileID: 1807604403}
   handTarget: {fileID: 896016147}
   pickUpPos: {fileID: 1817979544}
   speed: 5
-  mouseSensitivity: 0.05
-  scrollSensitivity: 2
-  xMinMax: {x: -4, y: 4}
-  yMinMax: {x: -4, y: 4}
-  zMinMax: {x: 1, y: 10}
 --- !u!114 &349205741
 MonoBehaviour:
   m_ObjectHideFlags: 0

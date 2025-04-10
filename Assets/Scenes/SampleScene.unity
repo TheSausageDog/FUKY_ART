@@ -1143,6 +1143,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 1
+  objectSize: 1
+  attachPoint: {fileID: 0}
   Collider: {fileID: 281427594}
 --- !u!114 &281427593
 MonoBehaviour:
@@ -1544,6 +1546,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 1
   foodColor: {r: 0.91291904, g: 1, b: 0, a: 1}
   minSplashSize: 0.1
@@ -1840,6 +1844,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 1
+  objectSize: 1
+  attachPoint: {fileID: 0}
 --- !u!1 &616358643 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 39332c7641e6512409f1948973dc4038,
@@ -1937,6 +1943,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 0
   foodColor: {r: 0.63256514, g: 1, b: 0, a: 1}
   minSplashSize: 0.1
@@ -2039,6 +2047,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 0
   foodColor: {r: 0.63256514, g: 1, b: 0, a: 1}
   minSplashSize: 0.1
@@ -2141,6 +2151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 1
   foodColor: {r: 0.91291904, g: 1, b: 0, a: 1}
   minSplashSize: 0.1
@@ -2642,6 +2654,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 4
   foodColor: {r: 0.60946727, g: 1, b: 0, a: 1}
   minSplashSize: 0.1
@@ -2764,6 +2778,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
 --- !u!4 &841806862 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 14383ddb1993a174cbcc4c9c2213121e,
@@ -2966,6 +2982,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 4
   foodColor: {r: 0.60946727, g: 1, b: 0, a: 1}
   minSplashSize: 0.1
@@ -3839,6 +3857,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
 --- !u!54 &1047991759
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8810,6 +8830,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 3
   foodColor: {r: 1, g: 0.7501172, b: 0.5943396, a: 1}
   minSplashSize: 0.1
@@ -8912,6 +8934,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 3
   foodColor: {r: 1, g: 0.7501172, b: 0.5943396, a: 1}
   minSplashSize: 0.1
@@ -9746,6 +9770,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 0
   foodColor: {r: 0.63256514, g: 1, b: 0, a: 1}
   minSplashSize: 0.1
@@ -9848,6 +9874,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 4
   foodColor: {r: 0.60946727, g: 1, b: 0, a: 1}
   minSplashSize: 0.1
@@ -9924,6 +9952,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 1
+  objectSize: 1
+  attachPoint: {fileID: 0}
 --- !u!64 &1343985922
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -10396,6 +10426,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 0
   foodColor: {r: 0, g: 0, b: 0, a: 0}
   minSplashSize: 0.1
@@ -16428,6 +16460,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
 --- !u!4 &1630552463 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1995074860587290001, guid: 0384cc8de2caa1547bdacea63de58e56,
@@ -16606,6 +16640,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 3
   foodColor: {r: 1, g: 0.7501172, b: 0.5943396, a: 1}
   minSplashSize: 0.1
@@ -16967,6 +17003,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
   foodType: 1
   foodColor: {r: 0.91291904, g: 1, b: 0, a: 1}
   minSplashSize: 0.1
