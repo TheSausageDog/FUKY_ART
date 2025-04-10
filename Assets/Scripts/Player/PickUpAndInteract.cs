@@ -221,20 +221,20 @@ public class PickUpAndInteract : MonoBehaviour
 
         _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
 
-        if (pickUpObj is Knife)
-        {
-            PlayerBlackBoard.holdingKnife = true;
-            PlayerBlackBoard.knifeOrginPos = handTarget.localPosition;
-        }
+        // if (pickUpObj is Knife)
+        // {
+        //     PlayerBlackBoard.holdingKnife = true;
+        //     PlayerBlackBoard.knifeOrginPos = handTarget.localPosition;
+        // }
     }
 
     void DropObject()
     {
-        if (PlayerBlackBoard.heldPickable is Knife)
-        {
-            PlayerBlackBoard.holdingKnife = false;
-            handTarget.localPosition = PlayerBlackBoard.knifeOrginPos;
-        }
+        // if (PlayerBlackBoard.heldPickable is Knife)
+        // {
+        //     PlayerBlackBoard.holdingKnife = false;
+        //     handTarget.localPosition = PlayerBlackBoard.knifeOrginPos;
+        // }
 
         // if (heldObj.interactionType == InteractionType.Check)
         // {

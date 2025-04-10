@@ -23,6 +23,9 @@ public class LevelController : MonoBehaviour
     public Scene mainScene { get; protected set; }
     protected Scene activeLevel;
     protected LoadSceneParameters loadSceneParameters;
+
+    [NonSerialized]
+    public EnvItemManager envItemManager;
     protected TutorialStepBase[] levelSteps;
     protected int nextStepIndex;
     protected TutorialStepBase currentStep;
@@ -30,6 +33,7 @@ public class LevelController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        envItemManager = GetComponent<EnvItemManager>();
         uiDialogText = uiDialog.GetChild(0).GetComponent<Text>();
         mainScene = SceneManager.GetActiveScene();
         loadSceneParameters = new LoadSceneParameters(LoadSceneMode.Additive);

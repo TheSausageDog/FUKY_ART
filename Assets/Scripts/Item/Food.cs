@@ -98,11 +98,11 @@ public class Food : BasePickableItem
                 HandleSlice(cutPlane);
             }
 
-            timer += Time.deltaTime;
-            if (timer > 1 && knife != null)
-            {
-                // Knife.OnFoodExit(this);
-            }
+            // timer += Time.deltaTime;
+            // if (timer > 1 && knife != null)
+            // {
+            //     // Knife.OnFoodExit(this);
+            // }
         }
     }
 

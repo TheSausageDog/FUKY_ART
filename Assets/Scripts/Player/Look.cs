@@ -15,7 +15,7 @@ public class Look : MonoBehaviour
 
     private void Update()
     {
-        if (PlayerInputController.IsMoveHandHeld() || PlayerBlackBoard.holdingKnife) return;
+        if (PlayerInputController.IsMoveHandHeld()) return;
 
         // 获取鼠标输入
         var input = PlayerInputController.GetMouseInput() * (sensitivity * Time.deltaTime);

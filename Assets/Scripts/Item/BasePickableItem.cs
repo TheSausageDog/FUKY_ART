@@ -41,11 +41,6 @@ public class BasePickableItem : MonoBehaviour, IInteractable
     {
     }
 
-    public virtual void Update()
-    {
-
-    }
-
     public virtual void OnHandEnter()
     {
         gameObject.layer = LayerMask.NameToLayer("Outline");
@@ -68,7 +63,7 @@ public class BasePickableItem : MonoBehaviour, IInteractable
     {
         gameObject.layer = LayerNumber;
 
-        if (attachPoint != null)
+        if (attachPoint != null && rb == null)
         {
             rb = gameObject.AddComponent<Rigidbody>();
         }
