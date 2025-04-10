@@ -81,9 +81,6 @@ public class BasePickableItem : MonoBehaviour, IInteractable
         transform.parent = holdPos.transform.parent.parent;
 
         isPicking = true;
-        UEvent.Dispatch(EventType.OnItemPicked, this);
-
-
     }
 
     public virtual void OnThrow()
@@ -109,8 +106,5 @@ public class BasePickableItem : MonoBehaviour, IInteractable
         }
 
         isPicking = false;
-        UEvent.Dispatch(EventType.OnItemDrop);
-
-
     }
 }

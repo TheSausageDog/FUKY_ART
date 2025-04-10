@@ -29,7 +29,7 @@ public class HandInteractionController : MonoListener
     // }
 
     [Listen(EventType.OnItemPicked)]
-    private void OnItemPicked(BasePickableItem item)
+    private void OnItemPicked()
     {
         // if (PlayerInputController.IsMoveHandHeld())
         // {

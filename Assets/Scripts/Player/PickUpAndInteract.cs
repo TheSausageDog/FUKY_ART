@@ -18,9 +18,9 @@ public class PickUpAndInteract : MonoBehaviour
     public float pickUpRange = 5f; // 拾取范围
     private float rotationSensitivity = 1f; // 旋转灵敏度
 
-    private IInteractable heldObj; // 当前持有物体接口
-    private Rigidbody heldObjRb; // 当前持有物体的刚体
     private bool canDrop = true; // 是否可以丢弃物体
+
+    private bool isHolding = false;
 
     private Camera _camera; // 主摄像机
 
@@ -30,7 +30,7 @@ public class PickUpAndInteract : MonoBehaviour
     [SerializeField] private float CameraFieldOfViewOrgin;
     [SerializeField] private float CameraFieldOfViewOffset;
 
-    public IInteractable currentHandObj; // 当前手部范围内的物体
+    public BasePickableItem currentHandObj; // 当前手部范围内的物体
     private float pickUpTimer = 0f; // 长按拾取计时器
 
     [Header("按下Alt后手移动的灵敏度")]
@@ -44,10 +44,12 @@ public class PickUpAndInteract : MonoBehaviour
     public Vector2 zMinMax;
 
 
+
     private void Awake()
     {
         _camera = Camera.main;
-        handTargetOffset = handTarget.transform.localPosition;
+        handTargetOffset = Vector3.forward;
+        // handTarget.transform.localPosition;
     }
 
     void Update()
@@ -65,8 +67,9 @@ public class PickUpAndInteract : MonoBehaviour
             }
         }
 
-        if (heldObj != null)
+        if (PlayerBlackBoard.isHeldObj)
         {
+            BasePickableItem heldObj = PlayerBlackBoard.heldPickable;
             if (heldObj.interactionType == InteractionType.Check && !PlayerInputController.IsMoveHandHeld())
             {
                 heldObj._transform.position = Camera.main.transform.position + heldObj._objectSize * Camera.main.transform.forward;
@@ -196,7 +199,7 @@ public class PickUpAndInteract : MonoBehaviour
         }
     }
 
-    void PickUpObject(IInteractable pickUpObj)
+    void PickUpObject(BasePickableItem pickUpObj)
     {
         if (Vector3.Distance(pickUpObj._transform.position, transform.position) > pickUpRange)
         {
@@ -204,19 +207,17 @@ public class PickUpAndInteract : MonoBehaviour
             return;
         }
 
-        heldObj = pickUpObj;
-        heldObjRb = heldObj._rb;
-
         // if (heldObj.interactionType == InteractionType.Check)
         // {
         //     heldObj._cd.enabled = false;
         // }
         // else
         // {
-        Physics.IgnoreCollision(heldObj._cd, GetComponent<Collider>(), true);
+        Physics.IgnoreCollision(pickUpObj._cd, GetComponent<Collider>(), true);
         // }
-        heldObj.OnPickup(holdPos);
-        PlayerBlackBoard.heldTrans = heldObj._transform;
+        pickUpObj.OnPickup(holdPos);
+        PlayerBlackBoard.OnItemPicked(pickUpObj);
+
 
         _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
 
@@ -229,7 +230,7 @@ public class PickUpAndInteract : MonoBehaviour
 
     void DropObject()
     {
-        if (heldObj is Knife)
+        if (PlayerBlackBoard.heldPickable is Knife)
         {
             PlayerBlackBoard.holdingKnife = false;
             handTarget.localPosition = PlayerBlackBoard.knifeOrginPos;
@@ -241,12 +242,11 @@ public class PickUpAndInteract : MonoBehaviour
         // }
         // else
         // {
-        Physics.IgnoreCollision(heldObj._cd, GetComponent<Collider>(), false);
+        Physics.IgnoreCollision(PlayerBlackBoard.heldPickable._cd, GetComponent<Collider>(), false);
         // }
 
-        heldObj.OnThrow();
-        heldObj = null;
-        PlayerBlackBoard.heldTrans = null;
+        PlayerBlackBoard.heldPickable.OnThrow();
+        PlayerBlackBoard.OnItemDrop();
         _camera.DOFieldOfView(CameraFieldOfViewOrgin, 0.5f);
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Aya.Events;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -22,6 +23,14 @@ public class TutorialFoodTrayAppear : TutorialStep
 
     void Update()
     {
+        if (!watched)
+        {
+            if (menuPickable.isPicking)
+            {
+                watched = true;
+                Debug.Log("watched");
+            }
+        }
         if (foodTray != null)
         {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
@@ -36,20 +45,10 @@ public class TutorialFoodTrayAppear : TutorialStep
         }
         else
         {
-            if (watched)
+            if (watched && !menuPickable.isPicking)
             {
-                if (!menuPickable.isPicking)
-                {
-                    menuPickable.gameObject.SetActive(false);
-                    EndStep();
-                }
-            }
-            else
-            {
-                if (menuPickable.isPicking)
-                {
-                    watched = true;
-                }
+                menuPickable.gameObject.SetActive(false);
+                EndStep();
             }
         }
     }

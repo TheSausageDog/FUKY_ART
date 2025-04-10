@@ -11,7 +11,8 @@ using UnityEngine;
 public class PlayerBlackBoard : MonoListener
 {
     public static bool isHeldObj { protected set; get; } = false;
-    [NonSerialized] public static Transform heldTrans;
+    // [NonSerialized] public static Transform heldTrans;
+    [NonSerialized] public static BasePickableItem heldPickable;
     [NonSerialized] public static bool holdingKnife;
     [NonSerialized] public static Vector3 knifeOrginPos;
     [NonSerialized] public static Vector3 moveLock;
@@ -27,15 +28,17 @@ public class PlayerBlackBoard : MonoListener
         moveLock = Vector3.zero;
     }
 
-    [Listen(EventType.OnItemPicked)]
-    private void OnItemPicked(BasePickableItem item)
+    public static void OnItemPicked(BasePickableItem item)
     {
         isHeldObj = true;
+        heldPickable = item;
+        UEvent.Dispatch(EventType.OnItemPicked);
     }
-    [Listen(EventType.OnItemDrop)]
-    private void OnItemDrop()
+
+    public static void OnItemDrop()
     {
         isHeldObj = false;
+        UEvent.Dispatch(EventType.OnItemDrop);
     }
 }
 
