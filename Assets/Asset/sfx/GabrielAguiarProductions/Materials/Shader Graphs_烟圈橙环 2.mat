@@ -20,29 +20,31 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "Shader Graphs_\u70DF\u5708\u7279\u6548"
-  m_Shader: {fileID: -6465566751694194690, guid: 158847ad1ab80da4692efc82a1393650, type: 3}
+  m_Name: "Shader Graphs_\u70DF\u5708\u6A59\u73AF 2"
+  m_Shader: {fileID: -6465566751694194690, guid: bae2dd6d964a453498c0c867084c31ca, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ALPHATEST_ON
-  - _SURFACE_TYPE_TRANSPARENT
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2450
   stringTagMap:
-    RenderType: Transparent
-  disabledShaderPasses:
-  - DepthOnly
+    RenderType: TransparentCutout
+  disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _SampleTexture2D_02e977f020864465a9e3c4bcf39a5103_Texture_1_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Texture2D:
-        m_Texture: {fileID: 2800000, guid: f60ec5d7c93ee374e85b20e24df2eb30, type: 3}
-        m_Scale: {x: 2.57, y: 0.64}
+        m_Texture: {fileID: 2800000, guid: efeb63d8a29b50a488ce74c587c6543f, type: 3}
+        m_Scale: {x: 1.28, y: 0.99}
         m_Offset: {x: 1.03, y: 0.02}
     - _mask:
         m_Texture: {fileID: 0}
@@ -63,22 +65,25 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 1
-    - _AlphaToMask: 0
+    - _AlphaToMask: 1
     - _Blend: 2
+    - _BlendModePreserveSpecular: 1
     - _CastShadows: 1
     - _Cull: 0
-    - _DstBlend: 1
+    - _DstBlend: 0
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _SrcBlend: 5
-    - _Surface: 1
+    - _ReceiveShadows: 1
+    - _SrcBlend: 1
+    - _Surface: 0
+    - _WorkflowMode: 1
     - _ZTest: 4
-    - _ZWrite: 0
+    - _ZWrite: 1
     - _ZWriteControl: 0
     - _distortion: 0
     - _distortionscale: 20
     m_Colors:
-    - _Color: {r: 0.801, g: 0.801, b: 0.801, a: 1}
+    - _Color: {r: 1.1132886, g: 1.1896635, b: 1.605559, a: 1}
     - _Vector2: {r: 0, g: 0, b: 0, a: 0}
     - _Vector2_1: {r: 0, g: 0, b: 0, a: 0}
     - _Vector2_2: {r: 1, g: 1, b: 0, a: 0}
