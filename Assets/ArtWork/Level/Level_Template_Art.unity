@@ -471,6 +471,7 @@ MonoBehaviour:
   CameraPos: {fileID: 2099180082}
   CameraFieldOfViewOrgin: 71.3
   CameraFieldOfViewOffset: 80
+  currentHandObj: {fileID: 0}
   mouseSensitivity: 0.1
   scrollSensitivity: 1
   xMinMax: {x: 0, y: 0}
