@@ -26,7 +26,7 @@ public class Container : BasePickableItem
     {
         if (!opened && !knifeEnter && other.TryGetComponent<BzKnife>(out var _knife))
         {
-            // if (content != null) content.SetActive(true);
+            if (content != null) content.SetActive(true);
             if (breakingStage[breakingIndex] != null) breakingStage[breakingIndex].SetActive(false);
             breakingIndex++;
             if (breakingIndex != breakingStage.Length)
