@@ -20,5 +20,6 @@ public enum InteractionType
 {
     Pick,
     Check,
+    Drag,
     Interact
 }
