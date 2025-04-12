@@ -200,6 +200,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u9152\u74F62"
       objectReference: {fileID: 0}
+    - target: {fileID: 4131448290104569845, guid: 8d7c8dde60bc4ab4d8b0d5a316c5fae2,
+        type: 3}
+      propertyPath: m_TagString
+      value: canInteract
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -212,6 +217,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 238798201}
+    - targetCorrespondingSourceObject: {fileID: 4131448290104569845, guid: 8d7c8dde60bc4ab4d8b0d5a316c5fae2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 238798203}
   m_SourcePrefab: {fileID: 100100000, guid: 8d7c8dde60bc4ab4d8b0d5a316c5fae2, type: 3}
 --- !u!1 &238798200 stripped
 GameObject:
@@ -268,6 +277,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6896402180531740273, guid: cfb85e3b18619a6418446c7bd1d28ee6, type: 3}
+--- !u!114 &238798203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 238798200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d872deda27b2248b4b0b2f9207774e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
 --- !u!1 &740148213
 GameObject:
   m_ObjectHideFlags: 0
@@ -694,6 +718,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u9152\u74F61"
       objectReference: {fileID: 0}
+    - target: {fileID: 5902563767681925623, guid: 97d226cbbb686f0498161062fb21f6cc,
+        type: 3}
+      propertyPath: m_TagString
+      value: canInteract
+      objectReference: {fileID: 0}
     - target: {fileID: 6530728351680011085, guid: 97d226cbbb686f0498161062fb21f6cc,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -771,6 +800,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1488943217}
+    - targetCorrespondingSourceObject: {fileID: 5902563767681925623, guid: 97d226cbbb686f0498161062fb21f6cc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1488943219}
   m_SourcePrefab: {fileID: 100100000, guid: 97d226cbbb686f0498161062fb21f6cc, type: 3}
 --- !u!1 &1488943216 stripped
 GameObject:
@@ -827,6 +860,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2693777808415303200, guid: 23e8b6886f22453428f35e23126a5e7c, type: 3}
+--- !u!114 &1488943219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488943216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d872deda27b2248b4b0b2f9207774e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
 --- !u!1 &1625931204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,6 +1104,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u9152\u74F62"
       objectReference: {fileID: 0}
+    - target: {fileID: 4131448290104569845, guid: 8d7c8dde60bc4ab4d8b0d5a316c5fae2,
+        type: 3}
+      propertyPath: m_TagString
+      value: canInteract
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1068,6 +1121,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1706700712}
+    - targetCorrespondingSourceObject: {fileID: 4131448290104569845, guid: 8d7c8dde60bc4ab4d8b0d5a316c5fae2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1706700714}
   m_SourcePrefab: {fileID: 100100000, guid: 8d7c8dde60bc4ab4d8b0d5a316c5fae2, type: 3}
 --- !u!1 &1706700711 stripped
 GameObject:
@@ -1124,6 +1181,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -6896402180531740273, guid: cfb85e3b18619a6418446c7bd1d28ee6, type: 3}
+--- !u!114 &1706700714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1706700711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d872deda27b2248b4b0b2f9207774e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
 --- !u!1 &2048243114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,6 +1360,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u9152\u74F61"
       objectReference: {fileID: 0}
+    - target: {fileID: 5902563767681925623, guid: 97d226cbbb686f0498161062fb21f6cc,
+        type: 3}
+      propertyPath: m_TagString
+      value: canInteract
+      objectReference: {fileID: 0}
     - target: {fileID: 6530728351680011085, guid: 97d226cbbb686f0498161062fb21f6cc,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1365,6 +1442,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2050367813}
+    - targetCorrespondingSourceObject: {fileID: 5902563767681925623, guid: 97d226cbbb686f0498161062fb21f6cc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2050367815}
   m_SourcePrefab: {fileID: 100100000, guid: 97d226cbbb686f0498161062fb21f6cc, type: 3}
 --- !u!1 &2050367812 stripped
 GameObject:
@@ -1421,6 +1502,21 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -2693777808415303200, guid: 23e8b6886f22453428f35e23126a5e7c, type: 3}
+--- !u!114 &2050367815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2050367812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d872deda27b2248b4b0b2f9207774e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PickDelay: 0
+  objectSize: 1
+  attachPoint: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

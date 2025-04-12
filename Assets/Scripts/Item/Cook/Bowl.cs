@@ -9,44 +9,23 @@ using UnityEngine.UI;
 /// 碗类，检测碗中的食物和味道成分，并进行评分。
 /// 继承自 BasePickableItem。
 /// </summary>
-public class Bowl : BasePickableItem
+public class Bowl : LiquidContainer
 {
     public Transform checkCenter; // 检查中心点
     public float checkRadius; // 检查半径
     public string testRecipeName; // 测试配方名称
     public Text text; // 显示评分信息的文本
 
-    public Material liquid_material;
-
-    protected float _threshold_start = 0.7f;
-
-    protected float _threshold_end = 0.25f;
-
-    public float liquid_max = 5f;
-
-
-
     private Camera cam; // 主摄像机
     private float pepperAmount = 0; // 胡椒量
     private Collider[] results = new Collider[128]; // 检测到的碰撞体数组
     private HashSet<GameObject> pepperSet = new HashSet<GameObject>(); // 胡椒对象集合
-
-    private Color liquid_color;
-
-    private float liquid_volume;
 
     public override void Awake()
     {
         base.Awake();
         text.enabled = false;
         cam = Camera.main;
-    }
-
-    public override void Start()
-    {
-        base.Start();
-
-        AddLiquid(Color.black, 0);
     }
 
     private void FixedUpdate()
@@ -63,25 +42,6 @@ public class Bowl : BasePickableItem
     //         text.enabled = !text.enabled;
     //     }
     // }
-
-    public void AddLiquid(Color _liquid_color, float _liquid_volume){
-        
-        if(liquid_volume == 0){
-            liquid_color = _liquid_color;
-            liquid_volume = _liquid_volume;
-        }else{
-            liquid_volume += _liquid_volume;
-            float alpha = _liquid_volume / liquid_volume;
-            liquid_color = (1- alpha) * liquid_color + alpha * _liquid_color;
-        }
-
-        liquid_color.a = 1;
-        
-        float threshold = _threshold_start - (_threshold_start - _threshold_end) * Mathf.Pow(Mathf.Min(liquid_volume / liquid_max, 1f), 1f/2);
-
-        liquid_material.SetColor("_surface_color", liquid_color);
-        liquid_material.SetFloat("_threshold", threshold);
-    }
 
     /// <summary>
     /// 检查碗中的食物和味道成分

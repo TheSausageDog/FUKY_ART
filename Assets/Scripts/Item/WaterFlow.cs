@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
-public class Salad : MonoBehaviour
+public class WaterFlow : MonoBehaviour
 {
     public float angleTreshold = 30f;
     bool isUp =true;
@@ -23,21 +23,22 @@ public class Salad : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        if (other.TryGetComponent<Bowl>(out var _bowl))
+        if (other.TryGetComponent<LiquidContainer>(out var _bowl))
         {
             _bowl.AddLiquid(liquid_color, 1);
         }else{
-            particle.GetCollisionEvents(other, collisionEvents);
-            GameObject new_spray = Instantiate(spray);
-            new_spray.transform.forward = collisionEvents[0].normal;
-            new_spray.transform.position = collisionEvents[0].intersection;
-            // Debug.Log(collisionEvents[0].intersection + " " + other.name);
-            if(other.layer == LayerMask.NameToLayer("Default")){
-                new_spray.transform.parent = other.transform;
-            }else{
-                FadeOutParticle fadeOut = new_spray.AddComponent<FadeOutParticle>();
-                fadeOut.Initialize(1, 1);
-            }
+            return;
+            // particle.GetCollisionEvents(other, collisionEvents);
+            // GameObject new_spray = Instantiate(spray);
+            // new_spray.transform.forward = collisionEvents[0].normal;
+            // new_spray.transform.position = collisionEvents[0].intersection;
+            // // Debug.Log(collisionEvents[0].intersection + " " + other.name);
+            // if(other.layer == LayerMask.NameToLayer("Default")){
+            //     new_spray.transform.parent = other.transform;
+            // }else{
+            //     FadeOutParticle fadeOut = new_spray.AddComponent<FadeOutParticle>();
+            //     fadeOut.Initialize(1, 1);
+            // }
         }
     }
 

@@ -33,7 +33,7 @@ public class TutorialFoodTrayAppear : TutorialStep
                 Debug.Log("watched");
             }
         }
-        if (foodTray != null)
+        if (animator.enabled)
         {
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.normalizedTime >= 1.0f && stateInfo.IsName("FoodTrayAnimation"))

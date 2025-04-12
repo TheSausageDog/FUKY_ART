@@ -5,7 +5,7 @@ Shader "Unlit/liquid"
         _water_color ("WaterColor", Color) = (1,1,1,1)
         _surface_color ("SurfaceColor", Color) = (1,1,1,1)
         _fresnel_color ("FresnelColor", Color) = (1,1,1,1)
-		// _threshold("test_threshold", Range(-1, 1)) = 1
+		_threshold("test_threshold", Range(-1, 1)) = 1
     }
     SubShader
     {
@@ -71,7 +71,7 @@ Shader "Unlit/liquid"
             {
                 float worldY = unity_ObjectToWorld._m13;
                 float dif = worldY - i.worldPos.y;
-                clip(dif - _threshold);
+                clip(dif + _threshold);
                 float3 view = normalize(_WorldSpaceCameraPos-i.worldPos);
                 float NoV = dot(i.worldNormal, view);
                 float front = step(0, NoV);

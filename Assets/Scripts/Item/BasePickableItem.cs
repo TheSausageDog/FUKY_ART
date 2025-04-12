@@ -90,7 +90,7 @@ public class BasePickableItem : MonoBehaviour, IInteractable
             float dist = Vector3.Distance(attachPoint.position, transform.position);
             if (dist < 0.5)
             {
-                Destroy(gameObject.GetComponent<Rigidbody>());
+                // Destroy(gameObject.GetComponent<Rigidbody>());
                 transform.parent = attachPoint;
             }
         }
