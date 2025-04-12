@@ -36,7 +36,8 @@ public class Food : BasePickableItem
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, VolumeCalculator.CalculateWorldBounds(gameObject).size);
+        Bounds bounds = VolumeCalculator.CalculateWorldBounds(gameObject);
+        Gizmos.DrawWireCube(bounds.center, bounds.size);
     }
 
     public override void Start()
@@ -72,7 +73,7 @@ public class Food : BasePickableItem
             if (knife == null)
             {
                 Vector3 move_dir = Vector3.Normalize(transform.position - _knife.transform.position);
-                if (Vector3.Dot(move_dir, _knife.EdgeDirection) > Mathf.Epsilon)
+                if (Vector3.Dot(move_dir, _knife.BladeDirection) > Mathf.Epsilon)
                 {
                     // Debug.Log(Vector3.Dot(move_dir, _knife.EdgeDirection));
                     OnKnifeEnter(_knife);
@@ -111,7 +112,7 @@ public class Food : BasePickableItem
         Vector3 knife_move = knife.transform.position - in_knifePos;
         Vector3 knife_in_dist = Vector3.Project(knife_move, in_edgeDir);
         // float dot = Vector3.Dot(knife_in_dist, in_edgeDir);
-        // Debug.Log(knife_in_dist.magnitude + " " + dot);
+        // Debug.Log(knife_move.magnitude + " " + knife_in_dist.magnitude + " " + cuttingDepth + " " + (knife_in_dist.magnitude > cuttingDepth));
         return knife_in_dist.magnitude > cuttingDepth;
     }
 
@@ -139,19 +140,20 @@ public class Food : BasePickableItem
         int splashCount = volume < maxSplashSize ? 1 : 3;
         splashCount = volume < minSplashSize ? UnityEngine.Random.Range(0, 2) : splashCount;
 
-        SFXManager.Instance.PlaySfx(SFXName.Food, transform.position, foodColor, splashCount);
+        // SFXManager.Instance.PlaySfx(SFXName.Food, transform.position, foodColor, splashCount);
         OnKnifeExit(knife);
     }
 
     public void OnKnifeEnter(BzKnife _knife)
     {
         _knife.OnEnterFood(this, ref cutPlane);
-        in_knifePos = _knife.transform.position;
-        in_edgeDir = _knife.EdgeDirection;
+        
         // cutPlane = plane;
         timer = 0;
         // what if have multiable knife
         knife = _knife;
+        in_knifePos = knife.transform.position;
+        in_edgeDir = knife.BladeDirection;
         gameObject.layer = LayerMask.NameToLayer("Player");
     }
 

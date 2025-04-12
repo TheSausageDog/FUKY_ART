@@ -126,15 +126,20 @@ public static class VolumeCalculator
     /// </summary>
     public static Bounds CalculateWorldBounds(GameObject gameObject)
     {
-        Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
+        // Renderer[] renderers = gameObject.GetComponentsInChildren<Renderer>();
+        Collider[] colliders = gameObject.GetComponentsInChildren<Collider>();
 
-        if (renderers.Length == 0)
+        if (colliders.Length == 0)
             return new Bounds(Vector3.zero, Vector3.zero);
 
-        Bounds worldBounds = renderers[0].bounds;
-        foreach (Renderer renderer in renderers)
+        Bounds worldBounds = colliders[0].bounds;
+        // foreach (Renderer renderer in renderers)
+        // {
+        //     worldBounds.Encapsulate(renderer.bounds);
+        // }
+        foreach (Collider collider in colliders)
         {
-            worldBounds.Encapsulate(renderer.bounds);
+            worldBounds.Encapsulate(collider.bounds);
         }
         return worldBounds;
     }

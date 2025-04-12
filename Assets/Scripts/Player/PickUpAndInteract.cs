@@ -20,7 +20,7 @@ public class PickUpAndInteract : MonoBehaviour
 
     private bool canDrop = true; // 是否可以丢弃物体
 
-    private bool isHolding = false;
+    // private bool isHolding = false;
 
     private Camera _camera; // 主摄像机
 

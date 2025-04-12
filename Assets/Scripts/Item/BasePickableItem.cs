@@ -8,15 +8,11 @@ using UnityEngine;
 
 public class BasePickableItem : MonoBehaviour, IInteractable
 {
-    [NonSerialized]
-    public Rigidbody rb;
-    [NonSerialized]
-    public Collider cd;
 
     public virtual InteractionType interactionType { get { return InteractionType.Pick; } }
 
-    public Rigidbody _rb => rb;
-    public Collider _cd => cd;
+    public Rigidbody _rb => GetComponent<Rigidbody>();
+    public Collider _cd => GetComponent<Collider>();
     public Transform _transform => transform;
 
     public float PickDelay;
@@ -32,8 +28,6 @@ public class BasePickableItem : MonoBehaviour, IInteractable
 
     public virtual void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        cd = GetComponent<Collider>();
         LayerNumber = LayerMask.NameToLayer("holdLayer");
     }
 
@@ -63,12 +57,13 @@ public class BasePickableItem : MonoBehaviour, IInteractable
     {
         gameObject.layer = LayerNumber;
 
-        if (attachPoint != null && rb == null)
+        if (attachPoint != null && _rb == null)
         {
-            rb = gameObject.AddComponent<Rigidbody>();
+            gameObject.AddComponent<Rigidbody>();
         }
-        if (rb != null)
-        {
+        if (_rb != null)
+        {   
+            Rigidbody rb = _rb;
             rb.freezeRotation = true;
             rb.useGravity = false;
         }
@@ -83,8 +78,9 @@ public class BasePickableItem : MonoBehaviour, IInteractable
         transform.parent = null;
         gameObject.layer = 0;
 
-        if (rb != null)
+        if (_rb != null)
         {
+            Rigidbody rb = _rb;
             rb.isKinematic = false;
             rb.freezeRotation = false;
             rb.useGravity = true;
@@ -95,7 +91,6 @@ public class BasePickableItem : MonoBehaviour, IInteractable
             if (dist < 0.5)
             {
                 Destroy(gameObject.GetComponent<Rigidbody>());
-                rb = null;
                 transform.parent = attachPoint;
             }
         }
