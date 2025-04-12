@@ -6,7 +6,7 @@ using UnityEngine.PlayerLoop;
 
 public class TutorialMoveFoodTray : TutorialStep
 {
-    public GameObject foodTray;
+    protected GameObject foodTray;
 
     protected BasePickableItem foodTrayPickable;
     protected Collider foodTrayCollider;
@@ -15,6 +15,7 @@ public class TutorialMoveFoodTray : TutorialStep
     public override void Start()
     {
         base.Start();
+        foodTray = levelController.envItemManager.tray;
         containRecorder = levelController.areaTrigger.Find("TableSurfaceArea").GetComponent<ContainRecorder>();
         foodTrayPickable = foodTray.GetComponent<BasePickableItem>();
         foodTrayCollider = foodTray.GetComponent<Collider>();

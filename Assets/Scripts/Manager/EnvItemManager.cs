@@ -9,4 +9,12 @@ public class EnvItemManager : MonoBehaviour
     public GameObject can;
 
     public GameObject knife;
+
+    public GameObject tray;
+
+    public GameObject cup;
+
+    public GameObject plate;
+
+    public GameObject menu;
 }

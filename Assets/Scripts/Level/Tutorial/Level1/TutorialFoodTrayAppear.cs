@@ -6,9 +6,9 @@ using UnityEngine.PlayerLoop;
 
 public class TutorialFoodTrayAppear : TutorialStep
 {
-    public GameObject foodTray;
+    protected GameObject foodTray;
 
-    public BasePickableItem menuPickable;
+    protected BasePickableItem menuPickable;
 
     protected Animator animator;
 
@@ -17,6 +17,8 @@ public class TutorialFoodTrayAppear : TutorialStep
     public override void Start()
     {
         base.Start();
+        foodTray = levelController.envItemManager.tray;
+        menuPickable = levelController.envItemManager.menu.GetComponent<BasePickableItem>();
         animator = foodTray.GetComponent<Animator>();
         foodTray.SetActive(true);
     }
@@ -36,11 +38,7 @@ public class TutorialFoodTrayAppear : TutorialStep
             AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.normalizedTime >= 1.0f && stateInfo.IsName("FoodTrayAnimation"))
             {
-                while (foodTray.transform.childCount != 0)
-                {
-                    foodTray.transform.GetChild(0).parent = null;
-                }
-                Destroy(foodTray);
+                animator.enabled = false;
             }
         }
         else
