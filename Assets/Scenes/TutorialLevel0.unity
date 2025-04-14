@@ -371,6 +371,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: "\u8001\u8C2D\u5BFB\u601D\u81EA\u5DF1\u5728\u8FD9\u91CC\u5E72\u4EC0\u4E48\uFF0C\u5BFB\u601D\u4E0D\u51FA\u6765\uFF0C\u4F46\u662F\u51B3\u5B9A\u8FD8\u662F\u5148\u6536\u62FE\u4E00\u4E0B\u684C\u9762"
+  taskName: "\u6E05\u7406\u684C\u9762"
+  taskStepName: "\u8D70\u5411\u6599\u7406\u53F0"
 --- !u!114 &740148220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +386,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: "\u5BF9\u8BDD\uFF1A\u8001\u8C2D\u89C9\u5F97\u684C\u5B50\u592A\u4E71\u8981\u6E05\u7406\u4E00\u4E0B"
+  taskName: "\u6E05\u7406\u684C\u9762"
+  taskStepName: "\u5C06\u684C\u4E0A\u7684\u9152\u74F6\u6E05\u7406\u51FA\u684C\u9762"
   rubbish:
   - {fileID: 1488943218}
   - {fileID: 238798202}
@@ -402,6 +406,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: "\u53EA\u662F\u8001\u8C2D\u81EA\u8A00\u81EA\u8BED\u8BF4\u641E\u5B9A\u4E86"
+  taskName: 
+  taskStepName: 
   duration: 5
 --- !u!1 &781982435
 GameObject:

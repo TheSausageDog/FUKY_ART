@@ -23,13 +23,23 @@ public class TutorialStep : TutorialStepBase
 {
     public string dialogText = null;
 
+    public string taskName = null;
+
+    public string taskStepName = null;
+
     public override void TutorialStart(LevelController _levelController)
     {
         base.TutorialStart(_levelController);
-        if (dialogText != null && dialogText.Length != 0)
+        if (!string.IsNullOrEmpty(dialogText))
         {
             levelController.uiDialogText.text = dialogText;
             levelController.uiDialog.gameObject.SetActive(true);
+        }
+
+        if (!string.IsNullOrEmpty(taskName) && !string.IsNullOrEmpty(taskStepName))
+        {
+            TaskManager.Instance.showUI = true;
+            TaskManager.Instance.AddTaskStep(taskName, taskStepName);
         }
     }
 
@@ -38,6 +48,11 @@ public class TutorialStep : TutorialStepBase
         if (dialogText != null && dialogText.Length != 0)
         {
             levelController.uiDialog.gameObject.SetActive(false);
+        }
+        if (!string.IsNullOrEmpty(taskName) && !string.IsNullOrEmpty(taskStepName))
+        {
+            TaskManager.Instance.showUI = true;
+            TaskManager.Instance.RemoveTaskStep(taskName, taskStepName);
         }
         base.TutorialEnd();
     }

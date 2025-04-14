@@ -14,6 +14,6 @@ public class TutorialPickCan : TutorialStep
     // Update is called once per frame
     public override bool TutorialUpdate()
     {
-        return canPickable.isPicking;
+        return !canPickable.isPicking;
     }
 }

@@ -16,6 +16,10 @@ public class TutorialMoveToTable : TutorialStep
         targetTrigger.trigged += StepOn;
     }
 
+    public override bool TutorialUpdate()
+    {
+        return !stepOn;
+    }
 
     public void StepOn()
     {

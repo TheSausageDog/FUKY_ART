@@ -30,7 +30,6 @@ public class TutorialFoodTrayAppear : TutorialStep
             if (menuPickable.isPicking)
             {
                 watched = true;
-                Debug.Log("watched");
             }
         }
         if (animator.enabled)
