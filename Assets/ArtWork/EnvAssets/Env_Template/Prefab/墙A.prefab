@@ -11,22 +11,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.048352953
+      value: 7.35
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.89708436
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.1975985
+      value: -7.78
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.00000035762784
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 7d4a05bcb70c6d243a6df0159c2b129c, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 0f00c42c1676df241b3bed78d2e9f880,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 87d2615929b900848ba3fcc6e81914de, type: 2}
     - target: {fileID: 919132149155446097, guid: 0f00c42c1676df241b3bed78d2e9f880,
         type: 3}
       propertyPath: m_Name
