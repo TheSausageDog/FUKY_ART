@@ -9,10 +9,13 @@ public class TutorialStepBase : MonoBehaviour
     [NonSerialized]
     public LevelController levelController;
 
-    public virtual void EndStep()
-    {
-        levelController.NectStep();
-    }
+    public virtual void TutorialStart(LevelController _levelController)
+    { levelController = _levelController; }
+
+    public virtual bool TutorialUpdate()
+    { return false; }
+
+    public virtual void TutorialEnd() { }
 }
 
 
@@ -20,8 +23,9 @@ public class TutorialStep : TutorialStepBase
 {
     public string dialogText = null;
 
-    public virtual void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
+        base.TutorialStart(_levelController);
         if (dialogText != null && dialogText.Length != 0)
         {
             levelController.uiDialogText.text = dialogText;
@@ -29,12 +33,12 @@ public class TutorialStep : TutorialStepBase
         }
     }
 
-    public override void EndStep()
+    public override void TutorialEnd()
     {
         if (dialogText != null && dialogText.Length != 0)
         {
             levelController.uiDialog.gameObject.SetActive(false);
         }
-        base.EndStep();
+        base.TutorialEnd();
     }
 }

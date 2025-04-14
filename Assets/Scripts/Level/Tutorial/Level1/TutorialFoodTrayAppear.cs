@@ -14,16 +14,16 @@ public class TutorialFoodTrayAppear : TutorialStep
 
     protected bool watched = false;
 
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
+        base.TutorialStart(_levelController);
         foodTray = levelController.envItemManager.tray;
         menuPickable = levelController.envItemManager.menu.GetComponent<BasePickableItem>();
         animator = foodTray.GetComponent<Animator>();
         foodTray.SetActive(true);
     }
 
-    void Update()
+    public override bool TutorialUpdate()
     {
         if (!watched)
         {
@@ -43,11 +43,14 @@ public class TutorialFoodTrayAppear : TutorialStep
         }
         else
         {
-            if (watched && !menuPickable.isPicking)
-            {
-                menuPickable.gameObject.SetActive(false);
-                EndStep();
-            }
+            return !watched || menuPickable.isPicking;
         }
+        return true;
+    }
+
+    public override void TutorialEnd()
+    {
+        base.TutorialEnd();
+        menuPickable.gameObject.SetActive(false);
     }
 }

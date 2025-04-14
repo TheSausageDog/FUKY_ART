@@ -7,14 +7,14 @@ public class TutorialDialogStep : TutorialStep
 
     protected float start_time;
 
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
+        base.TutorialStart(_levelController);
         start_time = Time.time;
     }
 
-    void Update()
+    public override bool TutorialUpdate()
     {
-        if (Time.time - start_time > duration) { EndStep(); }
+        return Time.time - start_time < duration;
     }
 }

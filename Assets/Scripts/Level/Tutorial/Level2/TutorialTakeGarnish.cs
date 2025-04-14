@@ -6,24 +6,24 @@ public class TutorialTakeGarnish : TutorialStep
 {
     protected ContainRecorder containRecorder;
 
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
+        base.TutorialStart(_levelController);
         containRecorder = levelController.areaTrigger.Find("TableSurfaceArea").GetComponent<ContainRecorder>();
     }
 
-    void Update()
+    public override bool TutorialUpdate()
     {
         bool hasMushroom = false, hasPepper = false;
-        foreach(var inside in containRecorder.inside){
-            if(inside != null && inside.TryGetComponent<Food>(out Food food)){
+        foreach (var inside in containRecorder.inside)
+        {
+            if (inside != null && inside.TryGetComponent<Food>(out Food food))
+            {
                 FoodType foodType = food.foodType;
-                if(foodType == FoodType.Mushroom){hasMushroom = true;}
-                if(foodType == FoodType.Pepper){hasPepper = true;}
+                if (foodType == FoodType.Mushroom) { hasMushroom = true; }
+                if (foodType == FoodType.Pepper) { hasPepper = true; }
             }
         }
-        if(hasMushroom && hasPepper){
-            EndStep();
-        }
+        return !(hasMushroom && hasPepper);
     }
 }

@@ -6,16 +6,14 @@ public class TutorialOpenFridge : TutorialStep
 {
     PickableDragItem fridge;
 
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
+        base.TutorialStart(_levelController);
         fridge = levelController.envItemManager.fridge.transform.GetChild(1).GetComponent<PickableDragItem>();
     }
 
-    void Update()
+    public override bool TutorialUpdate()
     {
-        if(fridge.isPicking){
-            EndStep();
-        }
+        return !fridge.isPicking;
     }
 }

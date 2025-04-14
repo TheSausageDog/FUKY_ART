@@ -6,17 +6,14 @@ public class TutorialBreakCan : TutorialStep
 {
     protected Container can;
 
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
+        base.TutorialStart(_levelController);
         can = levelController.envItemManager.can.GetComponent<Container>();
     }
     // Update is called once per frame
-    void Update()
+    public override bool TutorialUpdate()
     {
-        if (can.opened)
-        {
-            EndStep();
-        }
+        return !can.opened;
     }
 }

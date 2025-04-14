@@ -7,13 +7,14 @@ public class TutorialDelayStep : TutorialStepBase
 
     protected float start_time;
 
-    public virtual void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
+        base.TutorialStart(_levelController);
         start_time = Time.time;
     }
 
-    public virtual void Update()
+    public override bool TutorialUpdate()
     {
-        if (Time.time - start_time > duration) { EndStep(); }
+        return Time.time - start_time < duration;
     }
 }

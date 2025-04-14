@@ -7,12 +7,12 @@ public class TutorialStartStep : TutorialStepBase
 {
     public List<GameObject> stayObject = new List<GameObject>();
 
-    void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
+        base.TutorialStart(_levelController);
         foreach (var item in stayObject)
         {
             SceneManager.MoveGameObjectToScene(item, levelController.mainScene);
         }
-        EndStep();
     }
 }

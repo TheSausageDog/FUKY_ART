@@ -6,24 +6,25 @@ public class TutorialMoveToTable : TutorialStep
 {
     protected TargetTrigger targetTrigger;
 
+    protected bool stepOn = false;
+
     // Start is called before the first frame update
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
-        
+        base.TutorialStart(_levelController);
         targetTrigger = levelController.areaTrigger.Find("TableFrontArea").GetComponent<TargetTrigger>();
         targetTrigger.trigged += StepOn;
     }
 
-    
+
     public void StepOn()
     {
-        EndStep();
+        stepOn = true;
     }
 
-    public override void EndStep()
+    public override void TutorialEnd()
     {
         targetTrigger.trigged -= StepOn;
-        base.EndStep();
+        base.TutorialEnd();
     }
 }

@@ -6,17 +6,14 @@ public class TutorialPickCan : TutorialStep
 {
     protected BasePickableItem canPickable;
 
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
+        base.TutorialStart(_levelController);
         canPickable = levelController.envItemManager.can.GetComponent<BasePickableItem>();
     }
     // Update is called once per frame
-    void Update()
+    public override bool TutorialUpdate()
     {
-        if (canPickable.isPicking)
-        {
-            EndStep();
-        }
+        return canPickable.isPicking;
     }
 }

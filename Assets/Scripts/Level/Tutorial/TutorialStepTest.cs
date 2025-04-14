@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 
 public class TutorialStepTest : TutorialStep
 {
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
         dialogText = "Nothing here.施工中";
-        base.Start();
+        base.TutorialStart(_levelController);
     }
 }

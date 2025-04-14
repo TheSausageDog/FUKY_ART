@@ -65,6 +65,20 @@ public class LevelController : MonoBehaviour
                 asyncOperation.allowSceneActivation = true;
             }
         }
+        else
+        {
+            if (currentStep == null)
+            {
+                Debug.LogWarning("Current step is empty");
+            }
+            else
+            {
+                if (!currentStep.TutorialUpdate())
+                {
+                    NectStep();
+                }
+            }
+        }
     }
 
     public void LoadNewLevel(string levelName)
@@ -83,7 +97,7 @@ public class LevelController : MonoBehaviour
     {
         if (currentStep != null)
         {
-            currentStep.enabled = false;
+            currentStep.TutorialEnd();
         }
         if (nextStepIndex == levelSteps.Length)
         {
@@ -92,8 +106,7 @@ public class LevelController : MonoBehaviour
         else
         {
             currentStep = levelSteps[nextStepIndex];
-            currentStep.levelController = this;
-            currentStep.enabled = true;
+            currentStep.TutorialStart(this);
             nextStepIndex++;
         }
     }

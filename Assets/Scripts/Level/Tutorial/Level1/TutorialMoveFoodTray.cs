@@ -11,26 +11,17 @@ public class TutorialMoveFoodTray : TutorialStep
     protected BasePickableItem foodTrayPickable;
     protected Collider foodTrayCollider;
     protected ContainRecorder containRecorder;
-
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
+        base.TutorialStart(_levelController);
         foodTray = levelController.envItemManager.tray;
         containRecorder = levelController.areaTrigger.Find("TableSurfaceArea").GetComponent<ContainRecorder>();
         foodTrayPickable = foodTray.GetComponent<BasePickableItem>();
         foodTrayCollider = foodTray.GetComponent<Collider>();
     }
 
-    void Update()
+    public override bool TutorialUpdate()
     {
-        if (containRecorder.IsContain(foodTrayCollider) && !foodTrayPickable.isPicking)
-        {
-            EndStep();
-        }
-    }
-
-    public override void EndStep()
-    {
-        base.EndStep();
+        return !containRecorder.IsContain(foodTrayCollider) || foodTrayPickable.isPicking;
     }
 }

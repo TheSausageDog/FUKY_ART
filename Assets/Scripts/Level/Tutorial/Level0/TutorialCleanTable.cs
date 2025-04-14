@@ -11,20 +11,21 @@ public class TutorialCleanTable : TutorialStep
     protected ContainRecorder containRecorder;
 
     // Start is called before the first frame update
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
+        base.TutorialStart(_levelController);
         containRecorder = levelController.areaTrigger.Find("TableSurfaceArea").GetComponent<ContainRecorder>();
     }
 
-    void Update()
+    public override bool TutorialUpdate()
     {
         foreach (var item in rubbish)
         {
-            if(containRecorder.IsContain(item)){
-                return;
+            if (containRecorder.IsContain(item))
+            {
+                return true;
             }
         }
-        EndStep();
+        return false;
     }
 }
