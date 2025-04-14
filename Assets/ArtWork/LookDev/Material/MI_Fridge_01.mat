@@ -12,6 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _EDGE_HALFTONE
   - _SMOOTHNORMAL_TEXCOORD3
   - _UNIFORM_OUTLINE_WIDTH
   - _USE_SHADOW
@@ -67,10 +68,11 @@ Material:
     - _ColorMask: 15
     - _Cull: 2
     - _Cutoff: -0.01
+    - _Discolor: 0
     - _DstBlend: 0
-    - _HalftoneEffect: 0.462
+    - _HalftoneEffect: 0
     - _HalftoneScale: 12.82
-    - _HalftoneStep: 0.248
+    - _HalftoneStep: 0.176
     - _HalftoneUVZScale: 0
     - _IsTangentSpace: 1
     - _NormalScale: 1
@@ -115,13 +117,13 @@ Material:
     - _group3: 0
     - _group4: 0
     - _group5: 0
-    - _group8: 0
+    - _group8: 1
     - _group9: 0
     - _reflectionCol: 0
     - _rimLight: 0
     - _transmission: 0
     m_Colors:
-    - _EdgePowScale: {r: 0.1, g: 1, b: 0, a: 0}
+    - _EdgePowScale: {r: 0.14, g: 1, b: 0, a: 0}
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 0}
     - _HalftoneColor: {r: 1, g: 1, b: 1, a: 1}
     - _LambertSmooth: {r: 0.5, g: 0.5, b: 0, a: 0}
