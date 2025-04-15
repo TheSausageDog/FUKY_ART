@@ -2,10 +2,10 @@
 {
     Properties
     {
-    	[Main(Group20, _, off, off)] 
-    	_group20 ("自定义方向光(TODO)", float) = 0
-    	[SubToggle(Group20)]   _ViewSpace ("跟随视角",float) = 0
-    	[Sub(Group20)] _CustomDir("主光方向",Vector) = (0,0,0,0)
+//    	[Main(Group20, _, off, off)] 
+//    	_group20 ("自定义方向光(TODO)", float) = 0
+//    	[SubToggle(Group20)]   _ViewSpace ("跟随视角",float) = 0
+//    	[Sub(Group20)] _CustomDir("主光方向",Vector) = (0,0,0,0)
     	
         [Main(Group1, _, off, off)] 
 		_group1 ("主帖图设置", float) = 0
@@ -58,8 +58,8 @@
         [Sub(Group4)]   [HDR]_EmissiveColor("自发光颜色",Color) = (0,0,0,0)
         [Sub(Group4)]   _EmissiveTex("自发光贴图",2D) = "white"{}
         
-        [Main(Group8, _EDGE_HALFTONE, off, on)] 
-		_group8 ("半色调边缘光", float) = 0
+        [Main(Group8, _, off, off)] 
+		_group8 ("FX-半色调边缘光", float) = 0
         [Sub(Group8)]   _HalftoneEffect("整体强度",Range(0,1)) = 0
         [Sub(Group8)]   _HalftoneStep ("淡入淡出",Range(0.0001,1)) = 0.5
         [Sub(Group8)]   [HDR]_HalftoneColor("边缘颜色",Color) = (1,1,1,1)
@@ -67,7 +67,7 @@
         [SubToggle(Group8)]   _HalftoneUVZScale("网格密度不受远近影响",float) = 0
         [Sub(Group8)]   _EdgePowScale("XY:边缘过渡PowScale",Vector) = (1,1,0,0)
         
-        [Main(Group9, _, off, OFF)] 
+        [Main(Group9, _, off, off)] 
         _group9 ("描边", float) = 0
         [KWEnum(Group9, Null,_, VertexCol, _SMOOTHNORMAL_VERTEX_COLOR,Tangent, _SMOOTHNORMAL_TANGENT, UV3, _SMOOTHNORMAL_TEXCOORD3)] _SmoothNormalData ("平滑法线数据", float) = 0
         [SubToggle(Group9,_)] _IsTangentSpace("平滑法线在切线空间",Int) = 1
@@ -136,7 +136,6 @@
             
             #pragma shader_feature_local_fragment _EMISSIVE
             #pragma shader_feature_local_fragment _NORMALMAP
-            #pragma shader_feature_local_fragment _EDGE_HALFTONE
             
             
             // -------------------------------------
@@ -401,17 +400,15 @@
                 
                 //effects
                 half3 effects = 0;
-                #ifdef _EDGE_HALFTONE
-                    //edgeHalftone
-                    float2 halftoneUV = -input.positionVS.xy/input.positionVS.z;
-                    halftoneUV = lerp(halftoneUV*distance(TransformObjectToWorld(float3(0,0,0)),GetCameraPositionWS()),halftoneUV*10,_HalftoneUVZScale);//stabilize UV tilingScale
-                    half halftone = length(frac(halftoneUV* _HalftoneScale)-0.5);
-                    half edgeMask = pow(max(0,1-dot(normalize(input.viewDirWS),normalize(input.normalWS))),_EdgePowScale.x) * _EdgePowScale.y;
-                    halftone = saturate(step(pow(halftone,edgeMask),_HalftoneStep) * edgeMask);
-                    half3 edgeHalftoneCol = halftone * _HalftoneColor *  _HalftoneEffect;
-                #else
-                    half3 edgeHalftoneCol = 0;
-                #endif
+            	
+                //edgeHalftone
+                float2 halftoneUV = -input.positionVS.xy/input.positionVS.z;
+                halftoneUV = lerp(halftoneUV*distance(TransformObjectToWorld(float3(0,0,0)),GetCameraPositionWS()),halftoneUV*10,_HalftoneUVZScale);//stabilize UV tilingScale
+                half halftone = length(frac(halftoneUV* _HalftoneScale)-0.5);
+                half edgeMask = pow(max(0,1-dot(normalize(input.viewDirWS),normalize(input.normalWS))),_EdgePowScale.x) * _EdgePowScale.y;
+                halftone = saturate(step(pow(halftone,edgeMask),_HalftoneStep) * edgeMask);
+                half3 edgeHalftoneCol = halftone * _HalftoneColor *  _HalftoneEffect;
+            	
                 effects+=edgeHalftoneCol;
 
                 //globeIllumination
