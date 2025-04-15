@@ -73,6 +73,6 @@ public class HandInteractionController : MonoListener
                 return;
             }
         }
-        if (pick.currentHandObj != null) pick.OnHandTriggerExit(pick.currentHandObj._transform.gameObject);
+        pick.OnHandTriggerExit();
     }
 }

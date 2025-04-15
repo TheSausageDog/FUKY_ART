@@ -12,7 +12,7 @@ public class PlayerBlackBoard : MonoListener
 {
     public static bool isHeldObj { protected set; get; } = false;
     // [NonSerialized] public static Transform heldTrans;
-    [NonSerialized] public static BasePickableItem heldPickable;
+    [NonSerialized] public static BaseItem heldPickable;
     // [NonSerialized] public static bool holdingKnife;
     // [NonSerialized] public static Vector3 knifeOrginPos;
     [NonSerialized] public static Vector3 moveLock;
@@ -28,7 +28,7 @@ public class PlayerBlackBoard : MonoListener
         moveLock = Vector3.zero;
     }
 
-    public static void OnItemPicked(BasePickableItem item)
+    public static void OnItemPicked(BaseItem item)
     {
         isHeldObj = true;
         heldPickable = item;

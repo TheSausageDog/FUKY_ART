@@ -12,7 +12,7 @@ using UnityEngine;
 /// 食物类，表示可切割的食物对象。
 /// 继承自 BasePickableItem。
 /// </summary>
-public class Food : BasePickableItem
+public class Food : PickableItem
 {
     [NonSerialized] public AllTaste Tastes; // 食物的味道属性
     public FoodType foodType; // 食物类型
