@@ -65,7 +65,7 @@
         [Sub(Group8)]   [HDR]_HalftoneColor("边缘颜色",Color) = (1,1,1,1)
         [Sub(Group8)]   _HalftoneScale("网格密度",float) = 10
         [SubToggle(Group8)]   _HalftoneUVZScale("网格密度不受远近影响",float) = 0
-        [Sub(Group8)]   _EdgePowScale("XY:边缘过渡PowScale",Vector) = (1,1,0,0)
+        [Sub(Group8)]   _EdgePowScale("XY:边缘过渡PowScale Z:Bias W:Active",Vector) = (1,1,0,1)
         
         [Main(Group9, _, off, off)] 
         _group9 ("描边", float) = 0
@@ -405,7 +405,8 @@
                 float2 halftoneUV = -input.positionVS.xy/input.positionVS.z;
                 halftoneUV = lerp(halftoneUV*distance(TransformObjectToWorld(float3(0,0,0)),GetCameraPositionWS()),halftoneUV*10,_HalftoneUVZScale);//stabilize UV tilingScale
                 half halftone = length(frac(halftoneUV* _HalftoneScale)-0.5);
-                half edgeMask = pow(max(0,1-dot(normalize(input.viewDirWS),normalize(input.normalWS))),_EdgePowScale.x) * _EdgePowScale.y;
+                half edgeMask = saturate(pow(max(0,1-dot(normalize(input.viewDirWS),normalize(input.normalWS))),_EdgePowScale.x) * _EdgePowScale.y + _EdgePowScale.z);
+            	edgeMask = lerp(1,edgeMask,_EdgePowScale.w);
                 halftone = saturate(step(pow(halftone,edgeMask),_HalftoneStep) * edgeMask);
                 half3 edgeHalftoneCol = halftone * _HalftoneColor *  _HalftoneEffect;
             	

@@ -43,7 +43,7 @@ half _HalftoneStep;
 half3 _HalftoneColor;
 half _HalftoneScale;
 half _HalftoneUVZScale;
-half2 _EdgePowScale;
+half4 _EdgePowScale;
 
 half _UseVertexColorRGB;
 half _UseVertexColorA;
