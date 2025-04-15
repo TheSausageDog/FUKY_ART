@@ -20,6 +20,9 @@ public class TaskManager : SingletonMono<TaskManager>
     [NonSerialized]
     protected Text uiTaskText;
 
+    [NonSerialized]
+    protected Text uiDetailsText;
+
     protected Animator animator;
 
     protected Dictionary<string, Task> tasks = new Dictionary<string, Task>();
@@ -31,6 +34,7 @@ public class TaskManager : SingletonMono<TaskManager>
         base.Awake();
         animator = missionUI.GetComponent<Animator>();
         uiTaskText = missionUI.GetChild(0).GetComponent<Text>();
+        uiDetailsText = missionUI.GetChild(1).GetComponent<Text>();
     }
 
     // Update is called once per frame
@@ -38,16 +42,35 @@ public class TaskManager : SingletonMono<TaskManager>
     {
         if (task_dirty)
         {
-            string newTaskMessage = "";
-            foreach (var task in tasks)
-            {
-                newTaskMessage += task.Key + "\n";
-                foreach (var step in task.Value.steps)
+            if(tasks.Count != 0){
+                foreach (var task in tasks)
                 {
-                    newTaskMessage += "\t-" + step.Key + "\n";
+                    uiTaskText.text = task.Key;
+                    if(task.Value.steps.Count != 0){
+                        foreach (var step in task.Value.steps)
+                        {
+                            uiDetailsText.text = step.Key;
+                            break;
+                        }
+                    }else{
+                        uiDetailsText.text = "";
+                    }
+                    break;
                 }
+            }else{
+                uiTaskText.text = "";
+                uiDetailsText.text = "";
             }
-            uiTaskText.text = newTaskMessage;
+            // string newTaskMessage = "";
+            // foreach (var task in tasks)
+            // {
+            //     newTaskMessage += task.Key + "\n";
+            //     foreach (var step in task.Value.steps)
+            //     {
+            //         newTaskMessage += "\t-" + step.Key + "\n";
+            //     }
+            // }
+            // uiTaskText.text = newTaskMessage;
             task_dirty = false;
         }
     }
