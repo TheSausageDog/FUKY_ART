@@ -84,6 +84,15 @@ public class LevelController : MonoBehaviour
     public void LoadNewLevel(string levelName)
     {
         asyncOperation = SceneManager.LoadSceneAsync(levelName, loadSceneParameters);
+        if(asyncOperation == null){
+            if(levelName == null){
+                Debug.LogError("levelName is Null");
+                return;
+            }else{
+                Debug.LogError("Unknow error");
+                return;
+            }
+        }
         if (lastLevelName != null)
         {
             SceneManager.UnloadSceneAsync(lastLevelName);

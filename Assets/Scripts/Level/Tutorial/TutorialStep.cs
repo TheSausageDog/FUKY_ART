@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//现在先用继承写，以后要改成组合
 public class TutorialStepBase : MonoBehaviour
 {
     [NonSerialized]

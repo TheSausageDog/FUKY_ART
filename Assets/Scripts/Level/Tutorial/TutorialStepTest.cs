@@ -11,4 +11,9 @@ public class TutorialStepTest : TutorialStep
         dialogText = "Nothing here.施工中";
         base.TutorialStart(_levelController);
     }
+
+    public override bool TutorialUpdate()
+    {
+        return true;
+    }
 }

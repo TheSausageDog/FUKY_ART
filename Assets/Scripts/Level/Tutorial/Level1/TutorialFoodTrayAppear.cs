@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Aya.Events;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.PlayerLoop;
 
@@ -38,6 +39,7 @@ public class TutorialFoodTrayAppear : TutorialStep
             if (stateInfo.normalizedTime >= 1.0f && stateInfo.IsName("FoodTrayAnimation"))
             {
                 animator.enabled = false;
+                menuPickable.AddComponent<HighLightedItem>().isHighlighted = true;
             }
         }
         else
@@ -51,5 +53,8 @@ public class TutorialFoodTrayAppear : TutorialStep
     {
         base.TutorialEnd();
         menuPickable.gameObject.SetActive(false);
+        if(menuPickable.TryGetComponent<HighLightedItem>(out var highLighted)){
+            highLighted.isHighlighted = false;
+        }
     }
 }

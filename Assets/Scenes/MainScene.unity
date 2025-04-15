@@ -2528,6 +2528,12 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -259446717649491484, guid: 4cfc41466f1e10e428436b069f677f41, type: 2}
+--- !u!1 &304643437 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7319140153544462973, guid: a70ac6cfc3c3d4a459bc5e485c177fde,
+    type: 3}
+  m_PrefabInstance: {fileID: 3572190257960576929}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &314193639
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20382,6 +20388,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c3b5a7f9cb21574d9dd63a14ca91502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  environment: {fileID: 425275512}
+  table: {fileID: 304643437}
   fridge: {fileID: 5729239518958880676}
   can: {fileID: 1105016100}
   knife: {fileID: 688528593}
@@ -20403,7 +20411,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDialog: {fileID: 976294127}
   areaTrigger: {fileID: 1972598770}
-  startLevelName: TutorialLevel2
+  startLevelName: TutorialLevel1
 --- !u!114 &1651822396
 MonoBehaviour:
   m_ObjectHideFlags: 0

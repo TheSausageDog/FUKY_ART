@@ -29,6 +29,7 @@ Material:
   - _USE_SHADOW
   - _USE_SSAO
   m_InvalidKeywords:
+  - _EDGE_HALFTONE
   - _SPECULARSTEP_ON
   - _ZWRITE1_ON
   - _ZWRITE2_ON
@@ -205,7 +206,7 @@ Material:
     - _group3: 0
     - _group4: 0
     - _group5: 0
-    - _group8: 0
+    - _group8: 1
     - _group9: 0
     - _rimLight: 0
     - _transmission: 0
