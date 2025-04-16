@@ -43,39 +43,7 @@ public class HandCursorMoveController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (PlayerBlackBoard.isHeldObj)
-        {
-            //move to interact
-            Transform heldTrans = PlayerBlackBoard.heldPickable.transform;
-            // 计算目标位置与当前物体位置之间的距离
-            float distanceToTarget = Vector3.Distance(heldTrans.position, handTarget.position);
-
-            // 计算目标位置与当前物体位置之间的方向
-            Vector3 directionToTarget = (handTarget.position - heldTrans.position).normalized;
-
-            // 动态调整速度：距离越远，速度越快
-            float dynamicSpeed = speed * distanceToTarget;
-
-            // 计算目标速度
-            Vector3 targetVelocity = directionToTarget * dynamicSpeed;
-
-            // 设置刚体速度
-            Rigidbody heldBody = heldTrans.GetComponent<Rigidbody>();
-            if (heldBody != null)
-            {
-                heldBody.velocity = targetVelocity;
-            }
-
-            // 同时调整手的位置，使其始终与物体位置对齐
-            transform.position = transform.position - pickUpPos.position + heldTrans.position;
-
-            // 保持手的旋转
-            transform.rotation = handTarget.rotation;
-        }
-        else
-        {
-            transform.position = Vector3.Lerp(transform.position, handTarget.position, speed * Time.deltaTime);
-            transform.rotation = handTarget.rotation;
-        }
+        transform.position = Vector3.Lerp(transform.position, handTarget.position, speed * Time.deltaTime);
+        transform.rotation = handTarget.rotation;
     }
 }

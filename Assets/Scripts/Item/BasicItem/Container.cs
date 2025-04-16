@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BzKovSoft.ObjectSlicer.Samples;
 using UnityEngine;
 
-public class Container : PickableItem
+public class Container : NormalPickableItem
 {
     public GameObject[] breakingStage;
 

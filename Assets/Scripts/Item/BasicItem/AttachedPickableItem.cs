@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public  class AttachedPickableItem : NormalPickableItem
+public class AttachedPickableItem : NormalPickableItem
 {
 
     Transform attachPoint;
@@ -8,9 +8,9 @@ public  class AttachedPickableItem : NormalPickableItem
     Collider attachActiveArea;
 
     public override void OnThrow()
-    {    
+    {
         base.OnThrow();
-        
+
 
         // if (attachPoint != null)
         // {

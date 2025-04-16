@@ -11,7 +11,7 @@ public abstract class BaseItem : MonoBehaviour
     // public float PickDelay;
     // public float _pickDelay => PickDelay;
 
-    public Collider itemCollider => GetComponent<Collider>();
+    public Collider itemCollider { get; protected set; }
 
     public bool isPicking { get; protected set; } = false;
 
@@ -19,6 +19,7 @@ public abstract class BaseItem : MonoBehaviour
 
     public virtual void Awake()
     {
+        itemCollider = GetComponent<Collider>();
         // LayerNumber = LayerMask.NameToLayer("holdLayer");
     }
 
@@ -38,12 +39,14 @@ public abstract class BaseItem : MonoBehaviour
         isPicking = false;
     }
 
-    protected static void SetPickedRigidbody(Rigidbody rigidbody){
+    protected static void SetPickedRigidbody(Rigidbody rigidbody)
+    {
         rigidbody.freezeRotation = true;
         rigidbody.useGravity = false;
     }
 
-    protected static void SetDropRigidbody(Rigidbody rigidbody){
+    protected static void SetDropRigidbody(Rigidbody rigidbody)
+    {
         rigidbody.isKinematic = false;
         rigidbody.freezeRotation = false;
         rigidbody.useGravity = true;
@@ -62,7 +65,7 @@ public class PickableItem : BaseItem
     public override void OnThrow()
     {
         transform.parent = null;
-        
+
         base.OnThrow();
     }
 }

@@ -9,7 +9,7 @@ public class TutorialFoodTrayAppear : TutorialStep
 {
     protected GameObject foodTray;
 
-    protected NormalPickableItem menuPickable;
+    protected CheckItem menuPickable;
 
     protected Animator animator;
 
@@ -19,7 +19,7 @@ public class TutorialFoodTrayAppear : TutorialStep
     {
         base.TutorialStart(_levelController);
         foodTray = levelController.envItemManager.tray;
-        menuPickable = levelController.envItemManager.menu.GetComponent<NormalPickableItem>();
+        menuPickable = levelController.envItemManager.menu.GetComponent<CheckItem>();
         animator = foodTray.GetComponent<Animator>();
         foodTray.SetActive(true);
     }

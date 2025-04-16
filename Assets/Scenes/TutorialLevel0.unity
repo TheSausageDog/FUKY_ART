@@ -286,12 +286,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 238798200}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d872deda27b2248b4b0b2f9207774e, type: 3}
+  m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickDelay: 0
-  objectSize: 1
-  attachPoint: {fileID: 0}
 --- !u!1 &740148213
 GameObject:
   m_ObjectHideFlags: 0
@@ -406,8 +403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: "\u53EA\u662F\u8001\u8C2D\u81EA\u8A00\u81EA\u8BED\u8BF4\u641E\u5B9A\u4E86"
-  taskName: 
-  taskStepName: 
   duration: 5
 --- !u!1 &781982435
 GameObject:
@@ -875,12 +870,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1488943216}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d872deda27b2248b4b0b2f9207774e, type: 3}
+  m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickDelay: 0
-  objectSize: 1
-  attachPoint: {fileID: 0}
 --- !u!1 &1625931204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1196,12 +1188,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1706700711}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d872deda27b2248b4b0b2f9207774e, type: 3}
+  m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickDelay: 0
-  objectSize: 1
-  attachPoint: {fileID: 0}
 --- !u!1 &2048243114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1517,12 +1506,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2050367812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96d872deda27b2248b4b0b2f9207774e, type: 3}
+  m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PickDelay: 0
-  objectSize: 1
-  attachPoint: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ using UnityEngine;
 /// 食物类，表示可切割的食物对象。
 /// 继承自 BasePickableItem。
 /// </summary>
-public class Food : PickableItem
+public class Food : NormalPickableItem
 {
     [NonSerialized] public AllTaste Tastes; // 食物的味道属性
     public FoodType foodType; // 食物类型
@@ -90,8 +90,9 @@ public class Food : PickableItem
         }
     }
 
-    private void Update()
+    public override void Update()
     {
+        base.Update();
         if (knife != null)
         {
             if (CheckCutted())
@@ -147,7 +148,7 @@ public class Food : PickableItem
     public void OnKnifeEnter(BzKnife _knife)
     {
         _knife.OnEnterFood(this, ref cutPlane);
-        
+
         // cutPlane = plane;
         timer = 0;
         // what if have multiable knife
