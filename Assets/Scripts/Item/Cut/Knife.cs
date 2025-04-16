@@ -23,7 +23,7 @@ public class Knife : AttachedPickableItem
     public override void OnThrow()
     {
         base.OnThrow();
-        Destroy(itemRigidbody);
+        // Destroy(itemRigidbody);
 
         //Collider.enabled = true;
     }
