@@ -8,7 +8,7 @@ public class TutorialMoveFoodTray : TutorialStep
 {
     protected GameObject foodTray;
 
-    protected BasePickableItem foodTrayPickable;
+    protected NormalPickableItem foodTrayPickable;
     protected Collider foodTrayCollider;
     protected ContainRecorder containRecorder;
     protected HighLightedItem tableHighLight;
@@ -18,11 +18,12 @@ public class TutorialMoveFoodTray : TutorialStep
         base.TutorialStart(_levelController);
         foodTray = levelController.envItemManager.tray;
         containRecorder = levelController.areaTrigger.Find("TableSurfaceArea").GetComponent<ContainRecorder>();
-        foodTrayPickable = foodTray.GetComponent<BasePickableItem>();
+        foodTrayPickable = foodTray.GetComponent<NormalPickableItem>();
         foodTrayCollider = foodTray.GetComponent<Collider>();
 
 
-        if(!_levelController.envItemManager.table.TryGetComponent<HighLightedItem>(out tableHighLight)){
+        if (!_levelController.envItemManager.table.TryGetComponent<HighLightedItem>(out tableHighLight))
+        {
             tableHighLight = _levelController.envItemManager.table.AddComponent<HighLightedItem>();
         }
         tableHighLight.isHighlighted = true;

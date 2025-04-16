@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class TutorialPickCan : TutorialStep
 {
-    protected BasePickableItem canPickable;
+    protected Container canPickable;
 
     public override void TutorialStart(LevelController _levelController)
     {
         base.TutorialStart(_levelController);
-        canPickable = levelController.envItemManager.can.GetComponent<BasePickableItem>();
+        canPickable = levelController.envItemManager.can.GetComponent<Container>();
         canPickable.transform.gameObject.AddComponent<HighLightedItem>().isHighlighted = true;
     }
     // Update is called once per frame

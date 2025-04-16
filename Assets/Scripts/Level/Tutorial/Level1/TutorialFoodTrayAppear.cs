@@ -9,7 +9,7 @@ public class TutorialFoodTrayAppear : TutorialStep
 {
     protected GameObject foodTray;
 
-    protected BasePickableItem menuPickable;
+    protected NormalPickableItem menuPickable;
 
     protected Animator animator;
 
@@ -19,7 +19,7 @@ public class TutorialFoodTrayAppear : TutorialStep
     {
         base.TutorialStart(_levelController);
         foodTray = levelController.envItemManager.tray;
-        menuPickable = levelController.envItemManager.menu.GetComponent<BasePickableItem>();
+        menuPickable = levelController.envItemManager.menu.GetComponent<NormalPickableItem>();
         animator = foodTray.GetComponent<Animator>();
         foodTray.SetActive(true);
     }
@@ -53,7 +53,8 @@ public class TutorialFoodTrayAppear : TutorialStep
     {
         base.TutorialEnd();
         menuPickable.gameObject.SetActive(false);
-        if(menuPickable.TryGetComponent<HighLightedItem>(out var highLighted)){
+        if (menuPickable.TryGetComponent<HighLightedItem>(out var highLighted))
+        {
             highLighted.isHighlighted = false;
         }
     }

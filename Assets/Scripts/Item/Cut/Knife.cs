@@ -5,7 +5,7 @@ using Aya.Events;
 using DG.Tweening;
 using UnityEngine;
 
-public class Knife : BasePickableItem
+public class Knife : NormalPickableItem
 {
 
     public BoxCollider Collider;

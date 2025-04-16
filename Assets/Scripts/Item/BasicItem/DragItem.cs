@@ -12,7 +12,10 @@ public abstract class DragItem : BaseItem
 
     void Update()
     {
-        MoveItem(holdPos.position - holdPosOffset);
+        if (holdPos != null)
+        {
+            MoveItem(holdPos.position - holdPosOffset);
+        }
     }
 
     protected abstract void MoveItem(Vector3 targetPosition);
@@ -22,5 +25,11 @@ public abstract class DragItem : BaseItem
         base.OnPickup(_holdPos);
         holdPosOffset = _holdPos.position - dragPoint.position;
         holdPos = _holdPos;
+    }
+
+    public override void OnThrow()
+    {
+        base.OnThrow();
+        holdPos = null;
     }
 }

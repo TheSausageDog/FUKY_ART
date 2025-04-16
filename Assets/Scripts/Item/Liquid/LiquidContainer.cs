@@ -8,7 +8,7 @@ using UnityEngine.UI;
 /// 碗类，检测碗中的食物和味道成分，并进行评分。
 /// 继承自 BasePickableItem。
 /// </summary>
-public class LiquidContainer : BasePickableItem
+public class LiquidContainer : NormalPickableItem
 {
     public Material liquid_material;
 
@@ -30,21 +30,25 @@ public class LiquidContainer : BasePickableItem
         liquid_volume = 0;
     }
 
-    public void AddLiquid(Color _liquid_color, float _liquid_volume){
-        
-        if(liquid_volume == 0){
+    public void AddLiquid(Color _liquid_color, float _liquid_volume)
+    {
+
+        if (liquid_volume == 0)
+        {
             liquid_color = _liquid_color;
             liquid_volume = _liquid_volume;
-        }else{
+        }
+        else
+        {
             liquid_volume += _liquid_volume;
             float alpha = _liquid_volume / liquid_volume;
-            liquid_color = (1- alpha) * liquid_color + alpha * _liquid_color;
+            liquid_color = (1 - alpha) * liquid_color + alpha * _liquid_color;
         }
 
         liquid_color.a = 1;
-  
+
         // float threshold = _threshold_start + (_threshold_end-_threshold_start) * Mathf.Pow(Mathf.Min(liquid_volume / liquid_full, 1f), 1f/2);
-        float threshold = threshold_start + (threshold_end-threshold_start) * Mathf.Min(liquid_full, liquid_volume) / liquid_full;
+        float threshold = threshold_start + (threshold_end - threshold_start) * Mathf.Min(liquid_full, liquid_volume) / liquid_full;
 
         liquid_material.SetColor("_surface_color", liquid_color);
         liquid_material.SetFloat("_threshold", threshold);

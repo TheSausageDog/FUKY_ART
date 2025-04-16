@@ -32,9 +32,11 @@ public class TutorialCleanTable : TutorialStep
             {
                 highLight.isHighlighted = true;
                 hasRubbish = true;
-            }else{
+            }
+            else
+            {
                 highLight.isHighlighted = false;
-                
+
             }
         }
 
