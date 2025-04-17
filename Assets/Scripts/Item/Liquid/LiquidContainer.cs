@@ -4,11 +4,8 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
-/// <summary>
-/// 碗类，检测碗中的食物和味道成分，并进行评分。
-/// 继承自 BasePickableItem。
-/// </summary>
-public class LiquidContainer : NormalPickableItem
+
+public class LiquidContainer : MonoBehaviour
 {
     public Material liquid_material;
 
@@ -22,10 +19,8 @@ public class LiquidContainer : NormalPickableItem
 
     public float liquid_full = 5;
 
-    public override void Start()
+    public virtual void Start()
     {
-        base.Start();
-
         AddLiquid(Color.black, 0);
         liquid_volume = 0;
     }

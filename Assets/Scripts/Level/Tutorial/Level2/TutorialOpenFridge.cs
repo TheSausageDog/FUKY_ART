@@ -19,7 +19,7 @@ public class TutorialOpenFridge : TutorialStep
 
     public override bool TutorialUpdate()
     {
-        return !fridge.isPicking;
+        return !fridge.isHolding;
     }
 
     public override void TutorialEnd()

@@ -50,6 +50,35 @@ public class PickUpAndInteract : MonoBehaviour
         // handTarget.transform.localPosition;
     }
 
+
+    public void OnHandTriggerEnter(GameObject other)
+    {
+        if (other.CompareTag("canInteract"))
+        {
+            OnHandTriggerExit();
+            selectedObj = other;
+            SetLayerRecursive(selectedObj.transform, "Outline");
+        }
+    }
+
+    public void OnHandTriggerExit()
+    {
+        if (selectedObj != null)
+        {
+            SetLayerRecursive(selectedObj.transform, "Default");
+            selectedObj = null;
+        }
+    }
+
+    protected static void SetLayerRecursive(Transform trans, string layer)
+    {
+        trans.gameObject.layer = LayerMask.NameToLayer(layer);
+        foreach (Transform child in trans)
+        {
+            SetLayerRecursive(child, layer);
+        }
+    }
+
     void Update()
     {
         // 控制 handTarget 的移动
@@ -67,47 +96,15 @@ public class PickUpAndInteract : MonoBehaviour
 
         if (PlayerBlackBoard.isHeldObj)
         {
-            // BaseItem heldObj = PlayerBlackBoard.heldPickable;
-            // if (heldObj.interactionType == InteractionType.Check && !PlayerInputController.IsMoveHandHeld())
-            // {
-            //     heldObj._transform.position = Camera.main.transform.position + heldObj._objectSize * Camera.main.transform.forward;
-            //     heldObj._transform.LookAt(heldObj._transform.position + Camera.main.transform.up, -Camera.main.transform.forward);
-            //     // handTarget.
-            // }
-
-            // if (PlayerInputController.IsRotateHeld())
-            // {
-            //     float XaxisRotation = PlayerInputController.GetMouseInput().x * rotationSensitivity;
-            //     float YaxisRotation = PlayerInputController.GetMouseInput().y * rotationSensitivity;
-            //     heldObj._transform.Rotate(-CameraPos.up, XaxisRotation, Space.World);
-            //     heldObj._transform.Rotate(CameraPos.right, YaxisRotation, Space.World);
-            //     canDrop = false;
-            // }
-            // else
-            // {
-            //     canDrop = true;
-            // }
-            // if (PlayerInputController.IsThrowPressed() && canDrop)
-            // {
-            //     if (heldObj.interactionType == InteractionType.Check)
-            //     {
-            //         handTarget.localPosition = handTargetOffset;
-            //     }
-            //     DropObject();
-            // }
-
-            BaseItem heldObj = PlayerBlackBoard.heldPickable;
-
-
             if (PlayerInputController.IsRotateHeld())
             {
+                BaseItem heldObj = PlayerBlackBoard.heldPickable;
                 float XaxisRotation = PlayerInputController.GetMouseInput().x * rotationSensitivity;
                 float YaxisRotation = PlayerInputController.GetMouseInput().y * rotationSensitivity;
                 heldObj.transform.Rotate(-CameraPos.up, XaxisRotation, Space.World);
                 heldObj.transform.Rotate(CameraPos.right, YaxisRotation, Space.World);
             }
-
-            if (PlayerInputController.IsThrowPressed())
+            else if (PlayerInputController.IsThrowPressed())
             {
                 DropObject();
             }
@@ -116,10 +113,6 @@ public class PickUpAndInteract : MonoBehaviour
         {
             HandlePickUpInput();
         }
-
-        // float progress = (selectedObj != null && selectedObj._pickDelay != 0) ?
-        //     (float)pickUpTimer / selectedObj._pickDelay : 0;
-        // UEvent.Dispatch(EventType.OnPickingItem, progress);
     }
 
     private void MoveHandTarget()
@@ -146,7 +139,7 @@ public class PickUpAndInteract : MonoBehaviour
             // moveDelta = PlayerBlackBoard.moveLock * length;
             screen_move = Vector3.Project(screen_move, PlayerBlackBoard.moveLock);
         }
-        // Debug.Log(needLock);
+
         // if (!needLock)
         // {
         // 更新 handTarget 的本地位置
@@ -194,36 +187,35 @@ public class PickUpAndInteract : MonoBehaviour
         // {
         //     pickUpTimer = 0f;
         // }
+        // float progress = (selectedObj != null && selectedObj._pickDelay != 0) ?
+        //     (float)pickUpTimer / selectedObj._pickDelay : 0;
+        // UEvent.Dispatch(EventType.OnPickingItem, progress);
 
-        if (selectedObj != null && PlayerInputController.IsPickUpPressed())
+        if (selectedObj != null && selectedObj.TryGetComponent<BaseItem>(out var itemScript))
         {
             if (Vector3.Distance(selectedObj.transform.position, transform.position) > pickUpRange)
             {
                 Debug.LogWarning("物体超出拾取范围！");
                 return;
             }
-            if(selectedObj.TryGetComponent<BaseItem>(out var itemScript)){
-                
+            if (PlayerInputController.IsPickUpPressed())
+            {
                 OnHandTriggerExit();
-                PickUpObject(itemScript);
+                itemScript.OnPickup(holdPos);
+                itemScript.gameObject.tag = "isPicking";
+                Physics.IgnoreCollision(itemScript.itemCollider, GetComponent<Collider>(), true);
+                PlayerBlackBoard.OnItemHeld((HoldableItem)itemScript);
+                _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
+            }
+            else if (PlayerInputController.IsInteractPressed())
+            {
+                itemScript.OnInteract();
             }
         }
     }
 
-    void PickUpObject(BaseItem pickUpObj)
-    {
-        pickUpObj.gameObject.tag = "isPicking";
-        Physics.IgnoreCollision(pickUpObj.itemCollider, GetComponent<Collider>(), true);
-        pickUpObj.OnPickup(holdPos);
-
-        PlayerBlackBoard.OnItemPicked(pickUpObj);
-
-        _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
-    }
-
     void DropObject()
     {
-
         PlayerBlackBoard.heldPickable.OnThrow();
         Physics.IgnoreCollision(PlayerBlackBoard.heldPickable.itemCollider, GetComponent<Collider>(), false);
         PlayerBlackBoard.heldPickable.gameObject.tag = "canInteract";
@@ -239,35 +231,6 @@ public class PickUpAndInteract : MonoBehaviour
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, pickUpRange);
-        }
-    }
-
-    public void OnHandTriggerEnter(GameObject other)
-    {
-        if (other.CompareTag("canInteract"))
-        {
-            
-            OnHandTriggerExit();
-            selectedObj = other;
-            SetLayerRecursive(selectedObj.transform, "Outline");
-        }
-    }
-
-    public void OnHandTriggerExit()
-    {
-        if(selectedObj!=null)
-        {
-            SetLayerRecursive(selectedObj.transform, "Default");
-            selectedObj = null;
-        }
-    }
-
-    protected static void SetLayerRecursive(Transform trans, string layer)
-    {
-        trans.gameObject.layer = LayerMask.NameToLayer(layer);
-        foreach (Transform child in trans)
-        {
-            SetLayerRecursive(child, layer);
         }
     }
 }

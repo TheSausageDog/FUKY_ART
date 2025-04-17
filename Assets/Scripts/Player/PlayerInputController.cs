@@ -18,6 +18,16 @@ public class PlayerInputController : MonoBehaviour
         isRotating = Input.GetKey(KeyCode.LeftAlt);
     }
 
+    public static bool IsInteractPressing()
+    {
+        return Input.GetKey(KeyCode.E);
+    }
+
+    public static bool IsInteractPressed()
+    {
+        return Input.GetKeyDown(KeyCode.E);
+    }
+
     // 获取移动输入
     public static Vector2 GetMovementInput()
     {

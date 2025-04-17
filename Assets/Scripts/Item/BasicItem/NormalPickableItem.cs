@@ -5,6 +5,8 @@ public class NormalPickableItem : PickableItem
 {
     public Rigidbody itemRigidbody { get; protected set; }
 
+    public override bool isInteractable { get { return false; } }
+
     protected Transform holdPos;
 
     public override void Awake()
@@ -15,7 +17,7 @@ public class NormalPickableItem : PickableItem
 
     public virtual void Update()
     {
-        if (isPicking)
+        if (isHolding)
         {
             // 计算目标位置与当前物体位置之间的距离
             float distanceToTarget = Vector3.Distance(transform.position, holdPos.position);

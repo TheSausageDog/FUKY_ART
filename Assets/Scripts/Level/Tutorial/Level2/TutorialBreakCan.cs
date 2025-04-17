@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class TutorialBreakCan : TutorialStep
 {
-    protected Container can;
+    protected CanContainer can;
 
     protected HighLightedItem knifeHightlighted;
 
     public override void TutorialStart(LevelController _levelController)
     {
         base.TutorialStart(_levelController);
-        can = levelController.envItemManager.can.GetComponent<Container>();
+        can = levelController.envItemManager.can.GetComponent<CanContainer>();
         knifeHightlighted = levelController.envItemManager.knife.AddComponent<HighLightedItem>();
         knifeHightlighted.isHighlighted = true;
     }

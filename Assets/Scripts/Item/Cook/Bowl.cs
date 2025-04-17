@@ -9,29 +9,31 @@ using UnityEngine.UI;
 /// 碗类，检测碗中的食物和味道成分，并进行评分。
 /// 继承自 BasePickableItem。
 /// </summary>
-public class Bowl : LiquidContainer
+[RequireComponent(typeof(LiquidContainer))]
+public class Bowl : AttachedPickableItem
 {
+    public override bool isInteractable { get { return true; } }
+
     // public Transform checkCenter; // 检查中心点
-    public float checkRadius; // 检查半径
-    public string testRecipeName; // 测试配方名称
+    public FoodRecorder checkArea;
+
+    public LiquidContainer liquidContainer;
+    // public string testRecipeName; // 测试配方名称
     // public Text text; // 显示评分信息的文本
 
-    private Camera cam; // 主摄像机
-    private float pepperAmount = 0; // 胡椒量
-    private Collider[] results = new Collider[128]; // 检测到的碰撞体数组
-    private HashSet<GameObject> pepperSet = new HashSet<GameObject>(); // 胡椒对象集合
+    // private float pepperAmount = 0; // 胡椒量
+    // private Collider[] results = new Collider[128]; // 检测到的碰撞体数组
+    // private HashSet<GameObject> pepperSet = new HashSet<GameObject>(); // 胡椒对象集合
 
     public override void Awake()
     {
         base.Awake();
-        // text.enabled = false;
-        cam = Camera.main;
+        liquidContainer = GetComponent<LiquidContainer>();
     }
 
-    private void FixedUpdate()
+    public override void Update()
     {
         CheckFood();
-        // text.transform.rotation = Quaternion.LookRotation(cam.transform.forward);
     }
 
     // public override void Interact(InteractionType type, params object[] args)
@@ -48,7 +50,11 @@ public class Bowl : LiquidContainer
     /// </summary>
     private void CheckFood()
     {
+        if (checkArea.isDirty)
+        {
 
+            checkArea.isDirty = false;
+        }
         // int size = Physics.OverlapSphereNonAlloc(checkCenter.position, checkRadius, results);
         // if (size == 0)
         // {

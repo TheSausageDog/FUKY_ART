@@ -28,7 +28,7 @@ public class TutorialFoodTrayAppear : TutorialStep
     {
         if (!watched)
         {
-            if (menuPickable.isPicking)
+            if (menuPickable.isHolding)
             {
                 watched = true;
             }
@@ -44,7 +44,7 @@ public class TutorialFoodTrayAppear : TutorialStep
         }
         else
         {
-            return !watched || menuPickable.isPicking;
+            return !watched || menuPickable.isHolding;
         }
         return true;
     }

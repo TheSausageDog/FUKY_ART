@@ -13,30 +13,44 @@ public abstract class BaseItem : MonoBehaviour
 
     public Collider itemCollider { get; protected set; }
 
-    public bool isPicking { get; protected set; } = false;
+    public abstract bool isHoldable { get; }
 
-    // private int LayerNumber;
+    public abstract bool isInteractable { get; }
 
     public virtual void Awake()
     {
         itemCollider = GetComponent<Collider>();
-        // LayerNumber = LayerMask.NameToLayer("holdLayer");
     }
 
     public virtual void Start()
     {
     }
 
+    public virtual void OnInteract()
+    {
+        throw new NotImplementedException();
+    }
+
     public virtual void OnPickup(Transform holdPos)
     {
-        // gameObject.layer = LayerNumber;
-        isPicking = true;
+        throw new NotImplementedException();
+    }
+}
+
+public abstract class HoldableItem : BaseItem
+{
+    public bool isHolding { get; protected set; } = false;
+
+    public override bool isHoldable { get { return true; } }
+
+    public override void OnPickup(Transform holdPos)
+    {
+        isHolding = true;
     }
 
     public virtual void OnThrow()
     {
-        // gameObject.layer = 0;
-        isPicking = false;
+        isHolding = false;
     }
 
     protected static void SetPickedRigidbody(Rigidbody rigidbody)
@@ -53,7 +67,7 @@ public abstract class BaseItem : MonoBehaviour
     }
 }
 
-public class PickableItem : BaseItem
+public abstract class PickableItem : HoldableItem
 {
     public override void OnPickup(Transform holdPos)
     {

@@ -32,7 +32,7 @@ public class TutorialMoveFoodTray : TutorialStep
 
     public override bool TutorialUpdate()
     {
-        return !containRecorder.IsContain(foodTrayCollider) || foodTrayPickable.isPicking;
+        return !containRecorder.IsContain(foodTrayCollider) || foodTrayPickable.isHolding;
     }
 
     public override void TutorialEnd()

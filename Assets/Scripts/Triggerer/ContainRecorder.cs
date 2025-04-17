@@ -11,16 +11,17 @@ public class ContainRecorder : MonoBehaviour
         inside.RemoveAll(s => s == null);
     }
 
-    public bool IsContain(Collider other){
+    public bool IsContain(Collider other)
+    {
         return inside.Contains(other);
     }
 
-    void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         inside.Add(other);
     }
 
-    void OnTriggerExit(Collider other)
+    public virtual void OnTriggerExit(Collider other)
     {
         inside.Remove(other);
     }

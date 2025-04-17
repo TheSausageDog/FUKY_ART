@@ -17,7 +17,7 @@ public class ItemConsole : MonoListener
         }
     }
 
-    [Listen(EventType.OnItemPicked)]
+    [Listen(EventType.OnItemHeld)]
     private void OnPickUpItem()
     {
         BaseItem item = PlayerBlackBoard.heldPickable;
