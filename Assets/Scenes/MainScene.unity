@@ -351,6 +351,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inside: []
   foods: []
+  mainIngredient: []
+  spices: []
 --- !u!1 &37524159
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,7 +546,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8707ee712aa59d8448cdcd9964b477af,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 69227731}
+      addedObject: {fileID: 69227733}
   m_SourcePrefab: {fileID: 100100000, guid: 8707ee712aa59d8448cdcd9964b477af, type: 3}
 --- !u!4 &69227727 stripped
 Transform:
@@ -608,21 +610,6 @@ CapsuleCollider:
   m_Height: 0.53
   m_Direction: 2
   m_Center: {x: 0.001, y: 0.045, z: 0.26}
---- !u!114 &69227731
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 69227728}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 7
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &69227732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -642,6 +629,20 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
+--- !u!114 &69227733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 69227728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 7
 --- !u!4 &77586390 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4272510212267909626, guid: 428665ccec99f2940b6de323d327be4b,
@@ -1190,15 +1191,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5113820924453014546, guid: ea11af398310d744e9d6c3042eb447bb,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1312423554}
-    - targetCorrespondingSourceObject: {fileID: 5113820924453014546, guid: ea11af398310d744e9d6c3042eb447bb,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1312423553}
     - targetCorrespondingSourceObject: {fileID: 5113820924453014546, guid: ea11af398310d744e9d6c3042eb447bb,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1312423557}
+    - targetCorrespondingSourceObject: {fileID: 5113820924453014546, guid: ea11af398310d744e9d6c3042eb447bb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1312423561}
   m_SourcePrefab: {fileID: 100100000, guid: ea11af398310d744e9d6c3042eb447bb, type: 3}
 --- !u!1001 &157607533
 PrefabInstance:
@@ -1287,7 +1288,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 928a525032506c8468b0d3db5feef948,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 157607538}
+      addedObject: {fileID: 157607540}
   m_SourcePrefab: {fileID: 100100000, guid: 928a525032506c8468b0d3db5feef948, type: 3}
 --- !u!4 &157607534 stripped
 Transform:
@@ -1351,21 +1352,6 @@ CapsuleCollider:
   m_Height: 0.53
   m_Direction: 2
   m_Center: {x: 0.001, y: 0.045, z: 0.26}
---- !u!114 &157607538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157607535}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 7
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &157607539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1385,6 +1371,20 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
+--- !u!114 &157607540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 157607535}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 7
 --- !u!4 &162295153 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6009456172123583720, guid: d4704445283b4d446a30665af8faf00b,
@@ -1817,21 +1817,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &250259941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 250259936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 6
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!64 &250259944
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -1898,6 +1883,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &250259950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250259936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f6b6e604e60b0419a91e6c9e324912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 6
 --- !u!1 &256527310
 GameObject:
   m_ObjectHideFlags: 0
@@ -2102,21 +2101,6 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
---- !u!114 &273079925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 273079922}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 4
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!54 &273079926
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2190,6 +2174,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &273079932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 273079922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 4
 --- !u!1001 &276060837
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2277,7 +2275,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 928a525032506c8468b0d3db5feef948,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 276060842}
+      addedObject: {fileID: 276060844}
   m_SourcePrefab: {fileID: 100100000, guid: 928a525032506c8468b0d3db5feef948, type: 3}
 --- !u!4 &276060838 stripped
 Transform:
@@ -2341,21 +2339,6 @@ CapsuleCollider:
   m_Height: 0.53
   m_Direction: 2
   m_Center: {x: 0.001, y: 0.045, z: 0.26}
---- !u!114 &276060842
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 276060839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 7
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &276060843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2375,6 +2358,20 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
+--- !u!114 &276060844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276060839}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 7
 --- !u!1001 &279669609
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3241,10 +3238,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1463442716}
-    - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1463442719}
     - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
         type: 3}
@@ -3258,6 +3251,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1463442722}
+    - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1463442725}
   m_SourcePrefab: {fileID: 100100000, guid: a7057053503ae8d43827a1f1e796082b, type: 3}
 --- !u!1 &375388254
 GameObject:
@@ -3626,15 +3623,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5113820924453014546, guid: ea11af398310d744e9d6c3042eb447bb,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1113677178}
-    - targetCorrespondingSourceObject: {fileID: 5113820924453014546, guid: ea11af398310d744e9d6c3042eb447bb,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1113677179}
     - targetCorrespondingSourceObject: {fileID: 5113820924453014546, guid: ea11af398310d744e9d6c3042eb447bb,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1113677181}
+    - targetCorrespondingSourceObject: {fileID: 5113820924453014546, guid: ea11af398310d744e9d6c3042eb447bb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1113677185}
     - targetCorrespondingSourceObject: {fileID: 9143682571306485766, guid: ea11af398310d744e9d6c3042eb447bb,
         type: 3}
       insertIndex: -1
@@ -8984,10 +8981,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 250259941}
-    - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 250259944}
     - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
         type: 3}
@@ -9001,6 +8994,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 250259947}
+    - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 250259950}
   m_SourcePrefab: {fileID: 100100000, guid: a7057053503ae8d43827a1f1e796082b, type: 3}
 --- !u!4 &486568267 stripped
 Transform:
@@ -9105,15 +9102,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1491682683559610449, guid: 8618b82a43ff5c044ace08f3daa116ca,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 273079925}
-    - targetCorrespondingSourceObject: {fileID: 1491682683559610449, guid: 8618b82a43ff5c044ace08f3daa116ca,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 273079924}
     - targetCorrespondingSourceObject: {fileID: 1491682683559610449, guid: 8618b82a43ff5c044ace08f3daa116ca,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 273079929}
+    - targetCorrespondingSourceObject: {fileID: 1491682683559610449, guid: 8618b82a43ff5c044ace08f3daa116ca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 273079932}
   m_SourcePrefab: {fileID: 100100000, guid: 8618b82a43ff5c044ace08f3daa116ca, type: 3}
 --- !u!1001 &557506633
 PrefabInstance:
@@ -9523,15 +9520,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1006723387}
-    - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1006723388}
     - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1006723390}
+    - targetCorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1006723393}
   m_SourcePrefab: {fileID: 100100000, guid: a7057053503ae8d43827a1f1e796082b, type: 3}
 --- !u!1001 &685642156
 PrefabInstance:
@@ -10506,15 +10503,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6750701934158924704, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1998464645}
-    - targetCorrespondingSourceObject: {fileID: 6750701934158924704, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1998464644}
     - targetCorrespondingSourceObject: {fileID: 6750701934158924704, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1998464648}
+    - targetCorrespondingSourceObject: {fileID: 6750701934158924704, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1998464652}
   m_SourcePrefab: {fileID: 100100000, guid: 0cd9cddd71db1e0419aadcabc163b0ad, type: 3}
 --- !u!1 &809256890
 GameObject:
@@ -10762,7 +10759,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8707ee712aa59d8448cdcd9964b477af,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 823626705}
+      addedObject: {fileID: 823626707}
   m_SourcePrefab: {fileID: 100100000, guid: 8707ee712aa59d8448cdcd9964b477af, type: 3}
 --- !u!4 &823626701 stripped
 Transform:
@@ -10826,21 +10823,6 @@ CapsuleCollider:
   m_Height: 0.53
   m_Direction: 2
   m_Center: {x: 0.001, y: 0.045, z: 0.26}
---- !u!114 &823626705
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 823626702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 7
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &823626706
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10860,6 +10842,20 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
+--- !u!114 &823626707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 823626702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 7
 --- !u!1 &860594622 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6750701934158924704, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
@@ -10899,21 +10895,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &860594628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 860594622}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 4
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &860594629
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10958,6 +10939,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &860594635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 860594622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 4
 --- !u!1 &861272104
 GameObject:
   m_ObjectHideFlags: 0
@@ -11636,7 +11631,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c75f9f2b2da2d9c44bdb47f62fe6cffd,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 997663899}
+      addedObject: {fileID: 997663901}
   m_SourcePrefab: {fileID: 100100000, guid: c75f9f2b2da2d9c44bdb47f62fe6cffd, type: 3}
 --- !u!4 &997663895 stripped
 Transform:
@@ -11700,21 +11695,6 @@ CapsuleCollider:
   m_Height: 0.53
   m_Direction: 2
   m_Center: {x: 0.009, y: 0.045, z: 0.26}
---- !u!114 &997663899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 997663896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 7
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &997663900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11734,6 +11714,20 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
+--- !u!114 &997663901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997663896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 7
 --- !u!1 &1005751905 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9143682571306485766, guid: ea11af398310d744e9d6c3042eb447bb,
@@ -11851,21 +11845,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5362362617252419451, guid: 157f52c094b67234397ba2c872fa9acb, type: 3}
---- !u!114 &1006723387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006723381}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 6
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1006723388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11910,6 +11889,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1006723393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006723381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f6b6e604e60b0419a91e6c9e324912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 6
 --- !u!1001 &1015866857
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16978,15 +16971,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6750701934158924704, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 860594628}
-    - targetCorrespondingSourceObject: {fileID: 6750701934158924704, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 860594629}
     - targetCorrespondingSourceObject: {fileID: 6750701934158924704, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 860594631}
+    - targetCorrespondingSourceObject: {fileID: 6750701934158924704, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 860594635}
     - targetCorrespondingSourceObject: {fileID: 1414887537312389525, guid: 0cd9cddd71db1e0419aadcabc163b0ad,
         type: 3}
       insertIndex: -1
@@ -17423,7 +17416,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: c75f9f2b2da2d9c44bdb47f62fe6cffd,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1072321622}
+      addedObject: {fileID: 1072321624}
   m_SourcePrefab: {fileID: 100100000, guid: c75f9f2b2da2d9c44bdb47f62fe6cffd, type: 3}
 --- !u!4 &1072321618 stripped
 Transform:
@@ -17487,21 +17480,6 @@ CapsuleCollider:
   m_Height: 0.53
   m_Direction: 2
   m_Center: {x: 0.009, y: 0.045, z: 0.26}
---- !u!114 &1072321622
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1072321619}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 7
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1072321623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17521,6 +17499,20 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
+--- !u!114 &1072321624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1072321619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 7
 --- !u!1001 &1075042521
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17870,21 +17862,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1113677178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1113677172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 4
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1113677179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17929,6 +17906,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1113677185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1113677172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 4
 --- !u!1001 &1138107649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18616,21 +18607,6 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
---- !u!114 &1312423554
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1312423551}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 4
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!54 &1312423555
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -18682,6 +18658,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1312423561
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1312423551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 4
 --- !u!1001 &1355943749
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18769,7 +18759,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 928a525032506c8468b0d3db5feef948,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1355943754}
+      addedObject: {fileID: 1355943756}
   m_SourcePrefab: {fileID: 100100000, guid: 928a525032506c8468b0d3db5feef948, type: 3}
 --- !u!4 &1355943750 stripped
 Transform:
@@ -18833,21 +18823,6 @@ CapsuleCollider:
   m_Height: 0.53
   m_Direction: 2
   m_Center: {x: 0.001, y: 0.045, z: 0.26}
---- !u!114 &1355943754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1355943751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 7
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1355943755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18867,6 +18842,20 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
+--- !u!114 &1355943756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355943751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 7
 --- !u!4 &1388946751 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4272510212267909626, guid: 428665ccec99f2940b6de323d327be4b,
@@ -19114,7 +19103,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 8707ee712aa59d8448cdcd9964b477af,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1456650106}
+      addedObject: {fileID: 1456650108}
   m_SourcePrefab: {fileID: 100100000, guid: 8707ee712aa59d8448cdcd9964b477af, type: 3}
 --- !u!4 &1456650102 stripped
 Transform:
@@ -19178,21 +19167,6 @@ CapsuleCollider:
   m_Height: 0.53
   m_Direction: 2
   m_Center: {x: 0.001, y: 0.045, z: 0.26}
---- !u!114 &1456650106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1456650103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 7
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1456650107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19212,6 +19186,20 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
+--- !u!114 &1456650108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456650103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 7
 --- !u!1 &1463442711 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8479717380996862872, guid: a7057053503ae8d43827a1f1e796082b,
@@ -19251,21 +19239,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1463442716
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463442711}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 6
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!64 &1463442719
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -19332,6 +19305,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1463442725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463442711}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f6b6e604e60b0419a91e6c9e324912, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 6
 --- !u!1 &1481523313
 GameObject:
   m_ObjectHideFlags: 0
@@ -19492,21 +19479,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: -854545869433990601, guid: 9191e4999c2b25f49951e513557686a7, type: 3}
---- !u!114 &1497039859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1497039853}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 4
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &1497039860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19551,6 +19523,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1497039865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1497039853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 4
 --- !u!1 &1512142908
 GameObject:
   m_ObjectHideFlags: 0
@@ -25820,15 +25806,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1491682683559610449, guid: 8618b82a43ff5c044ace08f3daa116ca,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1497039859}
-    - targetCorrespondingSourceObject: {fileID: 1491682683559610449, guid: 8618b82a43ff5c044ace08f3daa116ca,
-        type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1497039860}
     - targetCorrespondingSourceObject: {fileID: 1491682683559610449, guid: 8618b82a43ff5c044ace08f3daa116ca,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1497039862}
+    - targetCorrespondingSourceObject: {fileID: 1491682683559610449, guid: 8618b82a43ff5c044ace08f3daa116ca,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1497039865}
     - targetCorrespondingSourceObject: {fileID: 7731886514699641174, guid: 8618b82a43ff5c044ace08f3daa116ca,
         type: 3}
       insertIndex: -1
@@ -27376,21 +27362,6 @@ MonoBehaviour:
   minSplashSize: 0.1
   maxSplashSize: 0.3
   cutted: 0
---- !u!114 &1998464645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1998464642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a24e79661c6e944e94d24d759780a1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startTastes: []
-  foodType: 4
-  foodColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!54 &1998464646
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -27442,6 +27413,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1998464652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998464642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f468cf992c17c4247979e9f5321dac54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 4
 --- !u!1 &2000696916
 GameObject:
   m_ObjectHideFlags: 0
