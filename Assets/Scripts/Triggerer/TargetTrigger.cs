@@ -6,25 +6,24 @@ public class TargetTrigger : MonoBehaviour
 {
     public delegate void Trigged();
     public Collider target;
-    public Trigged trigged;
+    public Trigged trigged = () => { };
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public bool isInside { get; protected set; }
 
     void OnTriggerEnter(Collider other)
     {
-        if(other == target && trigged != null)
+        if (other == target)
         {
             trigged();
+            isInside = true;
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other == target)
+        {
+            isInside = false;
         }
     }
 }
