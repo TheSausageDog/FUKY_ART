@@ -19,80 +19,82 @@ public class Recipe : ScriptableObject
     /// <summary>
     /// 评估配方是否符合要求，返回评级结果。
     /// </summary>
-    public RecipeRating EvaluateRecipe(Dictionary<FoodType, float> foodValues, List<Taste> allTaste, List<Food> foods)
+    public RecipeRating EvaluateRecipe(Dictionary<FoodType, float> foodValues, Dictionary<FoodType, float> allTaste, List<Food> foods)
     {
-        Dictionary<FoodType, float> foodCount = foodValues;
-        Dictionary<TasteType, float> tasteTotals = new Dictionary<TasteType, float>();
+        return RecipeRating.差;
 
-        // 计算所有味道总量
-        foreach (var taste in allTaste)
-        {
-            if (tasteTotals.ContainsKey(taste.tasteType))
-                tasteTotals[taste.tasteType] += taste.tasteValue;
-            else
-                tasteTotals[taste.tasteType] = taste.tasteValue;
-        }
+        //     Dictionary<FoodType, float> foodCount = foodValues;
+        //     Dictionary<TasteType, float> tasteTotals = new Dictionary<TasteType, float>();
 
-        // 检查食材要求
-        foreach (var requirement in ingredientRequirements)
-        {
-            if (!foodCount.TryGetValue(requirement.foodType, out float count) ||
-                count < requirement.generalRange.x || count > requirement.generalRange.y)
-            {
-                return RecipeRating.差;
-            }
-        }
+        //     // 计算所有味道总量
+        //     foreach (var taste in allTaste)
+        //     {
+        //         if (tasteTotals.ContainsKey(taste.tasteType))
+        //             tasteTotals[taste.tasteType] += taste.tasteValue;
+        //         else
+        //             tasteTotals[taste.tasteType] = taste.tasteValue;
+        //     }
 
-        // 检查是否需要切割
-        foreach (var food in foods)
-        {
-            if (!food.cutted && ingredientRequirements.Find(req => food.foodType == req.foodType).needToCut)
-            {
-                return RecipeRating.差;
-            }
-        }
+        //     // 检查食材要求
+        //     foreach (var requirement in ingredientRequirements)
+        //     {
+        //         if (!foodCount.TryGetValue(requirement.foodType, out float count) ||
+        //             count < requirement.generalRange.x || count > requirement.generalRange.y)
+        //         {
+        //             return RecipeRating.差;
+        //         }
+        //     }
 
-        // 检查味道要求
-        foreach (var requirement in tasteRequirements)
-        {
-            if (!tasteTotals.TryGetValue(requirement.tasteType, out float value) ||
-                value < requirement.generalRange.x || value > requirement.generalRange.y)
-            {
-                return RecipeRating.差;
-            }
-        }
+        //     // 检查是否需要切割
+        //     foreach (var food in foods)
+        //     {
+        //         if (!food.cutted && ingredientRequirements.Find(req => food.foodType == req.foodType).needToCut)
+        //         {
+        //             return RecipeRating.差;
+        //         }
+        //     }
 
-        // 进一步评估优秀与一般
-        bool isExcellent = true;
+        //     // 检查味道要求
+        //     foreach (var requirement in tasteRequirements)
+        //     {
+        //         if (!tasteTotals.TryGetValue(requirement.tasteType, out float value) ||
+        //             value < requirement.generalRange.x || value > requirement.generalRange.y)
+        //         {
+        //             return RecipeRating.差;
+        //         }
+        //     }
 
-        foreach (var requirement in ingredientRequirements)
-        {
-            foodCount.TryGetValue(requirement.foodType, out float count);
-            if (count < requirement.goodRange.x || count > requirement.goodRange.y)
-            {
-                isExcellent = false;
-            }
-        }
+        //     // 进一步评估优秀与一般
+        //     bool isExcellent = true;
 
-        foreach (var requirement in tasteRequirements)
-        {
-            tasteTotals.TryGetValue(requirement.tasteType, out float value);
-            if (value < requirement.goodRange.x || value > requirement.goodRange.y)
-            {
-                isExcellent = false;
-            }
-        }
+        //     foreach (var requirement in ingredientRequirements)
+        //     {
+        //         foodCount.TryGetValue(requirement.foodType, out float count);
+        //         if (count < requirement.goodRange.x || count > requirement.goodRange.y)
+        //         {
+        //             isExcellent = false;
+        //         }
+        //     }
 
-        foreach (var food in foods)
-        {
-            var singleGoodRange = ingredientRequirements.Find(req => food.foodType == req.foodType).singleGoodRange;
-            if (food.volume < singleGoodRange.x || food.volume > singleGoodRange.y)
-            {
-                isExcellent = false;
-            }
-        }
+        //     foreach (var requirement in tasteRequirements)
+        //     {
+        //         tasteTotals.TryGetValue(requirement.tasteType, out float value);
+        //         if (value < requirement.goodRange.x || value > requirement.goodRange.y)
+        //         {
+        //             isExcellent = false;
+        //         }
+        //     }
 
-        return isExcellent ? RecipeRating.优秀 : RecipeRating.一般;
+        //     foreach (var food in foods)
+        //     {
+        //         var singleGoodRange = ingredientRequirements.Find(req => food.foodType == req.foodType).singleGoodRange;
+        //         if (food.volume < singleGoodRange.x || food.volume > singleGoodRange.y)
+        //         {
+        //             isExcellent = false;
+        //         }
+        //     }
+
+        //     return isExcellent ? RecipeRating.优秀 : RecipeRating.一般;
     }
 }
 

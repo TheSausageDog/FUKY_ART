@@ -7,9 +7,9 @@ using UnityEngine.Rendering.Universal;
 public class WaterFlow : MonoBehaviour
 {
     public float angleTreshold = 30f;
-    bool isUp =true;
+    protected bool isUp = true;
     // private Coroutine generationCoroutine = null;
-    
+
     // public GameObject item;
     // public Transform generatePos;
 
@@ -17,16 +17,20 @@ public class WaterFlow : MonoBehaviour
 
     public ParticleSystem particle;
 
-    public GameObject spray;
+    // public GameObject spray;
 
-    public List<ParticleCollisionEvent> collisionEvents= new List<ParticleCollisionEvent>();
+    // public List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
+
+    public float dropVolume = 0.1f;
 
     void OnParticleCollision(GameObject other)
     {
         if (other.TryGetComponent<LiquidContainer>(out var _bowl))
         {
-            _bowl.AddLiquid(liquid_color, 1);
-        }else{
+            _bowl.AddLiquid(liquid_color, dropVolume, this);
+        }
+        else
+        {
             return;
             // particle.GetCollisionEvents(other, collisionEvents);
             // GameObject new_spray = Instantiate(spray);
@@ -42,23 +46,24 @@ public class WaterFlow : MonoBehaviour
         }
     }
 
-    private void Update()
+    public virtual void Update()
     {
-        if(isUp && Vector3.Angle(transform.up,-Vector3.up) < angleTreshold)
+        if (isUp && Vector3.Angle(transform.up, -Vector3.up) < angleTreshold)
         {
             isUp = false;
             StartDrop();
         }
-        else if(!isUp && Vector3.Angle(transform.up,-Vector3.up) > angleTreshold)
+        else if (!isUp && Vector3.Angle(transform.up, -Vector3.up) > angleTreshold)
         {
             isUp = true;
             EndDrop();
         }
     }
 
-    private void StartDrop()
+    protected void StartDrop()
     {
-        if(particle != null){
+        if (particle != null)
+        {
             particle.Play();
             // particle.Emit(1);
         }
@@ -78,7 +83,7 @@ public class WaterFlow : MonoBehaviour
     //         Instantiate(item, generatePos.position, Quaternion.identity);
     //     }  
     // }
-    private void EndDrop()
+    protected void EndDrop()
     {
         particle.Stop();
         // Debug.Log("end");

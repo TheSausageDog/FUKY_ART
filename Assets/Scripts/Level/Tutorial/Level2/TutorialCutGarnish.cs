@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using BzKovSoft.ObjectSlicer;
 using UnityEngine;
 
 public class TutorialCutGarnish : TutorialStep
@@ -17,10 +18,10 @@ public class TutorialCutGarnish : TutorialStep
         bool hasMushroom = false, hasPepper = false;
         foreach (var inside in containRecorder.inside)
         {
-            if (inside != null && inside.TryGetComponent<Food>(out Food food))
+            if (inside != null && inside.TryGetComponent<Food>(out Food food) && inside.TryGetComponent<BzSliceableObject>(out BzSliceableObject sliceObj))
             {
                 FoodType foodType = food.foodType;
-                if (food.cutted)
+                if (sliceObj.cutted)
                 {
                     if (foodType == FoodType.Mushroom) { hasMushroom = true; }
                     if (foodType == FoodType.Pepper) { hasPepper = true; }

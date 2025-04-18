@@ -19,7 +19,7 @@ namespace BzKovSoft.ObjectSlicer.Samples
         [SerializeField] private Vector3 _direction = Vector3.up;
         private Rigidbody _rigidbody;
 
-        public List<Food> cuttingFoods;
+        public List<BzSliceableObject> cuttingObjects;
         // public Vector3 normal = Vector3.up; // 平面法向量
         // public Vector3 point = Vector3.zero; // 平面上一点
         public float planeSize = 5f; // 平面尺寸
@@ -65,14 +65,14 @@ namespace BzKovSoft.ObjectSlicer.Samples
         /// <summary>
         /// 当接触食物时调用
         /// </summary>
-        public void OnEnterFood(Food food, ref Plane plane)
+        public void OnEnterObject(BzSliceableObject slicedObj, ref Plane plane)
         {
-            if (cuttingFoods.Count == 0)
+            if (cuttingObjects.Count == 0)
                 UEvent.Dispatch(EventType.OnKnifeTouchBegin, BladeDirection);
 
-            if (!cuttingFoods.Contains(food))
+            if (!cuttingObjects.Contains(slicedObj))
             {
-                cuttingFoods.Add(food);
+                cuttingObjects.Add(slicedObj);
                 Vector3 collisionPoint = GetCollisionPoint();
                 Vector3 normal = Vector3.Cross(MoveDirection, BladeDirection);
 
@@ -85,12 +85,12 @@ namespace BzKovSoft.ObjectSlicer.Samples
         /// <summary>
         /// 当食物离开时调用
         /// </summary>
-        public void OnExitFood(Food food)
+        public void OnExitObject(BzSliceableObject slicedObj)
         {
-            if (cuttingFoods.Contains(food))
-                cuttingFoods.Remove(food);
+            if (cuttingObjects.Contains(slicedObj))
+                cuttingObjects.Remove(slicedObj);
 
-            if (cuttingFoods.Count == 0)
+            if (cuttingObjects.Count == 0)
                 UEvent.Dispatch(EventType.OnKnifeTouchEnd);
         }
 
@@ -132,11 +132,12 @@ namespace BzKovSoft.ObjectSlicer.Samples
             Gizmos.DrawLine(collisionPoint, collisionPoint + normal * planeSize);
 
             Gizmos.color = Color.blue;
-            foreach(var foods in cuttingFoods){
+            foreach (var foods in cuttingObjects)
+            {
                 Gizmos.DrawLine(foods.in_knifePos, transform.position);
             }
 
-            
+
         }
     }
 }

@@ -19,15 +19,20 @@ public class LiquidContainer : MonoBehaviour
 
     public float liquid_full = 5;
 
+    public delegate void OnLiquidChanged(float delta_volume, WaterFlow source);
+
+    public OnLiquidChanged onLiquidChanged = (float _, WaterFlow _) => { };
+
     public virtual void Start()
     {
         AddLiquid(Color.black, 0);
         liquid_volume = 0;
     }
 
-    public void AddLiquid(Color _liquid_color, float _liquid_volume)
+    public void AddLiquid(Color _liquid_color, float _liquid_volume, WaterFlow source = null)
     {
 
+        if (source != null) { onLiquidChanged(_liquid_volume, source); }
         if (liquid_volume == 0)
         {
             liquid_color = _liquid_color;

@@ -7,13 +7,13 @@ using UnityEngine.UI;
 
 public class ItemConsole : MonoListener
 {
-    public Text consoleText;
+    public string consoleText;
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            consoleText.enabled = !consoleText.enabled;
+            Debug.Log(consoleText);
         }
     }
 
@@ -24,28 +24,28 @@ public class ItemConsole : MonoListener
         string info = "";
         info += $"当前物品的名字：{item.name}\n";
 
-        if (item is Food food)
+        if (item.TryGetComponent<Food>(out var food))
         {
             info += $"当前食物的种类：{food.foodType}\n";
-            info += $"当前食物的体积：{Mathf.Max(0.01f, food.volume):F}\n";
+            // info += $"当前食物的体积：{Mathf.Max(0.01f, food.volume):F}\n";
 
-            foreach (var taste in food.Tastes.Tastes)
+            foreach (var taste in food.tastes)
             {
-                info += $"当前食物味道：{taste.tasteType}\n";
-                info += $"值为：{Mathf.Max(0.01f, taste.tasteValue):F}\n";
+                info += $"当前食物味道：{taste.Key}\n";
+                info += $"值为：{Mathf.Max(0.01f, taste.Value):F}\n";
             }
 
-            info += food.cutted ? "当前食物被切过了" : "当前食物未被切过\n";
+            // info += food.cutted ? "当前食物被切过了" : "当前食物未被切过\n";
         }
 
 
 
-        consoleText.text = info;
+        consoleText = info;
     }
     [Listen(EventType.OnItemDrop)]
     private void OnItemDrop()
     {
-        consoleText.text = " ";
+        // consoleText.text = " ";
     }
 
 }

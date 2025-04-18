@@ -29,7 +29,7 @@ public class PickUpAndInteract : MonoBehaviour
     [SerializeField] private float CameraFieldOfViewOffset;
 
     public GameObject selectedObj; // 当前手部范围内的物体
-    private float pickUpTimer = 0f; // 长按拾取计时器
+    // private float pickUpTimer = 0f; // 长按拾取计时器
 
     [Header("按下Alt后手移动的灵敏度")]
     public float mouseSensitivity = 0.1f; // 鼠标灵敏度
@@ -99,10 +99,12 @@ public class PickUpAndInteract : MonoBehaviour
             if (PlayerInputController.IsRotateHeld())
             {
                 BaseItem heldObj = PlayerBlackBoard.heldPickable;
-                float XaxisRotation = PlayerInputController.GetMouseInput().x * rotationSensitivity;
-                float YaxisRotation = PlayerInputController.GetMouseInput().y * rotationSensitivity;
-                heldObj.transform.Rotate(-CameraPos.up, XaxisRotation, Space.World);
-                heldObj.transform.Rotate(CameraPos.right, YaxisRotation, Space.World);
+                Vector2 mouseInput = PlayerInputController.GetMouseInput() * rotationSensitivity;
+                float scrollInput = PlayerInputController.GetScrollInput() * 10;
+
+                heldObj.transform.Rotate(Vector3.up, mouseInput.x, Space.Self);
+                heldObj.transform.Rotate(Vector3.right, mouseInput.y, Space.Self);
+                heldObj.transform.Rotate(Vector3.forward, scrollInput, Space.Self);
             }
             else if (PlayerInputController.IsThrowPressed())
             {
