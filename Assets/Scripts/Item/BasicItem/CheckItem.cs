@@ -6,7 +6,6 @@ public class CheckItem : PickableItem
 {
     public override bool isInteractable { get { return false; } }
 
-    public Transform dragPoint;
     public float objectSize = 1;
 
     void Update()

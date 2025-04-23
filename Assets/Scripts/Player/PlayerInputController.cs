@@ -28,6 +28,11 @@ public class PlayerInputController : MonoBehaviour
         return Input.GetKeyDown(KeyCode.E);
     }
 
+    public static bool IsRecipePressed()
+    {
+        return Input.GetKeyDown(KeyCode.R);
+    }
+
     // 获取移动输入
     public static Vector2 GetMovementInput()
     {

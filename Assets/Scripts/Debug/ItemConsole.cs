@@ -20,7 +20,7 @@ public class ItemConsole : MonoListener
     [Listen(EventType.OnItemHeld)]
     private void OnPickUpItem()
     {
-        BaseItem item = PlayerBlackBoard.heldPickable;
+        BaseItem item = PlayerBlackBoard.heldItem;
         string info = "";
         info += $"当前物品的名字：{item.name}\n";
 

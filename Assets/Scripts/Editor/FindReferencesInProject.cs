@@ -55,7 +55,7 @@ namespace ProjectWK
 
         void OnGUI()
         {
-            GUILayout.TextField("查询范围: "+_queryScope);
+            GUILayout.TextField("查询范围: " + _queryScope);
             if (_prefabs != null && _AllAssetsData != null)
             {
                 EditorGUILayout.BeginVertical();
@@ -267,8 +267,8 @@ namespace ProjectWK
         public void OnGUI()
         {
             EditorGUILayout.BeginVertical();
-            EditorGUILayout.ObjectField("被引用次数:"+_usedPrefab.Count+"/  查询的资源:", assetObj, typeof(GameObject), true);
-            
+            EditorGUILayout.ObjectField("被引用次数:" + _usedPrefab.Count + "/  查询的资源:", assetObj, typeof(GameObject), true);
+
             for (int i = 0; i < _usedPrefab.Count; i++)
             {
                 EditorGUILayout.BeginHorizontal();

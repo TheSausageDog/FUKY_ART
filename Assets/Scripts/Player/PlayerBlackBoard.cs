@@ -12,7 +12,7 @@ public class PlayerBlackBoard : MonoListener
 {
     public static bool isHeldObj { protected set; get; } = false;
     // [NonSerialized] public static Transform heldTrans;
-    [NonSerialized] public static HoldableItem heldPickable;
+    [NonSerialized] public static HoldableItem heldItem;
     // [NonSerialized] public static bool holdingKnife;
     // [NonSerialized] public static Vector3 knifeOrginPos;
     [NonSerialized] public static Vector3 moveLock;
@@ -40,7 +40,7 @@ public class PlayerBlackBoard : MonoListener
     public static void OnItemHeld(HoldableItem item)
     {
         isHeldObj = true;
-        heldPickable = item;
+        heldItem = item;
         UEvent.Dispatch(EventType.OnItemHeld);
     }
 

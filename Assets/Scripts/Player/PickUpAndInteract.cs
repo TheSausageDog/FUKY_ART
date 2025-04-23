@@ -9,7 +9,7 @@ using UnityEngine;
 /// 物品拾取与交互逻辑类
 /// 处理玩家对物品的拾取、旋转、丢弃等操作。
 /// </summary>
-public class PickUpAndInteract : MonoBehaviour
+public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 {
     public Transform holdPos; // 物品持有位置
     public Transform handTarget;
@@ -41,14 +41,14 @@ public class PickUpAndInteract : MonoBehaviour
     public Vector2 yMinMax;
     public Vector2 zMinMax;
 
-
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _camera = Camera.main;
         handTargetOffset = Vector3.forward;
         // handTarget.transform.localPosition;
     }
+
 
 
     public void OnHandTriggerEnter(GameObject other)
@@ -98,7 +98,7 @@ public class PickUpAndInteract : MonoBehaviour
         {
             if (PlayerInputController.IsRotateHeld())
             {
-                BaseItem heldObj = PlayerBlackBoard.heldPickable;
+                BaseItem heldObj = PlayerBlackBoard.heldItem;
                 Vector2 mouseInput = PlayerInputController.GetMouseInput() * rotationSensitivity;
                 float scrollInput = PlayerInputController.GetScrollInput() * 10;
 
@@ -203,11 +203,7 @@ public class PickUpAndInteract : MonoBehaviour
             if (PlayerInputController.IsPickUpPressed())
             {
                 OnHandTriggerExit();
-                itemScript.OnPickup(holdPos);
-                itemScript.gameObject.tag = "isPicking";
-                Physics.IgnoreCollision(itemScript.itemCollider, GetComponent<Collider>(), true);
-                PlayerBlackBoard.OnItemHeld((HoldableItem)itemScript);
-                _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
+                PickObject(itemScript);
             }
             else if (PlayerInputController.IsInteractPressed())
             {
@@ -216,11 +212,22 @@ public class PickUpAndInteract : MonoBehaviour
         }
     }
 
-    void DropObject()
+    public void PickObject(BaseItem pickItem)
     {
-        PlayerBlackBoard.heldPickable.OnThrow();
-        Physics.IgnoreCollision(PlayerBlackBoard.heldPickable.itemCollider, GetComponent<Collider>(), false);
-        PlayerBlackBoard.heldPickable.gameObject.tag = "canInteract";
+        pickItem.OnPickup(holdPos);
+        pickItem.gameObject.tag = "isPicking";
+        Physics.IgnoreCollision(pickItem.itemCollider, GetComponent<Collider>(), true);
+
+        PlayerBlackBoard.OnItemHeld((HoldableItem)pickItem);
+
+        _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
+    }
+
+    public void DropObject()
+    {
+        PlayerBlackBoard.heldItem.OnThrow();
+        Physics.IgnoreCollision(PlayerBlackBoard.heldItem.itemCollider, GetComponent<Collider>(), false);
+        PlayerBlackBoard.heldItem.gameObject.tag = "canInteract";
 
         PlayerBlackBoard.OnItemDrop();
 

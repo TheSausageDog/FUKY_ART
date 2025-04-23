@@ -55,10 +55,10 @@ public class GradientCreator : EditorWindow
         {
             mat = (Material)EditorGUILayout.ObjectField("需要预览的材质球", mat, typeof(Material), true);
             shaderParameterName = EditorGUILayout.TextField("贴图参数名", shaderParameterName);
-            if(!tempMat) tempMat = mat;
+            if (!tempMat) tempMat = mat;
             if (mat)
             {
-                if(!tex)
+                if (!tex)
                     tex = mat.GetTexture(shaderParameterName);
                 mat.SetTexture(shaderParameterName, _GradientMap);
             }
@@ -76,12 +76,13 @@ public class GradientCreator : EditorWindow
         {
             if (tex && mat)
             {
-                mat.SetTexture(shaderParameterName,tex);
+                mat.SetTexture(shaderParameterName, tex);
                 tex = null;
                 mat = null;
-            }else if (tex && !mat)
+            }
+            else if (tex && !mat)
             {
-                tempMat.SetTexture(shaderParameterName,tex);
+                tempMat.SetTexture(shaderParameterName, tex);
                 tempMat = null;
                 tex = null;
             }
@@ -97,13 +98,13 @@ public class GradientCreator : EditorWindow
         _Gradient = data._Gradient;
         _Gradient = _GradientData._Gradient;
     }
-    
+
 
     ///<绘制渐变控制列表>
     [SerializeField]
     public List<Gradient> _Gradient = new List<Gradient>();
-    protected SerializedObject _serializedObject;    
-    protected SerializedProperty _assetLstProperty;  
+    protected SerializedObject _serializedObject;
+    protected SerializedProperty _assetLstProperty;
     private void GradientListGUI()//绘制列表
     {
         if (_Gradient.Count <= 0)
@@ -119,8 +120,8 @@ public class GradientCreator : EditorWindow
     //绘制GUI
     private void DrawGUI()
     {
-        _GradientWidth = (GradientCreatorData.WidthSize)EditorGUILayout.EnumPopup("每条渐变宽度(像素)",_GradientWidth);
-        
+        _GradientWidth = (GradientCreatorData.WidthSize)EditorGUILayout.EnumPopup("每条渐变宽度(像素)", _GradientWidth);
+
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.LabelField("纹理名称", GUILayout.Width(100));
 
@@ -131,10 +132,12 @@ public class GradientCreator : EditorWindow
         if (index == GradientCreatorData.Format.TGA)
         {
             _Format = ".tga";
-        }else if (index == GradientCreatorData.Format.PNG)
+        }
+        else if (index == GradientCreatorData.Format.PNG)
         {
             _Format = ".tga";
-        }else
+        }
+        else
             _Format = ".jpg";
         EditorGUILayout.EndHorizontal();
     }
@@ -144,7 +147,7 @@ public class GradientCreator : EditorWindow
         EditorGUILayout.BeginHorizontal();
         if (GUILayout.Button("Save Texture"))
         {
-            string path = EditorUtility.SaveFolderPanel("Select an output path", _GradientData?_GradientData.path : "", "");
+            string path = EditorUtility.SaveFolderPanel("Select an output path", _GradientData ? _GradientData.path : "", "");
             string subPath = path.Substring(Application.dataPath.Length - 6);
             // Save the texture to disk
             byte[] pngData = _GradientMap.EncodeToTGA();
@@ -155,10 +158,10 @@ public class GradientCreator : EditorWindow
             if (FormatIndex == 2)
                 pngData = _GradientMap.EncodeToJPG();
 
-            
+
             File.WriteAllBytes(path + "/" + _GradientName + _Format, pngData);
             AssetDatabase.Refresh();
-            
+
             TextureImporter importer = (TextureImporter)TextureImporter.GetAtPath(subPath + "/" + _GradientName + _Format);
             TextureImporterSettings setting = new TextureImporterSettings();
             if (importer != null)
@@ -195,9 +198,9 @@ public class GradientCreator : EditorWindow
                 AssetDatabase.Refresh();
                 _GradientData = data;
             }
-            
+
         }
-        
+
         EditorGUILayout.EndHorizontal();
     }
 

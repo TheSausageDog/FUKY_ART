@@ -7,21 +7,16 @@ using UnityEngine.PlayerLoop;
 
 public class TutorialFoodTrayAppear : TutorialStep
 {
-    protected GameObject foodTray;
-
     protected CheckItem menuPickable;
-
-    protected Animator animator;
 
     protected bool watched = false;
 
     public override void TutorialStart(LevelController _levelController)
     {
         base.TutorialStart(_levelController);
-        foodTray = levelController.envItemManager.tray;
+        OrderManager.Instance.NewOrder();
         menuPickable = levelController.envItemManager.menu.GetComponent<CheckItem>();
-        animator = foodTray.GetComponent<Animator>();
-        foodTray.SetActive(true);
+        menuPickable.AddComponent<HighLightedItem>().isHighlighted = true;
     }
 
     public override bool TutorialUpdate()
@@ -33,20 +28,8 @@ public class TutorialFoodTrayAppear : TutorialStep
                 watched = true;
             }
         }
-        if (animator.enabled)
-        {
-            AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.normalizedTime >= 1.0f && stateInfo.IsName("FoodTrayAnimation"))
-            {
-                animator.enabled = false;
-                menuPickable.AddComponent<HighLightedItem>().isHighlighted = true;
-            }
-        }
-        else
-        {
-            return !watched || menuPickable.isHolding;
-        }
-        return true;
+
+        return !watched || menuPickable.isHolding;
     }
 
     public override void TutorialEnd()

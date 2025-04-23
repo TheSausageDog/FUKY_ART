@@ -17341,7 +17341,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6415946459505320378, guid: 1e2c8fd8838da97478279f8e63143b37,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1064203531}
+      addedObject: {fileID: 1064203533}
   m_SourcePrefab: {fileID: 100100000, guid: 1e2c8fd8838da97478279f8e63143b37, type: 3}
 --- !u!4 &1064203526 stripped
 Transform:
@@ -17376,7 +17376,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.35160875, y: 0.0360502, z: 0.440763}
   m_Center: {x: 0, y: 0.0180251, z: 0}
---- !u!114 &1064203531
+--- !u!114 &1064203533
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -25548,6 +25548,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1651822401}
   - component: {fileID: 1651822399}
+  - component: {fileID: 1651822405}
   - component: {fileID: 1651822404}
   - component: {fileID: 1651822398}
   - component: {fileID: 1651822397}
@@ -25556,7 +25557,6 @@ GameObject:
   - component: {fileID: 1651822394}
   - component: {fileID: 1651822402}
   - component: {fileID: 1651822403}
-  - component: {fileID: 1651822405}
   m_Layer: 0
   m_Name: "\u2014\u2014Manager\u2014\u2014"
   m_TagString: Untagged
@@ -25718,7 +25718,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodTray: {fileID: 793550273}
-  orderItem: {fileID: 1064203531}
+  orderItem: {fileID: 0}
 --- !u!1001 &1663717624
 PrefabInstance:
   m_ObjectHideFlags: 0
