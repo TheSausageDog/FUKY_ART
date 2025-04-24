@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 740148228}
   - component: {fileID: 740148233}
   - component: {fileID: 740148232}
-  - component: {fileID: 740148219}
   - component: {fileID: 740148218}
   m_Layer: 0
   m_Name: LevelController
@@ -195,20 +194,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f90f972ce2c0da43aae24267f12d2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextLevel: 
---- !u!114 &740148219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740148213}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa5b62b106b1b284cb3f2034b995aec5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogText: 
+  nextLevel: TutorialLevel3
 --- !u!114 &740148220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,6 +222,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: "\u9999\u80A0\u7F50\u5934\u63D0\u793A\u8001\u8C2Dgkd\u628A\u6211\u62FF\u8D77\u6765"
+  taskName: "\u590D\u5DE5\u590D\u4EA7"
+  taskStepName: "\u62FF\u53D6\u9999\u80A0\u7F50\u5934"
 --- !u!114 &740148222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -263,6 +251,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: 
+  taskName: "\u590D\u5DE5\u590D\u4EA7"
+  taskStepName: "\u60F3\u529E\u6CD5\u6253\u5F00\u7F50\u5934"
 --- !u!114 &740148224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +294,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: 
+  taskName: "\u590D\u5DE5\u590D\u4EA7 "
+  taskStepName: "\u6253\u5F00\u51B0\u7BB1\u68C0\u67E5"
 --- !u!114 &740148227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +323,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: 
+  taskName: "\u590D\u5DE5\u590D\u4EA7"
+  taskStepName: "\u5C06\u8FA3\u6912\u5207\u7247"
 --- !u!114 &740148229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -372,6 +366,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: 
+  taskName: "\u590D\u5DE5\u590D\u4EA7"
+  taskStepName: "\u53D6\u51FA\u8611\u83C7\u548C\u8FA3\u6912"
 --- !u!114 &740148232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,7 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e757d3b6ec4db354eb64277522514173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogText: "\u7B49\u7B49\u7B49\uFF0C\u8001\u8C2D\u5BFB\u601D\u7740\u4ED6\u77E5\u9053\u8BE5\u600E\u4E48\u4E0A\u5DE5\u4E86\uFF0C\u4ED6\u61C2\u4E86\uFF0C\u4ED6\u660E\u767D\u4E86\uFF0C\u4ED6\u4E86\u89E3\u4E86\uFF0C\u4ED6\u9152\u9192\u4E86"
+  dialogText: "\u7B49\u7B49\u7B49\uFF0C\u8001\u8C2D\u5BFB\u601D\u7740\u4ED6\u77E5\u9053\u8BE5\u600E\u4E48\u4E0A\u5DE5\u4E86\uFF0C\u4ED6\u61C2\u4E86\uFF0C\u4ED6\u660E\u767D\u4E86\uFF0C\u4ED6\u4E86\u89E3\u4E86\uFF0C\u4ED6\u9152\u9192\u4E86\uFF08\u5012\u996E\u6599"
   duration: 2
 --- !u!114 &740148233
 MonoBehaviour:

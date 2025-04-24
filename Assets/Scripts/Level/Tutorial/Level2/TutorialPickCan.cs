@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class TutorialPickCan : TutorialStep
 {
-    protected BasePickableItem canPickable;
+    protected CanContainer canPickable;
 
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
-        canPickable = levelController.envItemManager.can.GetComponent<BasePickableItem>();
+        base.TutorialStart(_levelController);
+        canPickable = levelController.envItemManager.can.GetComponent<CanContainer>();
+        canPickable.transform.gameObject.AddComponent<HighLightedItem>().isHighlighted = true;
     }
     // Update is called once per frame
-    void Update()
+    public override bool TutorialUpdate()
     {
-        if (canPickable.isPicking)
-        {
-            EndStep();
-        }
+        return !canPickable.isHolding;
+    }
+
+    public override void TutorialEnd()
+    {
+        base.TutorialEnd();
+        canPickable.GetComponent<HighLightedItem>().isHighlighted = false;
     }
 }

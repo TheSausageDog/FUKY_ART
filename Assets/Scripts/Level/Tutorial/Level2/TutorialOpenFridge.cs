@@ -4,18 +4,27 @@ using UnityEngine;
 
 public class TutorialOpenFridge : TutorialStep
 {
-    PickableDragItem fridge;
+    FridgeItem fridge;
 
-    public override void Start()
+    protected HighLightedItem fridgeHightlighted;
+
+
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
-        fridge = levelController.envItemManager.fridge.transform.GetChild(1).GetComponent<PickableDragItem>();
+        base.TutorialStart(_levelController);
+        fridge = levelController.envItemManager.fridge.transform.GetChild(1).GetComponent<FridgeItem>();
+        fridgeHightlighted = levelController.envItemManager.fridge.AddComponent<HighLightedItem>();
+        fridgeHightlighted.isHighlighted = true;
     }
 
-    void Update()
+    public override bool TutorialUpdate()
     {
-        if(fridge.isPicking){
-            EndStep();
-        }
+        return !fridge.isHolding;
+    }
+
+    public override void TutorialEnd()
+    {
+        base.TutorialEnd();
+        fridgeHightlighted.isHighlighted = false;
     }
 }

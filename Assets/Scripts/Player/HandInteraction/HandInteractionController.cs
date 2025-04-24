@@ -28,7 +28,7 @@ public class HandInteractionController : MonoListener
     //     }
     // }
 
-    [Listen(EventType.OnItemPicked)]
+    [Listen(EventType.OnItemHeld)]
     private void OnItemPicked()
     {
         // if (PlayerInputController.IsMoveHandHeld())
@@ -73,6 +73,6 @@ public class HandInteractionController : MonoListener
                 return;
             }
         }
-        if (pick.currentHandObj != null) pick.OnHandTriggerExit(pick.currentHandObj._transform.gameObject);
+        pick.OnHandTriggerExit();
     }
 }

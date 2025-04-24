@@ -12,10 +12,19 @@ public class PlayerBlackBoard : MonoListener
 {
     public static bool isHeldObj { protected set; get; } = false;
     // [NonSerialized] public static Transform heldTrans;
-    [NonSerialized] public static BasePickableItem heldPickable;
+    [NonSerialized] public static HoldableItem heldItem;
     // [NonSerialized] public static bool holdingKnife;
     // [NonSerialized] public static Vector3 knifeOrginPos;
     [NonSerialized] public static Vector3 moveLock;
+
+    public float _handSpeed = 1;
+
+    public static float handSpeed;
+
+    void Start()
+    {
+        handSpeed = _handSpeed;
+    }
 
     [Listen(EventType.OnKnifeTouchBegin)]
     private void OnKnifeTouchBegin(Vector3 dir)
@@ -28,11 +37,11 @@ public class PlayerBlackBoard : MonoListener
         moveLock = Vector3.zero;
     }
 
-    public static void OnItemPicked(BasePickableItem item)
+    public static void OnItemHeld(HoldableItem item)
     {
         isHeldObj = true;
-        heldPickable = item;
-        UEvent.Dispatch(EventType.OnItemPicked);
+        heldItem = item;
+        UEvent.Dispatch(EventType.OnItemHeld);
     }
 
     public static void OnItemDrop()
@@ -47,7 +56,7 @@ public enum EventType
 {
     OnKnifeTouchBegin,
     OnKnifeTouchEnd,
-    OnItemPicked,
+    OnItemHeld,
     OnItemDrop,
-    OnPickingItem
+    OnPickingItem,
 }

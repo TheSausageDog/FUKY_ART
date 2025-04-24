@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class TutorialBreakCan : TutorialStep
 {
-    protected Container can;
+    protected CanContainer can;
 
-    public override void Start()
+    protected HighLightedItem knifeHightlighted;
+
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
-        can = levelController.envItemManager.can.GetComponent<Container>();
+        base.TutorialStart(_levelController);
+        can = levelController.envItemManager.can.GetComponent<CanContainer>();
+        knifeHightlighted = levelController.envItemManager.knife.AddComponent<HighLightedItem>();
+        knifeHightlighted.isHighlighted = true;
     }
     // Update is called once per frame
-    void Update()
+    public override bool TutorialUpdate()
     {
-        if (can.opened)
-        {
-            EndStep();
-        }
+        return !can.opened;
+    }
+
+    public override void TutorialEnd()
+    {
+        base.TutorialEnd();
+        knifeHightlighted.isHighlighted = false;
     }
 }

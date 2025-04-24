@@ -11,22 +11,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.048352953
+      value: 6.4305067
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.89708436
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.1975985
+      value: -38.483765
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.046018098
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
@@ -36,7 +36,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: -0.9989406
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -174.725
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
@@ -63,6 +63,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9a317974a84a3ed4fad80dc7159d6406, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 0165abb5d53d01e4e87e590acdca4997,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 509c66f35c5e14d4aa00cd20c9686136, type: 2}
     - target: {fileID: 919132149155446097, guid: 0165abb5d53d01e4e87e590acdca4997,
         type: 3}
       propertyPath: m_Name

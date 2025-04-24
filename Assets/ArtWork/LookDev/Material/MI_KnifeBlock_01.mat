@@ -67,6 +67,7 @@ Material:
     - _ColorMask: 15
     - _Cull: 2
     - _Cutoff: -0.01
+    - _Discolor: 0
     - _DstBlend: 0
     - _HalftoneEffect: 0.462
     - _HalftoneScale: 12.82

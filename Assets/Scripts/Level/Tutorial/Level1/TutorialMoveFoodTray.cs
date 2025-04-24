@@ -8,29 +8,37 @@ public class TutorialMoveFoodTray : TutorialStep
 {
     protected GameObject foodTray;
 
-    protected BasePickableItem foodTrayPickable;
+    protected NormalPickableItem foodTrayPickable;
     protected Collider foodTrayCollider;
     protected ContainRecorder containRecorder;
+    protected HighLightedItem tableHighLight;
 
-    public override void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
-        base.Start();
+        base.TutorialStart(_levelController);
         foodTray = levelController.envItemManager.tray;
         containRecorder = levelController.areaTrigger.Find("TableSurfaceArea").GetComponent<ContainRecorder>();
-        foodTrayPickable = foodTray.GetComponent<BasePickableItem>();
+        foodTrayPickable = foodTray.GetComponent<NormalPickableItem>();
         foodTrayCollider = foodTray.GetComponent<Collider>();
-    }
 
-    void Update()
-    {
-        if (containRecorder.IsContain(foodTrayCollider) && !foodTrayPickable.isPicking)
+
+        if (!_levelController.envItemManager.table.TryGetComponent<HighLightedItem>(out tableHighLight))
         {
-            EndStep();
+            tableHighLight = _levelController.envItemManager.table.AddComponent<HighLightedItem>();
         }
+        tableHighLight.isHighlighted = true;
+        foodTrayPickable.AddComponent<HighLightedItem>().isHighlighted = true;
     }
 
-    public override void EndStep()
+    public override bool TutorialUpdate()
     {
-        base.EndStep();
+        return !containRecorder.IsContain(foodTrayCollider) || foodTrayPickable.isHolding;
+    }
+
+    public override void TutorialEnd()
+    {
+        base.TutorialEnd();
+        tableHighLight.isHighlighted = false;
+        foodTrayPickable.GetComponent<HighLightedItem>().isHighlighted = false;
     }
 }

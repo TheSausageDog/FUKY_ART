@@ -8,9 +8,9 @@ public class TutorialEndStep : TutorialStepBase
     public string nextLevel;
 
     // Start is called before the first frame update
-    void Start()
+    public override void TutorialStart(LevelController _levelController)
     {
+        base.TutorialStart(_levelController);
         levelController.LoadNewLevel(nextLevel);
     }
-
 }

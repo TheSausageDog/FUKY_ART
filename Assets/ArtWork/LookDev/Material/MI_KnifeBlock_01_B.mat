@@ -82,6 +82,7 @@ Material:
     - _RampIntensity: 1
     - _ReflectionIntensity: 1
     - _Render: 0
+    - _RimLightInShadow: 0.2
     - _RimWidth: 0.01
     - _ShadowGain: 0
     - _SmoothNormalData: 3
@@ -127,7 +128,7 @@ Material:
     - _LambertSmooth: {r: 0.5, g: 0.5, b: 0, a: 0}
     - _MainColor: {r: 0.39607844, g: 0.2362965, b: 0.09149412, a: 1}
     - _OutlineCol: {r: 1, g: 1, b: 1, a: 1}
-    - _ReflectionCol: {r: 0.93710685, g: 0.93710685, b: 0.93710685, a: 0}
+    - _ReflectionCol: {r: 1, g: 1, b: 1, a: 0}
     - _ReflectionSetting: {r: 5, g: 0.17, b: 0.72, a: 0}
     - _RimCol: {r: 2.143547, g: 2.143547, b: 2.143547, a: 0}
     - _ShadowSmooth: {r: 0, g: 1, b: 0, a: 0}

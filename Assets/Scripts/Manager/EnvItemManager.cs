@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class EnvItemManager : MonoBehaviour
 {
+    public GameObject environment;
+
+    public GameObject table;
+
     public GameObject fridge;
 
     public GameObject can;
