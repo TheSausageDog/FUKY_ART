@@ -6,6 +6,10 @@ public class OrderManager : SingletonMono<OrderManager>
 {
     public GameObject foodTray;
 
+    public GameObject cup;
+
+    public GameObject plate;
+
 
     protected Animator animator;
 
@@ -58,6 +62,10 @@ public class OrderManager : SingletonMono<OrderManager>
         {
             this.orderItem = orderItem;
         }
+        //weird to write here
+        foodTray.tag = "canInteract";
+        cup.tag = "canInteract";
+        plate.tag = "canInteract";
     }
 
     public void ThrowMenu(OrderItem orderItem)

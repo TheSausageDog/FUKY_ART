@@ -2488,7 +2488,7 @@ PrefabInstance:
     - target: {fileID: 3524769541193068577, guid: 0f81ad3bcacf101458ea9a41706cd578,
         type: 3}
       propertyPath: m_TagString
-      value: canInteract
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3831478909283668380, guid: 0f81ad3bcacf101458ea9a41706cd578,
         type: 3}
@@ -10236,7 +10236,7 @@ PrefabInstance:
     - target: {fileID: 6701538432396241381, guid: e6ece057acdaa31468b9c081ef0e69c4,
         type: 3}
       propertyPath: m_TagString
-      value: canInteract
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 7366595439325146923, guid: e6ece057acdaa31468b9c081ef0e69c4,
         type: 3}
@@ -19843,7 +19843,7 @@ PrefabInstance:
     - target: {fileID: 2488444390731541386, guid: dda7e775e481dca4c8ac8fe072f16f17,
         type: 3}
       propertyPath: m_TagString
-      value: canInteract
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 3009365874997834032, guid: dda7e775e481dca4c8ac8fe072f16f17,
         type: 3}
@@ -25718,7 +25718,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   foodTray: {fileID: 793550273}
-  orderItem: {fileID: 0}
+  cup: {fileID: 279669611}
+  plate: {fileID: 1564474699}
+  orderItem: {fileID: 1064203533}
 --- !u!1001 &1663717624
 PrefabInstance:
   m_ObjectHideFlags: 0
