@@ -57,6 +57,16 @@
 		_group4 ("自发光", float) = 0
         [Sub(Group4)]   [HDR]_EmissiveColor("自发光颜色",Color) = (0,0,0,0)
         [Sub(Group4)]   _EmissiveTex("自发光贴图",2D) = "white"{}
+    	
+		[Main(StaticAO, _STATIC_AO, off, on)] 
+		_staticAO ("AO贴图", float) = 0
+		[Sub(StaticAO)]   _OcclusionMult("AO贴图强度",Range(0,1)) = 1
+		[Sub(StaticAO)]   _OcclusionTex("AO贴图",2D) = "white"{}
+    	
+    	[Main(AOSetting, _, off, off)]
+    	_aoSetting ("AOSetting", float) = 0
+    	[Sub(AOSetting)]   _AOInBaseColor("2AO影响主贴图",Range(0,1)) = 0.5
+    	[Sub(AOSetting)]   _AOColor("2AO颜色",Color) = (0,0,0,0)
         
         [Main(Group8, _, off, off)] 
 		_group8 ("FX-半色调边缘光", float) = 0
@@ -72,6 +82,7 @@
         [KWEnum(Group9, Null,_, VertexCol, _SMOOTHNORMAL_VERTEX_COLOR,Tangent, _SMOOTHNORMAL_TANGENT, UV3, _SMOOTHNORMAL_TEXCOORD3)] _SmoothNormalData ("平滑法线数据", float) = 0
         [SubToggle(Group9,_)] _IsTangentSpace("平滑法线在切线空间",Int) = 1
         [Sub(Group9)]  [HDR]_OutlineCol ("描边颜色",Color) = (0,0,0,1)
+    	[Sub(Group9)]  _OutlineColInBaseColor ("描边纯度",Range(0,1)) = 0
         [Sub(Group9)]   _OutlineWidth ("描边宽度",float) = -0.1
         [SubToggle(Group9,_UNIFORM_OUTLINE_WIDTH)] _UniformOutline("描边宽度始终不变",float) = 0
         [Sub(Group9)]   _ViewSpaceZOffset ("深度偏移",Range(0,20)) = 0
@@ -135,6 +146,7 @@
             #pragma shader_feature_local_fragment _USE_SSAO
             
             #pragma shader_feature_local_fragment _EMISSIVE
+            #pragma shader_feature_local_fragment _STATIC_AO
             #pragma shader_feature_local_fragment _NORMALMAP
             
             
@@ -347,16 +359,25 @@
 
 				//ssao
             	float2 sceneUV = input.positionNDC.xy/input.positionNDC.w;
-            	float ssao = 1;
+            	half ssao = 1;
             	#if (_SCREEN_SPACE_OCCLUSION) && (_USE_SSAO)
-            	ssao = SAMPLE_TEXTURE2D_X(_ScreenSpaceOcclusionTexture, sampler_ScreenSpaceOcclusionTexture,sceneUV);
+            	ssao = lerp(1, SAMPLE_TEXTURE2D_X(_ScreenSpaceOcclusionTexture, sampler_ScreenSpaceOcclusionTexture,sceneUV), _AmbientOcclusionParam.a);
             	#endif
+
+            	//ao
+            	half ao = 1;
+                #if _STATIC_AO
+            	ao = lerp(1, SAMPLE_TEXTURE2D(_OcclusionTex,sampler_OcclusionTex,TRANSFORM_TEX(input.uv,_OcclusionTex)), _OcclusionMult);
+            	#endif
+
+            	//ssao和ao影响基础色 增强对比度用
+            	mainTex.rgb = mainTex.rgb * lerp(1, lerp(_AOColor, 1, min(ssao,ao)), _AOInBaseColor);
 				
                 half lambert = saturate(dot(normalize(mainLight.direction),normalWS));
             	half halfLambert = dot(normalize(mainLight.direction),normalWS) * 0.5 + 0.5;
             	
             	//Diffuse
-				float2 rampUV = float2(min(min(halfLambert, saturate(mainLight.shadowAttenuation + _ShadowGain)), lerp(1,ssao,_AmbientOcclusionParam.a)) , maskSGRI.a);
+				float2 rampUV = float2(min(min(halfLambert, saturate(mainLight.shadowAttenuation + _ShadowGain)), min(ssao,ao)) , maskSGRI.a);
             	half3 diffuseLight = SAMPLE_TEXTURE2D(_DiffuseRampMap,sampler_LinearClamp,rampUV);
             	diffuseLight *= mainLight.color * mainLight.distanceAttenuation;
                 diffuseLight = mainTex.rgb * diffuseLight.rgb ;
@@ -602,12 +623,14 @@
 	         half4 frag(Varyings input) : SV_Target
 	        {
 	            UNITY_SETUP_INSTANCE_ID(input);
-
+				half4 mainTex = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,input.uv);
 	            #if _ALPHA_CLIP_ON
-	            clip(SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,input.uv).a - _Cutoff);
+	            clip(mainTex.a - _Cutoff);
 	            #endif
 	            //half3 globeIllumination = SampleSH(input.normalWS)*0.5;
 	            half3 outlineCol = lerp(_OutlineCol,input.color,_UseVertexColorRGB).rgb ;
+	        	outlineCol = lerp(outlineCol,mainTex.rgb,_OutlineColInBaseColor);
+	        	
 	            
                 return half4(MixFog(outlineCol,input.fogFactor).rgb, _OutlineCol.a);
 	        }

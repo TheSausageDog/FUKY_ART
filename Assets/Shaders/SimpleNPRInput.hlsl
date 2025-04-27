@@ -37,6 +37,12 @@ float _TransmissionSetting,_TransmissionUseShadow;
 float4 _EmissiveTex_ST;
 half3 _EmissiveColor;
 //float2 _LambertSmooth;
+
+float4 _OcclusionTex_ST;
+half _OcclusionMult;
+
+half _AOInBaseColor;
+half4 _AOColor;
             
 half _HalftoneEffect;
 half _HalftoneStep;
@@ -51,6 +57,7 @@ half _UseVertexColorA;
 //outline
 int _IsTangentSpace;
 half4 _OutlineCol;
+half _OutlineColInBaseColor;
 half _OutlineWidth;
 half _ViewSpaceZOffset;
 
@@ -60,6 +67,7 @@ TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex);
 TEXTURE2D(_ShadowColorTex); SAMPLER(sampler_ShadowColorTex);
 TEXTURE2D(_NormalMap); SAMPLER(sampler_NormalMap);
 TEXTURE2D(_EmissiveTex); SAMPLER(sampler_EmissiveTex);
+TEXTURE2D(_OcclusionTex); SAMPLER(sampler_OcclusionTex);
 TEXTURE2D(_DiffuseRampMap);
 //SAMPLER(sampler_LinearClamp);
 #endif

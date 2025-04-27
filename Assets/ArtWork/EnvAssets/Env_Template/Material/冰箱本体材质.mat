@@ -25,11 +25,13 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
-  - _EDGE_HALFTONE
   - _SMOOTHNORMAL_TEXCOORD3
+  - _STATIC_AO
+  - _UNIFORM_OUTLINE_WIDTH
   - _USE_SHADOW
   - _USE_SSAO
   m_InvalidKeywords:
+  - _EDGE_HALFTONE
   - _HALFTONEUVZSCALE_ON
   - _SPECULARSTEP_ON
   - _USESHADOW
@@ -48,6 +50,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _AOTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 2800000, guid: 50efaef92f0bf7e4a95e1eae77d2d3cb, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -108,6 +114,10 @@ Material:
         m_Texture: {fileID: 2800000, guid: 6aef5c5c993209b4283f0462a6388d58, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _OcclusionTex:
+        m_Texture: {fileID: 2800000, guid: 6aef5c5c993209b4283f0462a6388d58, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -132,6 +142,9 @@ Material:
     - _Stencil: 1
     - _Stencil2: 1
     m_Floats:
+    - _AOColor: 0
+    - _AOInBaseColor: 0
+    - _AOInShadow: 0
     - _AddSpecular: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -163,8 +176,10 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _NormalScale: 1
+    - _OcclusionMult: 0.396
     - _OcclusionStrength: 1
-    - _OutlineWidth: 2.26
+    - _OutlineColInBaseColor: 0.198
+    - _OutlineWidth: 3.03
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
@@ -192,7 +207,7 @@ Material:
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UVSec: 0
-    - _UniformOutline: 0
+    - _UniformOutline: 1
     - _UseSSAO: 1
     - _UseShadow: 1
     - _UseVertexColorA: 0
@@ -205,6 +220,7 @@ Material:
     - _ZWrite: 0
     - _ZWrite1: 1
     - _ZWrite2: 1
+    - _aoSetting: 0
     - _group1: 0
     - _group2: 0
     - _group20: 0
@@ -214,8 +230,12 @@ Material:
     - _group8: 1
     - _group9: 0
     - _rimLight: 0
+    - _staticAO: 1
     - _transmission: 0
     m_Colors:
+    - _AOColor: {r: 0, g: 0, b: 0, a: 0}
+    - _AOMuit: {r: 0, g: 0, b: 0, a: 0}
+    - _AOMult: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 0}
     - _CustomDir: {r: 0, g: 0, b: 0, a: 0}
@@ -224,7 +244,9 @@ Material:
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 0}
     - _HalftoneColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 0.93710685, g: 0.93710685, b: 0.93710685, a: 1}
+    - _OcclusionMult: {r: 0, g: 0, b: 0, a: 0}
     - _OutlineCol: {r: 0.09084173, g: 0.07818743, b: 0.038204376, a: 1}
+    - _OutlineIn: {r: 0, g: 0, b: 0, a: 1}
     - _RimCol: {r: 0.9883372, g: 0.9883372, b: 0.9883372, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 0.24777733, g: 0.24777733, b: 0.24777733, a: 1}
