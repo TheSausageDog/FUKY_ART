@@ -441,6 +441,7 @@
                     globeIllumination = SampleSH(normalWS);
                 #endif
             		globeIllumination *= mainTex.rgb * ssao;
+            	
                 //final
                 half3 finalCol = 0;
                 finalCol += diffuseLight+specularCol + emissiveCol + rimLight  + globeIllumination + effects;
