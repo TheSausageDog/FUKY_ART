@@ -5415,6 +5415,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 1f7972bf60ddb024195549c5b03e6db4, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 894b2da098be7ae419992ec9e33189b4,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 285a43f98159c984eae542d211efb366, type: 2}
     - target: {fileID: -3189054665046328506, guid: 894b2da098be7ae419992ec9e33189b4,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5435,6 +5440,16 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3133833352361068435, guid: 894b2da098be7ae419992ec9e33189b4,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 9049e17954ace6e4fa362032a208425f, type: 2}
+    - target: {fileID: -2652215659114479398, guid: 894b2da098be7ae419992ec9e33189b4,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: 976f578e45dbda34091cdd96f4cd6362, type: 2}
     - target: {fileID: 919132149155446097, guid: 894b2da098be7ae419992ec9e33189b4,
         type: 3}
       propertyPath: m_Name
