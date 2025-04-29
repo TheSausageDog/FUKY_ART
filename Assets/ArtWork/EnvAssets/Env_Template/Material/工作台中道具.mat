@@ -164,8 +164,8 @@ Material:
     - _NormalScale: 1
     - _OcclusionMult: 0.555
     - _OcclusionStrength: 1
-    - _OutlineColInBaseColor: 0.291
-    - _OutlineWidth: 1.05
+    - _OutlineColInBaseColor: 0.217
+    - _OutlineWidth: 3
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
@@ -198,7 +198,7 @@ Material:
     - _UseShadow: 1
     - _UseVertexColorA: 0
     - _UseVertexColorRGB: 0
-    - _ViewSpaceZOffset: 0
+    - _ViewSpaceZOffset: 0.1
     - _WorkflowMode: 1
     - _ZTest1: 4
     - _ZTest2: 4

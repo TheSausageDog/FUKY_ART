@@ -178,8 +178,8 @@ Material:
     - _NormalScale: 1
     - _OcclusionMult: 0.396
     - _OcclusionStrength: 1
-    - _OutlineColInBaseColor: 0.198
-    - _OutlineWidth: 3.03
+    - _OutlineColInBaseColor: 0.107
+    - _OutlineWidth: 6
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
