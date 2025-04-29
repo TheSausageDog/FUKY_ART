@@ -34,6 +34,10 @@ public class OrderManager : SingletonMono<OrderManager>
                 if (stateInfo.normalizedTime >= 1.0f && stateInfo.IsName("FoodTrayAnimation"))
                 {
                     animator.enabled = false;
+                    foodTray.AddComponent<Rigidbody>();
+                    foodTray.AddComponent<NormalPickableItem>();
+                    cup.AddComponent<Rigidbody>();
+                    plate.AddComponent<Rigidbody>();
                 }
             }
 
