@@ -10,8 +10,10 @@ public class OrderManager : SingletonMono<OrderManager>
     public GameObject cup;
 
     public GameObject plate;
+    public GameObject menu;
 
     public Transform trayTarget;
+    public Transform trayStart;
 
 
     // protected Animator animator;
@@ -24,6 +26,7 @@ public class OrderManager : SingletonMono<OrderManager>
     {
         // animator = foodTray.GetComponent<Animator>();
         foodTray.SetActive(true);
+        foodTray.transform.position = trayStart.position;
         foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 4;
         order = new Order(recipe);
         isTrayOnSite = false;
@@ -35,15 +38,25 @@ public class OrderManager : SingletonMono<OrderManager>
         {
             if (!isTrayOnSite)
             {
-                if ((trayTarget.position - foodTray.transform.position).magnitude < Mathf.Epsilon)
+                if ((trayTarget.position - foodTray.transform.position).magnitude < 0.1f)
                 {
                     isTrayOnSite = true;
                     // foodTray.AddComponent<Rigidbody>();
+                    //what a mass
                     foodTray.AddComponent<NormalPickableItem>();
-                    cup.AddComponent<Rigidbody>();
-                    plate.AddComponent<Rigidbody>();
+                    cup.AddComponent<Rigidbody>().mass = 3;
+                    cup.GetComponent<AttachedPickableItem>().enabled = true;
+                    plate.AddComponent<Rigidbody>().mass = 3;
+                    plate.GetComponent<AttachedPickableItem>().enabled = true;
+                    foodTray.GetComponent<Rigidbody>().mass = 3;
+                    menu.tag = "canInteract";
+                }
+                else
+                {
+                    foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 2;
                 }
             }
+
 
             if (orderItem != null && PlayerInputController.IsRecipePressed())
             {

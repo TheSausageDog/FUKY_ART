@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class ContainRecorder : MonoBehaviour
 {
-    public List<Collider> inside = new List<Collider>();
+    public HashSet<Collider> inside = new HashSet<Collider>();
 
-    void Update()
-    {
-        inside.RemoveAll(s => s == null);
-    }
+    // void Update()
+    // {
+    //     inside.Remove(null);
+    // }
 
     public bool IsContain(Collider other)
     {

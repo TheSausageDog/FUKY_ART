@@ -19,11 +19,12 @@ public abstract class BaseItem : MonoBehaviour
 
     public virtual void Awake()
     {
-        itemCollider = GetComponent<Collider>();
+
     }
 
     public virtual void Start()
     {
+        itemCollider = GetComponent<Collider>();
     }
 
     public virtual void OnInteract()

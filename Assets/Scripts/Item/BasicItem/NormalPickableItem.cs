@@ -9,9 +9,9 @@ public class NormalPickableItem : PickableItem
 
     protected Transform holdPos;
 
-    public override void Awake()
+    public override void Start()
     {
-        base.Awake();
+        base.Start();
         itemRigidbody = GetComponent<Rigidbody>();
     }
 

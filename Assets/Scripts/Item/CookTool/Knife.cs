@@ -9,11 +9,9 @@ public class Knife : AttachedPickableItem
 {
     // public BoxCollider Collider;
 
-    //暂时没有碰撞体
+    // protected override bool keepRigbody {get{ return false; }}
     public override void OnPickup(Transform holdPos)
     {
-        if (itemRigidbody == null)
-            itemRigidbody = gameObject.AddComponent<Rigidbody>();
         transform.DORotate(new Vector3(-90, 3, 3), 0.5f);
         base.OnPickup(holdPos);
         //Collider.enabled = false;
@@ -21,13 +19,13 @@ public class Knife : AttachedPickableItem
 
     }
 
-    public override void OnThrow()
-    {
-        base.OnThrow();
-        // Destroy(itemRigidbody);
+    // public override void OnThrow()
+    // {
+    //     base.OnThrow();
+    //     // Destroy(itemRigidbody);
 
-        //Collider.enabled = true;
-    }
+    //     //Collider.enabled = true;
+    // }
 
 
 
