@@ -12,49 +12,50 @@ public class OrderManager : SingletonMono<OrderManager>
     public GameObject plate;
     public GameObject menu;
 
-    public Transform trayTarget;
-    public Transform trayStart;
+    // public Transform trayTarget;
+    // public Transform trayStart;
 
 
-    // protected Animator animator;
-    protected bool isTrayOnSite;
+    protected Animator animator;
+    // protected bool isTrayOnSite;
     protected Order order = null;
     public OrderItem orderItem;
 
 
     public void NewOrder(Recipe recipe = null)
     {
-        // animator = foodTray.GetComponent<Animator>();
+        animator = foodTray.GetComponent<Animator>();
         foodTray.SetActive(true);
-        foodTray.transform.position = trayStart.position;
-        foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 4;
+        // foodTray.transform.position = trayStart.position;
+        // foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 4;
         order = new Order(recipe);
-        isTrayOnSite = false;
+        // isTrayOnSite = false;
     }
 
     void Update()
     {
         if (order != null)
         {
-            if (!isTrayOnSite)
+            if (animator.enabled)
             {
-                if ((trayTarget.position - foodTray.transform.position).magnitude < 0.1f)
+                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+                if (stateInfo.normalizedTime >= 1.0f && stateInfo.IsName("FoodTrayAnimation"))
                 {
-                    isTrayOnSite = true;
+                    animator.enabled = false;
                     // foodTray.AddComponent<Rigidbody>();
                     //what a mass
                     foodTray.AddComponent<NormalPickableItem>();
-                    cup.AddComponent<Rigidbody>().mass = 3;
-                    cup.GetComponent<AttachedPickableItem>().enabled = true;
-                    plate.AddComponent<Rigidbody>().mass = 3;
-                    plate.GetComponent<AttachedPickableItem>().enabled = true;
-                    foodTray.GetComponent<Rigidbody>().mass = 3;
+                    // cup.AddComponent<Rigidbody>().mass = 3;
+                    // cup.GetComponent<AttachedPickableItem>().enabled = true;
+                    // plate.AddComponent<Rigidbody>().mass = 3;
+                    // plate.GetComponent<AttachedPickableItem>().enabled = true;
+                    // foodTray.GetComponent<Rigidbody>().mass = 3;
                     menu.tag = "canInteract";
                 }
-                else
-                {
-                    foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 2;
-                }
+                // else
+                // {
+                //     foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 2;
+                // }
             }
 
 

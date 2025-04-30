@@ -636,7 +636,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90134104}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 42f7282d78d5c734389f89204ddfacef, type: 2}
   m_CullingMode: 0
@@ -657,7 +657,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90134104}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -12089,8 +12089,6 @@ MonoBehaviour:
   cup: {fileID: 1854487849}
   plate: {fileID: 1652461542}
   menu: {fileID: 1064203527}
-  trayTarget: {fileID: 752774938}
-  trayStart: {fileID: 1537737223}
   orderItem: {fileID: 1064203531}
 --- !u!1001 &1652461540
 PrefabInstance:
@@ -12302,6 +12300,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1652461544}
+    - targetCorrespondingSourceObject: {fileID: 2488444390731541386, guid: dda7e775e481dca4c8ac8fe072f16f17,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1652461550}
   m_SourcePrefab: {fileID: 100100000, guid: dda7e775e481dca4c8ac8fe072f16f17, type: 3}
 --- !u!4 &1652461541 stripped
 Transform:
@@ -12338,7 +12340,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1652461542}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77fa1d71b9faf504ea0bdd314b7c4788, type: 3}
   m_Name: 
@@ -12347,6 +12349,33 @@ MonoBehaviour:
   keepRigbody: 1
   checkArea: {fileID: 0}
   liquidContainer: {fileID: 0}
+--- !u!54 &1652461550
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1652461542}
+  serializedVersion: 4
+  m_Mass: 3
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1657357991 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -3974511087994196099, guid: 60ad6ca1ff5b15143ae38dfbea35b30d,
@@ -14423,6 +14452,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1854487850}
+    - targetCorrespondingSourceObject: {fileID: 3524769541193068577, guid: 0f81ad3bcacf101458ea9a41706cd578,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1854487901}
   m_SourcePrefab: {fileID: 100100000, guid: 0f81ad3bcacf101458ea9a41706cd578, type: 3}
 --- !u!4 &1854487848 stripped
 Transform:
@@ -14443,7 +14476,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1854487849}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a254b302305b53429470571576ca663, type: 3}
   m_Name: 
@@ -14466,6 +14499,33 @@ MonoBehaviour:
   threshold_start: 0.02
   threshold_end: 1
   liquid_full: 10
+--- !u!54 &1854487901
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1854487849}
+  serializedVersion: 4
+  m_Mass: 3
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1871375879
 GameObject:
   m_ObjectHideFlags: 0
