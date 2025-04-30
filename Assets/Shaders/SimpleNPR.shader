@@ -60,7 +60,7 @@
     	
 		[Main(StaticAO, _STATIC_AO, off, on)] 
 		_staticAO ("AO贴图", float) = 0
-		[Sub(StaticAO)]   _OcclusionMult("AO贴图强度",Range(0,1)) = 1
+		[Sub(StaticAO)]   _OcclusionMult("AO贴图强度",Range(0,1)) = 0.5
 		[Sub(StaticAO)]   _OcclusionTex("AO贴图",2D) = "white"{}
     	
     	[Main(AOSetting, _, off, off)]
@@ -85,7 +85,7 @@
     	[Sub(Group9)]  _OutlineColInBaseColor ("描边纯度",Range(0,1)) = 0
         [Sub(Group9)]   _OutlineWidth ("描边宽度",float) = -0.1
         [SubToggle(Group9,_UNIFORM_OUTLINE_WIDTH)] _UniformOutline("描边宽度始终不变",float) = 0
-        [Sub(Group9)]   _ViewSpaceZOffset ("深度偏移",Range(0,20)) = 0
+        //[Sub(Group9)]   _ViewSpaceZOffset ("深度偏移",Range(0,20)) = 0
 
         [Header(Custom Outline)]
         [SubToggle(Group9)] _UseVertexColorRGB ("使用顶点色:RGB颜色",float) = 0
@@ -273,7 +273,7 @@
                  return o / o.w;
              }
 
-            void ApplyAdditionalLight(inout float3  mainColor ,float3 worldPos,float3 normalWS,float3 viewDirWS)
+            void ApplyAdditionalLight(inout float3  mainColor, half3 mainTex ,float3 worldPos,float3 normalWS,float3 viewDirWS)
             {
                 //MultipleLight
                 half3 mixColor = 0;
@@ -290,7 +290,7 @@
                     mixColor += lerp(addLightDiffuse,addLightSpecular,_AddSpecular);
                 }
                 #endif
-                mainColor += mixColor * mainColor.rgb;
+                mainColor += mixColor * mainTex.rgb;
             }
 
             float3 RimLighting(float3 positionCS,float3 normalWS,half rimlightWidth,half rimlightThreshold,half rimlightFadeout,half3 rimlightBrightness)
@@ -441,11 +441,11 @@
                     globeIllumination = SampleSH(normalWS);
                 #endif
             		globeIllumination *= mainTex.rgb * ssao;
-            	
+
                 //final
                 half3 finalCol = 0;
                 finalCol += diffuseLight+specularCol + emissiveCol + rimLight  + globeIllumination + effects;
-                ApplyAdditionalLight(finalCol,input.positionWS,normalWS,input.viewDirWS);
+                ApplyAdditionalLight(finalCol,mainTex.rgb,input.positionWS,normalWS,input.viewDirWS);
                 finalCol = MixFog(finalCol,input.fogFactor);
                 #if _ALPHA_CLIP_ON
                 clip(mainTex.a-_Cutoff);
@@ -582,6 +582,15 @@
 
                 return positionCS;
             }
+
+            float4 ClipPosZOffset_Correct(float3 worldPos, float viewSpaceZOffset)
+            {
+                float3 viewPos = mul(UNITY_MATRIX_V, float4(worldPos, 1.0)).xyz;
+                viewPos.z -= viewSpaceZOffset; // 正常视空间偏移
+
+                float4 clipPos = mul(UNITY_MATRIX_P, float4(viewPos, 1.0)); // 正常投影
+                return clipPos;
+            }
 	        
 	        Varyings vert(Attributes v)
 	        {
@@ -617,7 +626,8 @@
                 #if defined(_FOG_FRAGMENT)
                     o.fogFactor  = ComputeFogFactor(o.positionCS.z);
                 #endif
-                o.positionCS = ClipPosZOffset(o.positionCS,_ViewSpaceZOffset);
+                //禁用深度偏移
+                //o.positionCS = ClipPosZOffset(o.positionCS,_ViewSpaceZOffset);
                 return o;
 	        }
 	        

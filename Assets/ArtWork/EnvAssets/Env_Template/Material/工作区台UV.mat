@@ -167,14 +167,14 @@ Material:
     - _NormalScale: 1
     - _OcclusionMult: 0.555
     - _OcclusionStrength: 1
-    - _OutlineColInBaseColor: 0.239
-    - _OutlineWidth: 10
+    - _OutlineColInBaseColor: 0.178
+    - _OutlineWidth: 6.81
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _ReflectionSource: 0
-    - _RimLightInShadow: 0.2
+    - _RimLightInShadow: 0.1
     - _RimWidth: 0.02
     - _SampleGI: 0
     - _ShadowGain: 0
@@ -192,7 +192,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _StencilTest: 0
     - _Surface: 0
-    - _Threshold: 0.271
+    - _Threshold: 0.215
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UVSec: 0
@@ -201,7 +201,7 @@ Material:
     - _UseShadow: 1
     - _UseVertexColorA: 0
     - _UseVertexColorRGB: 0
-    - _ViewSpaceZOffset: 0.1
+    - _ViewSpaceZOffset: 0
     - _WorkflowMode: 1
     - _ZTest1: 4
     - _ZTest2: 4
@@ -228,7 +228,7 @@ Material:
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 0}
     - _HalftoneColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineCol: {r: 0.113000005, g: 0.038985007, b: 0.038985007, a: 1}
+    - _OutlineCol: {r: 0.071, g: 0.024482764, b: 0.024482764, a: 1}
     - _OutlineIn: {r: 0, g: 0, b: 0, a: 1}
     - _RimCol: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}

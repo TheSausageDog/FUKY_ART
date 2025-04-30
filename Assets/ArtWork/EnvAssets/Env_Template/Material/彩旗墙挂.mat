@@ -27,7 +27,6 @@ Material:
   m_ValidKeywords:
   - _SMOOTHNORMAL_TEXCOORD3
   - _STATIC_AO
-  - _UNIFORM_OUTLINE_WIDTH
   - _USE_SHADOW
   - _USE_SSAO
   m_InvalidKeywords:
@@ -166,7 +165,7 @@ Material:
     - _OcclusionMult: 0.555
     - _OcclusionStrength: 1
     - _OutlineColInBaseColor: 0.645
-    - _OutlineWidth: 15
+    - _OutlineWidth: 0.8
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
@@ -194,7 +193,7 @@ Material:
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UVSec: 0
-    - _UniformOutline: 1
+    - _UniformOutline: 0
     - _UseSSAO: 1
     - _UseShadow: 1
     - _UseVertexColorA: 0

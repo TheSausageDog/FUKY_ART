@@ -235,7 +235,7 @@ Material:
     - _HalftoneColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
     - _OcclusionMult: {r: 0, g: 0, b: 0, a: 0}
-    - _OutlineCol: {r: 0.113000005, g: 0.038985007, b: 0.038985007, a: 1}
+    - _OutlineCol: {r: 0.09, g: 0.03103449, b: 0.03103449, a: 1}
     - _OutlineIn: {r: 0, g: 0, b: 0, a: 1}
     - _RimCol: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
