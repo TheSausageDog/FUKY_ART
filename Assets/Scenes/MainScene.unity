@@ -481,7 +481,7 @@ PrefabInstance:
     - target: {fileID: 6218192483116610399, guid: e6ece057acdaa31468b9c081ef0e69c4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.266
+      value: 4.035
       objectReference: {fileID: 0}
     - target: {fileID: 6218192483116610399, guid: e6ece057acdaa31468b9c081ef0e69c4,
         type: 3}
@@ -603,6 +603,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 90134106}
+    - targetCorrespondingSourceObject: {fileID: 6701538432396241381, guid: e6ece057acdaa31468b9c081ef0e69c4,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 90134107}
   m_SourcePrefab: {fileID: 100100000, guid: e6ece057acdaa31468b9c081ef0e69c4, type: 3}
 --- !u!1 &90134104 stripped
 GameObject:
@@ -624,7 +628,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90134104}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 42f7282d78d5c734389f89204ddfacef, type: 2}
   m_CullingMode: 0
@@ -637,6 +641,33 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!54 &90134107
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 90134104}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &98628491 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6212604231944860805, guid: 60ad6ca1ff5b15143ae38dfbea35b30d,
@@ -4622,6 +4653,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 725189093}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &752774937
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 752774938}
+  m_Layer: 0
+  m_Name: TaryTarget
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &752774938
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752774937}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.846, y: 0.937, z: -0.546}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1651822401}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &765386487
 GameObject:
   m_ObjectHideFlags: 0
@@ -11718,7 +11780,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1651822393}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 86fc16ce80e841942b7eca917d89a22d, type: 3}
   m_Name: 
@@ -11790,7 +11852,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 752774938}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1651822402
@@ -11846,6 +11909,7 @@ MonoBehaviour:
   foodTray: {fileID: 90134104}
   cup: {fileID: 1854487849}
   plate: {fileID: 1652461542}
+  trayTarget: {fileID: 752774938}
   orderItem: {fileID: 1064203531}
 --- !u!1001 &1652461540
 PrefabInstance:
@@ -14649,7 +14713,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}

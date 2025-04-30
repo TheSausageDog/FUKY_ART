@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,31 +11,34 @@ public class OrderManager : SingletonMono<OrderManager>
 
     public GameObject plate;
 
+    public Transform trayTarget;
 
-    protected Animator animator;
 
+    // protected Animator animator;
+    protected bool isTrayOnSite;
     protected Order order = null;
     public OrderItem orderItem;
 
 
     public void NewOrder(Recipe recipe = null)
     {
-        animator = foodTray.GetComponent<Animator>();
+        // animator = foodTray.GetComponent<Animator>();
         foodTray.SetActive(true);
+        foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 4;
         order = new Order(recipe);
+        isTrayOnSite = false;
     }
 
     void Update()
     {
         if (order != null)
         {
-            if (animator.enabled)
+            if (!isTrayOnSite)
             {
-                AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                if (stateInfo.normalizedTime >= 1.0f && stateInfo.IsName("FoodTrayAnimation"))
+                if ((trayTarget.position - foodTray.transform.position).magnitude < Mathf.Epsilon)
                 {
-                    animator.enabled = false;
-                    foodTray.AddComponent<Rigidbody>();
+                    isTrayOnSite = true;
+                    // foodTray.AddComponent<Rigidbody>();
                     foodTray.AddComponent<NormalPickableItem>();
                     cup.AddComponent<Rigidbody>();
                     plate.AddComponent<Rigidbody>();
