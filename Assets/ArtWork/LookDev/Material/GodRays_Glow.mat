@@ -156,15 +156,15 @@ Material:
     - _ZWrite: 0
     - __dirty: 0
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 1, g: 0.9331542, b: 0.78930813, a: 1}
     - _BaseColorAddSubDiff: {r: 0, g: 0, b: 0, a: 0}
     - _CameraFadeParams: {r: 0, g: Infinity, b: 0, a: 0}
     - _CenterColor: {r: 0.3773585, g: 0.18867925, b: 0, a: 0}
     - _CloseColor: {r: 1, g: 0.033107374, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 0.9331542, b: 0.78930813, a: 1}
     - _Color0: {r: 0.015686274, g: 1, b: 0, a: 0}
     - _ColorAddSubDiff: {r: 1, g: 0, b: 0, a: 0}
-    - _EmissionColor: {r: 1.2311442, g: 1.2311442, b: 1.2311442, a: 1}
+    - _EmissionColor: {r: 2.1944342, g: 1.819337, b: 1.1938272, a: 1}
     - _EndColor: {r: 0, g: 1, b: 0, a: 0}
     - _FarColor: {r: 0.21226376, g: 0.5812036, b: 1, a: 0.4}
     - _GlowColor: {r: 0.24705872, g: 0.11763454, b: 0, a: 0}
