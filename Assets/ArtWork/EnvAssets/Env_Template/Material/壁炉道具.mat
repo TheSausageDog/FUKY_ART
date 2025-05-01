@@ -31,6 +31,7 @@ Material:
   - _USE_SHADOW
   - _USE_SSAO
   m_InvalidKeywords:
+  - _SPECULARSTEP_ON
   - _ZWRITE1_ON
   - _ZWRITE2_ON
   m_LightmapFlags: 4
@@ -132,7 +133,7 @@ Material:
     - _Stencil2: 0
     m_Floats:
     - _AOInBaseColor: 0.5
-    - _AddSpecular: 0
+    - _AddSpecular: 0.667
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _Blend: 0
@@ -147,7 +148,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Discolor: 0
+    - _Discolor: 0.033
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -181,16 +182,16 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
-    - _Specular1: 0
+    - _Specular1: 0.288
     - _SpecularDiscolor: 0
     - _SpecularHighlights: 1
-    - _SpecularInShadow: 0.1
+    - _SpecularInShadow: 0.191
     - _SpecularStep: 0
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _StencilTest: 0
     - _Surface: 0
-    - _Threshold: 0.271
+    - _Threshold: 0.08
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UVSec: 0
