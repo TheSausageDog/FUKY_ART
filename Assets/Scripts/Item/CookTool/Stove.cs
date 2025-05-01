@@ -4,13 +4,40 @@ using UnityEngine;
 
 public class Stove : ActivatableItem
 {
+    protected bool isFireOn = false;
+
+    public Pan pan;
+
+    protected Collider panCollider;
+
+    void Awake()
+    {
+        panCollider = pan.GetComponent<Collider>();
+    }
+
     public override void Active()
     {
-        Debug.Log("点火");
+        isFireOn = true;
     }
 
     public override void Deactive()
     {
-        Debug.Log("关火");
+        isFireOn = false;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other == panCollider)
+        {
+
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other == panCollider)
+        {
+
+        }
     }
 }
