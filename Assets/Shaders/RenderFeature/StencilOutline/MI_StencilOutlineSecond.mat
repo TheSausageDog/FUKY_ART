@@ -7,26 +7,33 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OutlineFill
-  m_Shader: {fileID: 4800000, guid: 4e76d4023d7e0411297c670f878973e2, type: 3}
+  m_Name: MI_StencilOutlineSecond
+  m_Shader: {fileID: 4800000, guid: c03a62ef664b9404e9b2ea192d063b67, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _USEUV3_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 3000
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
-    m_Ints: []
+    m_Ints:
+    - _Stencil: 2
     m_Floats:
-    - _OutlineWidth: 3
+    - _OutlineWidth: 11
+    - _StencilTest: 0
+    - _UseUV3: 1
+    - _Width: 0.115
     - _ZTest: 8
+    - _ZTest2: 8
     m_Colors:
+    - _Color: {r: 1, g: 0.015723169, b: 0.015723169, a: 1}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
