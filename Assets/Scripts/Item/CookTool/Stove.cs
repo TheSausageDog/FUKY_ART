@@ -6,6 +6,8 @@ public class Stove : ActivatableItem
 {
     protected bool isFireOn = false;
 
+    protected bool isPanOn = false;
+
     public Pan pan;
 
     protected Collider panCollider;
@@ -18,18 +20,27 @@ public class Stove : ActivatableItem
     public override void Active()
     {
         isFireOn = true;
+        if (isPanOn)
+        {
+            pan.Heat();
+        }
     }
 
     public override void Deactive()
     {
         isFireOn = false;
+        pan.Unheat();
     }
 
     void OnTriggerEnter(Collider other)
     {
         if (other == panCollider)
         {
-
+            isPanOn = true;
+            if (isFireOn)
+            {
+                pan.Heat();
+            }
         }
     }
 
@@ -37,7 +48,8 @@ public class Stove : ActivatableItem
     {
         if (other == panCollider)
         {
-
+            isPanOn = false;
+            pan.Unheat();
         }
     }
 }
