@@ -200,12 +200,13 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
                 Debug.LogWarning("物体超出拾取范围！");
                 return;
             }
-            if (PlayerInputController.IsPickUpPressed())
+            if (itemScript.isHoldable && PlayerInputController.IsPickUpPressed())
             {
                 OnHandTriggerExit();
                 PickObject(itemScript);
             }
-            else if (PlayerInputController.IsInteractPressed())
+            else if (itemScript.isInteractable &&
+            (PlayerInputController.IsInteractPressed() || PlayerInputController.IsPickUpPressed()))
             {
                 itemScript.OnInteract();
             }

@@ -85,7 +85,6 @@ public abstract class PickableItem : HoldableItem
     }
 }
 
-
 public enum InteractionType
 {
     //只能拿起来移动
