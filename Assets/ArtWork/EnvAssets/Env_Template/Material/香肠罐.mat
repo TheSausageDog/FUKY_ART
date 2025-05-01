@@ -20,12 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\u5DE5\u4F5C\u53F0\u4E2D\u9053\u5177"
+  m_Name: "\u9999\u80A0\u7F50"
   m_Shader: {fileID: 4800000, guid: c63f701315fb36849af70e827d86ffda, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _SMOOTHNORMAL_TEXCOORD3
+  - _UNIFORM_OUTLINE_WIDTH
   - _USE_SHADOW
   - _USE_SSAO
   m_InvalidKeywords:
@@ -35,7 +36,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2000
   stringTagMap: {}
   disabledShaderPasses: []
   m_LockedProperties: 
@@ -71,7 +72,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _DiffuseRampMap:
-        m_Texture: {fileID: 2800000, guid: 3be80abefc2e9ae4885b56c6d8f167ed, type: 3}
+        m_Texture: {fileID: 2800000, guid: c7787e190ff6ea04fa1d102fc9f10cdb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _EmissionMap:
@@ -83,7 +84,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ffe2fc58de18ad346a957e597286bf51, type: 3}
+        m_Texture: {fileID: 2800000, guid: a3b990ef5291d7245acfd69963dfe069, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -103,7 +104,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionTex:
-        m_Texture: {fileID: 2800000, guid: 91df3a55daf430b43b2587be1185fcd8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 38e0d3563904bd74b930883356bc6b3e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -130,7 +131,7 @@ Material:
     - _Stencil: 0
     - _Stencil2: 0
     m_Floats:
-    - _AOInBaseColor: 0
+    - _AOInBaseColor: 0.169
     - _AddSpecular: 0
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -146,7 +147,7 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _Discolor: 0
+    - _Discolor: 0.271
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
@@ -162,16 +163,16 @@ Material:
     - _Metallic: 0
     - _Mode: 0
     - _NormalScale: 1
-    - _OcclusionMult: 0.555
+    - _OcclusionMult: 0.5
     - _OcclusionStrength: 1
-    - _OutlineColInBaseColor: 0.153
-    - _OutlineWidth: 0.67
+    - _OutlineColInBaseColor: 0.234
+    - _OutlineWidth: 13.65
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _ReflectionSource: 0
-    - _RimLightInShadow: 0.246
+    - _RimLightInShadow: 0.111
     - _RimWidth: 0.01
     - _SampleGI: 0
     - _ShadowGain: 0
@@ -180,25 +181,25 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
-    - _Specular1: 0.112
+    - _Specular1: 0.227
     - _SpecularDiscolor: 0
     - _SpecularHighlights: 1
-    - _SpecularInShadow: 0.1
+    - _SpecularInShadow: 0.116
     - _SpecularStep: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _StencilTest: 0
     - _Surface: 0
-    - _Threshold: 0.064
+    - _Threshold: 0.07
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UVSec: 0
-    - _UniformOutline: 0
+    - _UniformOutline: 1
     - _UseSSAO: 1
     - _UseShadow: 1
     - _UseVertexColorA: 0
     - _UseVertexColorRGB: 0
-    - _ViewSpaceZOffset: 0.1
+    - _ViewSpaceZOffset: 0
     - _WorkflowMode: 1
     - _ZTest1: 4
     - _ZTest2: 4
@@ -217,7 +218,7 @@ Material:
     - _staticAO: 0
     - _transmission: 0
     m_Colors:
-    - _AOColor: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    - _AOColor: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 0}
     - _EdgePowScale: {r: 1, g: 1, b: 0, a: 0}
@@ -225,7 +226,7 @@ Material:
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 0}
     - _HalftoneColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineCol: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineCol: {r: 0.103773594, g: 0.04160734, b: 0.04160734, a: 1}
     - _RimCol: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}

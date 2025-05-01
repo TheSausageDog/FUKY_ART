@@ -20,12 +20,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: "\u5DE5\u4F5C\u53F0\u4E2D\u9053\u5177"
+  m_Name: "\u70B9\u83DC\u5355"
   m_Shader: {fileID: 4800000, guid: c63f701315fb36849af70e827d86ffda, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _SMOOTHNORMAL_TEXCOORD3
+  - _UNIFORM_OUTLINE_WIDTH
   - _USE_SHADOW
   - _USE_SSAO
   m_InvalidKeywords:
@@ -43,7 +44,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: d2d720d5070763441b17ceb247c4186a, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2edcbc9d41885c548a548fa0d8868853, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -83,7 +84,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: ffe2fc58de18ad346a957e597286bf51, type: 3}
+        m_Texture: {fileID: 2800000, guid: 2edcbc9d41885c548a548fa0d8868853, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -103,7 +104,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionTex:
-        m_Texture: {fileID: 2800000, guid: 91df3a55daf430b43b2587be1185fcd8, type: 3}
+        m_Texture: {fileID: 2800000, guid: 258f8da34a68f98469c2f70cabf44102, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ParallaxMap:
@@ -164,15 +165,15 @@ Material:
     - _NormalScale: 1
     - _OcclusionMult: 0.555
     - _OcclusionStrength: 1
-    - _OutlineColInBaseColor: 0.153
-    - _OutlineWidth: 0.67
+    - _OutlineColInBaseColor: 0.11
+    - _OutlineWidth: 10
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _ReflectionSource: 0
-    - _RimLightInShadow: 0.246
-    - _RimWidth: 0.01
+    - _RimLightInShadow: 0.118
+    - _RimWidth: 0.02
     - _SampleGI: 0
     - _ShadowGain: 0
     - _Shininess: 1
@@ -180,25 +181,25 @@ Material:
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
     - _SpecSource: 0
-    - _Specular1: 0.112
+    - _Specular1: 0
     - _SpecularDiscolor: 0
     - _SpecularHighlights: 1
-    - _SpecularInShadow: 0.1
+    - _SpecularInShadow: 0
     - _SpecularStep: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _StencilTest: 0
     - _Surface: 0
-    - _Threshold: 0.064
+    - _Threshold: 0.139
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UVSec: 0
-    - _UniformOutline: 0
+    - _UniformOutline: 1
     - _UseSSAO: 1
     - _UseShadow: 1
     - _UseVertexColorA: 0
     - _UseVertexColorRGB: 0
-    - _ViewSpaceZOffset: 0.1
+    - _ViewSpaceZOffset: 0
     - _WorkflowMode: 1
     - _ZTest1: 4
     - _ZTest2: 4
@@ -225,7 +226,7 @@ Material:
     - _EmissiveColor: {r: 0, g: 0, b: 0, a: 0}
     - _HalftoneColor: {r: 1, g: 1, b: 1, a: 1}
     - _MainColor: {r: 1, g: 1, b: 1, a: 1}
-    - _OutlineCol: {r: 0, g: 0, b: 0, a: 1}
+    - _OutlineCol: {r: 0.11372549, g: 0.030592157, b: 0.030592157, a: 1}
     - _RimCol: {r: 1, g: 1, b: 1, a: 0}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
