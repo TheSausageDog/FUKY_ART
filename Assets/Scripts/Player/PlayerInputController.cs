@@ -20,12 +20,12 @@ public class PlayerInputController : MonoBehaviour
 
     public static bool IsInteractPressing()
     {
-        return Input.GetKey(KeyCode.E);
+        return Input.GetKey(KeyCode.Mouse1);
     }
 
     public static bool IsInteractPressed()
     {
-        return Input.GetKeyDown(KeyCode.E);
+        return Input.GetKeyDown(KeyCode.Mouse1);
     }
 
     public static bool IsRecipePressed()

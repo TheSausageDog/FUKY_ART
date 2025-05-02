@@ -96,7 +96,11 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 
         if (PlayerBlackBoard.isHeldObj)
         {
-            if (PlayerInputController.IsRotateHeld())
+            if (PlayerInputController.IsInteractPressed())
+            {
+                PlayerBlackBoard.heldItem.OnInteract();
+            }
+            else if (PlayerInputController.IsRotateHeld())
             {
                 BaseItem heldObj = PlayerBlackBoard.heldItem;
                 Vector2 mouseInput = PlayerInputController.GetMouseInput() * rotationSensitivity;
@@ -217,6 +221,7 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     {
         pickItem.OnPickup(holdPos);
         pickItem.gameObject.tag = "isPicking";
+        SetLayerRecursive(pickItem.transform, "Player");
         Physics.IgnoreCollision(pickItem.itemCollider, GetComponent<Collider>(), true);
 
         PlayerBlackBoard.OnItemHeld((HoldableItem)pickItem);
@@ -229,7 +234,7 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         PlayerBlackBoard.heldItem.OnThrow();
         Physics.IgnoreCollision(PlayerBlackBoard.heldItem.itemCollider, GetComponent<Collider>(), false);
         PlayerBlackBoard.heldItem.gameObject.tag = "canInteract";
-
+        SetLayerRecursive(PlayerBlackBoard.heldItem.transform, "Default");
         PlayerBlackBoard.OnItemDrop();
 
         _camera.DOFieldOfView(CameraFieldOfViewOrgin, 0.5f);

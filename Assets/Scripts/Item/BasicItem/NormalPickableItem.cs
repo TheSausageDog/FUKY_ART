@@ -56,3 +56,10 @@ public class NormalPickableItem : PickableItem
         base.OnThrow();
     }
 }
+
+public abstract class PickupInteractableItem : NormalPickableItem
+{
+    public override bool isInteractable { get { return false; } }
+
+
+}

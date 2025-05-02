@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using static UnityEngine.ParticleSystem;
 
 public class WaterFlow : MonoBehaviour
 {
@@ -22,6 +23,12 @@ public class WaterFlow : MonoBehaviour
     // public List<ParticleCollisionEvent> collisionEvents = new List<ParticleCollisionEvent>();
 
     public float dropVolume = 0.1f;
+
+    void Awake()
+    {
+        TrailModule trailModule = particle.trails;
+        trailModule.colorOverTrail = new MinMaxGradient(liquid_color);
+    }
 
     void OnParticleCollision(GameObject other)
     {
@@ -46,26 +53,26 @@ public class WaterFlow : MonoBehaviour
         }
     }
 
-    public virtual void Update()
-    {
-        if (isUp && Vector3.Angle(transform.up, -Vector3.up) < angleTreshold)
-        {
-            isUp = false;
-            StartDrop();
-        }
-        else if (!isUp && Vector3.Angle(transform.up, -Vector3.up) > angleTreshold)
-        {
-            isUp = true;
-            EndDrop();
-        }
-    }
+    // public virtual void Update()
+    // {
+    //     if (isUp && Vector3.Angle(transform.up, -Vector3.up) < angleTreshold)
+    //     {
+    //         isUp = false;
+    //         StartDrop();
+    //     }
+    //     else if (!isUp && Vector3.Angle(transform.up, -Vector3.up) > angleTreshold)
+    //     {
+    //         isUp = true;
+    //         EndDrop();
+    //     }
+    // }
 
-    protected void StartDrop()
+    public void StartDrop()
     {
         if (particle != null)
         {
-            particle.Play();
-            // particle.Emit(1);
+            // particle.Play();
+            particle.Emit(1);
         }
         // Debug.Log("start");
         // StartGeneration();
@@ -83,9 +90,9 @@ public class WaterFlow : MonoBehaviour
     //         Instantiate(item, generatePos.position, Quaternion.identity);
     //     }  
     // }
-    protected void EndDrop()
+    public void EndDrop()
     {
-        particle.Stop();
+        // particle.Stop();
         // Debug.Log("end");
         // StopGeneration();
     }
