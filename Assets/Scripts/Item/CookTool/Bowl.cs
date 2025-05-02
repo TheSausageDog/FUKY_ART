@@ -10,10 +10,8 @@ using UnityEngine.UI;
 /// 继承自 BasePickableItem。
 /// </summary>
 [RequireComponent(typeof(LiquidContainer))]
-public class Bowl : AttachedPickableItem
+public class Bowl : InteractItemBase
 {
-    public override bool isInteractable { get { return true; } }
-
     public FoodRecorder checkArea;
 
     public LiquidContainer liquidContainer;
@@ -22,9 +20,8 @@ public class Bowl : AttachedPickableItem
     // private Collider[] results = new Collider[128]; // 检测到的碰撞体数组
     // private HashSet<GameObject> pepperSet = new HashSet<GameObject>(); // 胡椒对象集合
 
-    public override void Awake()
+    public void Awake()
     {
-        base.Awake();
         liquidContainer = GetComponent<LiquidContainer>();
         liquidContainer.onLiquidChanged += AddLiquid;
     }

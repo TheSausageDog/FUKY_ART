@@ -102,7 +102,7 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
             }
             else if (PlayerInputController.IsRotateHeld())
             {
-                BaseItem heldObj = PlayerBlackBoard.heldItem;
+                HoldableItem heldObj = PlayerBlackBoard.heldItem;
                 Vector2 mouseInput = PlayerInputController.GetMouseInput() * rotationSensitivity;
                 float scrollInput = PlayerInputController.GetScrollInput() * 10;
 
@@ -197,27 +197,32 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         //     (float)pickUpTimer / selectedObj._pickDelay : 0;
         // UEvent.Dispatch(EventType.OnPickingItem, progress);
 
-        if (selectedObj != null && selectedObj.TryGetComponent<BaseItem>(out var itemScript))
+        if (selectedObj != null)
         {
             if (Vector3.Distance(selectedObj.transform.position, transform.position) > pickUpRange)
             {
                 Debug.LogWarning("物体超出拾取范围！");
                 return;
             }
-            if (itemScript.isHoldable && PlayerInputController.IsPickUpPressed())
+            if (PlayerInputController.IsPickUpPressed())
             {
-                OnHandTriggerExit();
-                PickObject(itemScript);
+                if (selectedObj.TryGetComponent<HoldableItem>(out var holdItemScript))
+                {
+                    OnHandTriggerExit();
+                    PickObject(holdItemScript);
+                }
+                else if (selectedObj.TryGetComponent<InteractItemBase>(out var interactItemScript)) { interactItemScript.OnInteract(); }
             }
-            else if (itemScript.isInteractable &&
-            (PlayerInputController.IsInteractPressed() || PlayerInputController.IsPickUpPressed()))
+            else if (PlayerInputController.IsInteractPressed())
             {
-                itemScript.OnInteract();
+                if (selectedObj.TryGetComponent<InteractItemBase>(out var interactItemScript)) { interactItemScript.OnInteract(); }
             }
+
+
         }
     }
 
-    public void PickObject(BaseItem pickItem)
+    public void PickObject(HoldableItem pickItem)
     {
         pickItem.OnPickup(holdPos);
         pickItem.gameObject.tag = "isPicking";

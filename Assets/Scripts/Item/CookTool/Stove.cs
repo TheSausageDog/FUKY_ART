@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Stove : ActivatableItem
+public class Stove : InteractItemBase
 {
     protected bool isFireOn = false;
 
@@ -17,19 +17,17 @@ public class Stove : ActivatableItem
         panCollider = pan.GetComponent<Collider>();
     }
 
-    public override void Active()
+    public override void OnInteract()
     {
-        isFireOn = true;
+        isFireOn = !isFireOn;
         if (isPanOn)
         {
             pan.Heat();
         }
-    }
-
-    public override void Deactive()
-    {
-        isFireOn = false;
-        pan.Unheat();
+        else
+        {
+            pan.Unheat();
+        }
     }
 
     void OnTriggerEnter(Collider other)
