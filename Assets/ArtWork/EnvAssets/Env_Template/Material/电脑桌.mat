@@ -165,14 +165,14 @@ Material:
     - _NormalScale: 1
     - _OcclusionMult: 0.555
     - _OcclusionStrength: 1
-    - _OutlineColInBaseColor: 0.3
-    - _OutlineWidth: 7
+    - _OutlineColInBaseColor: 0.053
+    - _OutlineWidth: 6
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _ReflectionSource: 0
-    - _RimLightInShadow: 0.2
+    - _RimLightInShadow: 0.019
     - _RimWidth: 0.02
     - _SampleGI: 0
     - _ShadowGain: 0
@@ -184,13 +184,13 @@ Material:
     - _Specular1: 0
     - _SpecularDiscolor: 0
     - _SpecularHighlights: 1
-    - _SpecularInShadow: 0.1
+    - _SpecularInShadow: 0.059
     - _SpecularStep: 0
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _StencilTest: 0
     - _Surface: 0
-    - _Threshold: 0.075
+    - _Threshold: 0.638
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UVSec: 0

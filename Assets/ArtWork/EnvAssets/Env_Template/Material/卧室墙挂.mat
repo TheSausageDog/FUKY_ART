@@ -165,7 +165,7 @@ Material:
     - _NormalScale: 1
     - _OcclusionMult: 0.555
     - _OcclusionStrength: 1
-    - _OutlineColInBaseColor: 0.645
+    - _OutlineColInBaseColor: 0.037
     - _OutlineWidth: 4.95
     - _Parallax: 0.02
     - _PresetGroup: 0
@@ -190,7 +190,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _StencilTest: 0
     - _Surface: 0
-    - _Threshold: 0.083
+    - _Threshold: 0.325
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UVSec: 0
