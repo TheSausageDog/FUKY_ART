@@ -665,6 +665,87 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &62885329 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3649764085040790082, guid: 00a244c6d2cc0c643acf6e48dacd2edb,
+    type: 3}
+  m_PrefabInstance: {fileID: 4964484730476281474}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &62885330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62885329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1813acf07a87ef24f9d390f5454d235e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startTastes: []
+  foodType: 0
+--- !u!114 &62885334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62885329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &62885335
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62885329}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!64 &62885336
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 62885329}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8245062004112519257, guid: 6b3b6f54c3f91a742ae6eeba9a8e454c, type: 3}
 --- !u!1001 &90134103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6525,7 +6606,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startTastes: []
   foodType: 4
-  materials: []
 --- !u!114 &853951202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9475,7 +9555,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startTastes: []
   foodType: 6
-  materials: []
 --- !u!114 &1214886867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23573,6 +23652,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u8089\u5E26\u9AA8\u9ABC"
       objectReference: {fileID: 0}
+    - target: {fileID: 3649764085040790082, guid: 00a244c6d2cc0c643acf6e48dacd2edb,
+        type: 3}
+      propertyPath: m_TagString
+      value: canInteract
+      objectReference: {fileID: 0}
     - target: {fileID: 4174064677441364216, guid: 00a244c6d2cc0c643acf6e48dacd2edb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -23626,7 +23710,23 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3649764085040790082, guid: 00a244c6d2cc0c643acf6e48dacd2edb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 62885330}
+    - targetCorrespondingSourceObject: {fileID: 3649764085040790082, guid: 00a244c6d2cc0c643acf6e48dacd2edb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 62885334}
+    - targetCorrespondingSourceObject: {fileID: 3649764085040790082, guid: 00a244c6d2cc0c643acf6e48dacd2edb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 62885335}
+    - targetCorrespondingSourceObject: {fileID: 3649764085040790082, guid: 00a244c6d2cc0c643acf6e48dacd2edb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 62885336}
   m_SourcePrefab: {fileID: 100100000, guid: 00a244c6d2cc0c643acf6e48dacd2edb, type: 3}
 --- !u!220 &5206210498742247147
 LightProbeGroup:

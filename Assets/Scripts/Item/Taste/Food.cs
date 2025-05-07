@@ -18,28 +18,9 @@ public class Food : TasteObject
     public FoodType foodType; // 食物类型
     // public Color foodColor; // 食物颜色
 
-    public Material[] materials;
+    protected Material[] materials;
 
     protected float heated = 0f;
-
-    void Awake()
-    {
-        Renderer[] renderers = GetComponents<Renderer>();
-        Renderer[] renderers2 = GetComponentsInChildren<Renderer>();
-        int length = renderers.Length + renderers2.Length;
-        materials = new Material[length];
-        int i = 0;
-        while (i < renderers.Length)
-        {
-            materials[i] = renderers[i].material;
-            ++i;
-        }
-        while (i < length)
-        {
-            materials[i] = renderers2[i - renderers.Length].material;
-            ++i;
-        }
-    }
 
     protected void SetTasteByType()
     {
@@ -58,13 +39,6 @@ public class Food : TasteObject
         }
     }
 
-    // private void OnDrawGizmosSelected()
-    // {
-    //     Gizmos.color = Color.red;
-    //     Bounds bounds = VolumeCalculator.CalculateWorldBounds(gameObject);
-    //     Gizmos.DrawWireCube(bounds.center, bounds.size);
-    // }
-
     public override void Start()
     {
         if (foodType != FoodType.None)
@@ -75,7 +49,21 @@ public class Food : TasteObject
         {
             base.Start();
         }
-        // CalculateTaste();
+        Renderer[] renderers = GetComponents<Renderer>();
+        Renderer[] renderers2 = GetComponentsInChildren<Renderer>();
+        int length = renderers.Length + renderers2.Length;
+        materials = new Material[length];
+        int i = 0;
+        while (i < renderers.Length)
+        {
+            materials[i] = renderers[i].material;
+            ++i;
+        }
+        while (i < length)
+        {
+            materials[i] = renderers2[i - renderers.Length].material;
+            ++i;
+        }
     }
 
     public virtual void Heat(float _heat)
@@ -102,7 +90,6 @@ public class Food : TasteObject
                 material.SetColor("_MainColor", Color.white * 0.1f);
             }
         }
-
     }
 
 }
