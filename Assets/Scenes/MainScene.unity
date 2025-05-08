@@ -745,7 +745,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 1
   m_CookingOptions: 30
-  m_Mesh: {fileID: -8245062004112519257, guid: 6b3b6f54c3f91a742ae6eeba9a8e454c, type: 3}
+  m_Mesh: {fileID: 4300000, guid: 3cef721ca7099ca40b6182a6528ff17b, type: 2}
 --- !u!1001 &90134103
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23707,6 +23707,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6516673736213900066, guid: 00a244c6d2cc0c643acf6e48dacd2edb,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5a4e43d0bebd77b4e8190d98d0cf43ae, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
