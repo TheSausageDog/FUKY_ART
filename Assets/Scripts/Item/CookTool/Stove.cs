@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Stove : InteractItemBase
 {
-    protected bool isFireOn = false;
+    public bool isFireOn { protected set; get; } = false;
 
     protected bool isPanOn = false;
 

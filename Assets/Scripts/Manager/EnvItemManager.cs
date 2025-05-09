@@ -21,4 +21,8 @@ public class EnvItemManager : MonoBehaviour
     public GameObject plate;
 
     public GameObject menu;
+
+    public GameObject stove;
+
+    public GameObject stoveSwitch;
 }

@@ -12,6 +12,8 @@ public class OrderManager : SingletonMono<OrderManager>
     public GameObject plate;
     public GameObject menu;
 
+    public ContainRecorder submitArea;
+
     // public Transform trayTarget;
     // public Transform trayStart;
 
@@ -21,10 +23,13 @@ public class OrderManager : SingletonMono<OrderManager>
     protected Order order = null;
     public OrderItem orderItem;
 
+    void Start()
+    {
+        animator = foodTray.GetComponent<Animator>();
+    }
 
     public void NewOrder(Recipe recipe = null)
     {
-        animator = foodTray.GetComponent<Animator>();
         foodTray.SetActive(true);
         // foodTray.transform.position = trayStart.position;
         // foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 4;
@@ -93,6 +98,22 @@ public class OrderManager : SingletonMono<OrderManager>
     public void ThrowMenu(OrderItem orderItem)
     {
         orderItem.gameObject.SetActive(false);
+    }
+
+    public void SubmitOrder()
+    {
+        if (submitArea.inside.Contains(foodTray.GetComponent<Collider>()))
+        {
+            Debug.Log("提交了给评分");
+            orderItem = null;
+            foodTray.SetActive(false);
+            animator.Play("FoodTrayAnimation");
+            animator.enabled = true;
+        }
+        else
+        {
+            Debug.Log("没有餐盘");
+        }
     }
 
     public class Order

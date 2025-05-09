@@ -57,7 +57,7 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         {
             OnHandTriggerExit();
             selectedObj = other;
-            SetLayerRecursive(selectedObj.transform, "Outline");
+            Utils.SetLayerRecursive(selectedObj.transform, "Outline");
         }
     }
 
@@ -65,17 +65,8 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     {
         if (selectedObj != null)
         {
-            SetLayerRecursive(selectedObj.transform, "Default");
+            Utils.SetLayerRecursive(selectedObj.transform, "Default");
             selectedObj = null;
-        }
-    }
-
-    protected static void SetLayerRecursive(Transform trans, string layer)
-    {
-        trans.gameObject.layer = LayerMask.NameToLayer(layer);
-        foreach (Transform child in trans)
-        {
-            SetLayerRecursive(child, layer);
         }
     }
 
@@ -226,7 +217,7 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     {
         pickItem.OnPickup(holdPos);
         pickItem.gameObject.tag = "isPicking";
-        SetLayerRecursive(pickItem.transform, "Player");
+        Utils.SetLayerRecursive(pickItem.transform, "Player");
         Physics.IgnoreCollision(pickItem.itemCollider, GetComponent<Collider>(), true);
 
         PlayerBlackBoard.OnItemHeld((HoldableItem)pickItem);
@@ -239,7 +230,7 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         PlayerBlackBoard.heldItem.OnThrow();
         Physics.IgnoreCollision(PlayerBlackBoard.heldItem.itemCollider, GetComponent<Collider>(), false);
         PlayerBlackBoard.heldItem.gameObject.tag = "canInteract";
-        SetLayerRecursive(PlayerBlackBoard.heldItem.transform, "Default");
+        Utils.SetLayerRecursive(PlayerBlackBoard.heldItem.transform, "Default");
         PlayerBlackBoard.OnItemDrop();
 
         _camera.DOFieldOfView(CameraFieldOfViewOrgin, 0.5f);
