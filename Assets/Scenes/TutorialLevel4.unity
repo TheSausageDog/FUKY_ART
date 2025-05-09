@@ -133,11 +133,8 @@ GameObject:
   - component: {fileID: 740148215}
   - component: {fileID: 740148217}
   - component: {fileID: 740148221}
+  - component: {fileID: 740148228}
   - component: {fileID: 740148220}
-  - component: {fileID: 740148222}
-  - component: {fileID: 740148224}
-  - component: {fileID: 740148223}
-  - component: {fileID: 740148225}
   - component: {fileID: 740148226}
   - component: {fileID: 740148227}
   m_Layer: 0
@@ -187,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e757d3b6ec4db354eb64277522514173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogText: "\u4E0D\u77E5\u9053\u591F\u4E0D\u591F\u8FA3\uFF0C\u5C1D\u4E00\u53E3\u5148(\u8BD5\u5403\u83DC\u5355"
+  dialogText: "\u7528\u6CB9\u5148\u8DF3\u8FC7"
   duration: 2
 --- !u!114 &740148221
 MonoBehaviour:
@@ -201,66 +198,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e757d3b6ec4db354eb64277522514173, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogText: "\u8001\u8C2D\u611F\u89C9\u597D\u50CF\u8FD8\u5DEE\u4E86\u70B9\u4EC0\u4E48(\u770B\u83DC\u5355"
+  dialogText: "\u6765\u65B0\u5355\u5BF9\u8BDD"
   duration: 2
---- !u!114 &740148222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740148213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 313a053814fcd854bbe161edc5bfe384, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogText: 
-  taskName: "\u590D\u5DE5\u590D\u4EA7"
-  taskStepName: "\u8BD5\u5403\u83DC\u54C1\u5473\u9053"
---- !u!114 &740148223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740148213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e757d3b6ec4db354eb64277522514173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogText: "\u54E6\u5BF9\u4E86\uFF0C\u6709\u8FD9\u4E9B\u79D8\u5BC6\u6B66\u5668"
-  duration: 2
---- !u!114 &740148224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740148213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e757d3b6ec4db354eb64277522514173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogText: "\u4F3C\u4E4E\u4E0D\u591F\u8FA3\uFF0C\u5F97\u8FA3\u4E00\u4E9B\uFF0C\u6211\u5BFB\u601D\u4E00\u4E0B\u6709\u4EC0\u4E48\u65B9\u6CD5"
-  duration: 2
---- !u!114 &740148225
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740148213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 275d1bdab51218749b56585501f5f5b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogText: 
-  taskName: "\u590D\u5DE5\u590D\u4EA7"
-  taskStepName: "\u60F3\u529E\u6CD5\u8BA9\u83DC\u54C1\u66F4\u8FA3"
 --- !u!114 &740148226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,8 +213,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogText: 
-  taskName: "\u590D\u5DE5\u590D\u4EA7"
-  taskStepName: "\u51C6\u5907\u4E0A\u83DC"
+  taskName: 
+  taskStepName: 
 --- !u!114 &740148227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -290,6 +229,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogText: "\u7ED3\u7B97\u7ED3\u675F"
   duration: 10
+--- !u!114 &740148228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740148213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a7970a7462c4b4dbcfe95f9fb6da01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogText: 
+  taskName: 
+  taskStepName: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
