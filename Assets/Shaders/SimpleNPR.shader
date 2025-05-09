@@ -87,6 +87,12 @@
         [SubToggle(Group9,_UNIFORM_OUTLINE_WIDTH)] _UniformOutline("描边宽度始终不变",float) = 0
         //[Sub(Group9)]   _ViewSpaceZOffset ("深度偏移",Range(0,20)) = 0
 
+		[Main(FoodCooked, _FOOD_COOKED, off, on)] 
+		_foodCooked ("食物煮熟", float) = 0
+        [Sub(FoodCooked)]   _FoodRawTex("生食贴图",2D) = "white"{}
+		[Sub(FoodCooked)]   _FoodCookedTex("熟食贴图",2D) = "white"{}
+        [Sub(FoodCooked)]   _FoodBurnedTex("烤焦贴图",2D) = "white"{}
+
         [Header(Custom Outline)]
         [SubToggle(Group9)] _UseVertexColorRGB ("使用顶点色:RGB颜色",float) = 0
         [SubToggle(Group9)] _UseVertexColorA ("使用顶点色:A描边宽度",float) = 0
@@ -148,6 +154,7 @@
             #pragma shader_feature_local_fragment _EMISSIVE
             #pragma shader_feature_local_fragment _STATIC_AO
             #pragma shader_feature_local_fragment _NORMALMAP
+            #pragma shader_feature_local_fragment _FOOD_COOKED
             
             
             // -------------------------------------
@@ -209,6 +216,12 @@
                 UNITY_VERTEX_INPUT_INSTANCE_ID
                 UNITY_VERTEX_OUTPUT_STEREO
             };
+
+            float3 _bound_center;
+            float3 _bound_size;
+            float4 _heat1;
+            float4 _heat2;
+
             Varyings vert (Attributes input)
             {
                 Varyings output = (Varyings)0;
@@ -325,6 +338,33 @@
                 return rimLight * rimlightBrightness;
             }
 
+            half4 GetCookedColor(float3 loacl_pos, float2 uv){
+                float3 v_alpha = ((loacl_pos - _bound_center) / _bound_size) + 0.5;
+                return half4(v_alpha, 1);
+                float4 mid_surface = lerp(_heat1, _heat2, v_alpha.y);
+                float2 mid_line = lerp(mid_surface.xy, mid_surface.wz, v_alpha.z);
+                float heat = lerp(mid_line.x, mid_line.y, v_alpha.x) / 5;
+                // 1 <0.5
+                // (1.5- heated)     0.5< <1.5
+                // 0 >1.5
+                float raw_weight = saturate(1.5 - heat);
+                // 0  <0.5
+                // heated - 0.5   0.5< <1.5
+                // 1  1.5< <2
+                // 3- heats 2< < 3
+                // 0  >3
+                int well_cooked = step(heat, 1.5) * step(2, heat);
+                float cooked_weight = min(saturate(3 - heat), saturate(heat - 0.5)) * (1-well_cooked) + well_cooked;
+                // 0 <2
+                // heated - 2   2< <3
+                // 1 0 <3
+                float burned_weight = saturate(heat - 2);
+
+                return half4(1,0,0,1) * raw_weight + half4(0, 1, 0, 1) * cooked_weight + half4(0, 0, 0, 1) * burned_weight;
+                
+                // half4 mainTex = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,TRANSFORM_TEX(input.uv,_MainTex))*_MainColor;
+            }
+
             half4 frag (Varyings input) : SV_Target
             {
 
@@ -355,7 +395,12 @@
 
             	// TODO R:Specular; G:Gloss; B:Reflect; A:RampID;
             	half4 maskSGRI = 1;
-            	half4 mainTex = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,TRANSFORM_TEX(input.uv,_MainTex))*_MainColor;
+
+                #if _FOOD_COOKED
+            	half4 mainTex = GetCookedColor(input.positionOS, input.uv);
+                #else
+                half4 mainTex = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,TRANSFORM_TEX(input.uv,_MainTex))*_MainColor;
+                #endif
 
 				//ssao
             	float2 sceneUV = input.positionNDC.xy/input.positionNDC.w;

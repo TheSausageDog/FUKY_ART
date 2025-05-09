@@ -40,6 +40,8 @@ public class Steak : Food
         base.Start();
         bounds = VolumeCalculator.CalculateWorldBounds(gameObject);
         bounds.center = transform.worldToLocalMatrix.MultiplyPoint(bounds.center);
+        SetMaterials((Material material) => { material.SetVector("_bound_center", bounds.center); });
+        SetMaterials((Material material) => { material.SetVector("_bound_size", bounds.size); });
     }
 
     public override void Heat(float _heat)
@@ -60,6 +62,9 @@ public class Steak : Food
         {
             heats[face[min_index][i]] += _heat;
         }
+
+        SetMaterials((Material material) => { material.SetVector("_heat1", new Vector4(heats[0], heats[1], heats[2], heats[3])); });
+        SetMaterials((Material material) => { material.SetVector("_heat2", new Vector4(heats[4], heats[5], heats[6], heats[7])); });
     }
 
     protected Vector3 GetDirection(int index)
@@ -88,13 +93,23 @@ public class Steak : Food
 
         for (int i = 0; i < 8; i++)
         {
-            if (heats[i] < 5)
+            if (heats[i] < 2.5)
             {
                 Gizmos.color = Color.red;
+            }
+            else if (heats[i] < 7.5)
+            {
+                float alpha = (heats[i] - 2.5f) / 5;
+                Gizmos.color = Color.Lerp(Color.red, Color.green, alpha);
             }
             else if (heats[i] < 10)
             {
                 Gizmos.color = Color.green;
+            }
+            else if (heats[i] < 15)
+            {
+                float alpha = (heats[i] - 10f) / 5;
+                Gizmos.color = Color.Lerp(Color.green, Color.black, alpha);
             }
             else
             {
