@@ -96,7 +96,7 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 
         if (PlayerBlackBoard.isHeldObj)
         {
-            if (PlayerInputController.IsInteractPressed())
+            if (PlayerInputController.IsInteractPressed() && PlayerBlackBoard.heldItem.isInteractable)
             {
                 PlayerBlackBoard.heldItem.OnInteract();
             }
