@@ -221,6 +221,12 @@
             float3 _bound_size;
             float4 _heat1;
             float4 _heat2;
+            TEXTURE2D(_FoodRawTex); SAMPLER(sampler_FoodRawTex);
+            TEXTURE2D(_FoodCookedTex); SAMPLER(sampler_FoodCookedTex);
+            TEXTURE2D(_FoodBurnedTex); SAMPLER(sampler_FoodBurnedTex);
+            float4 _FoodRawTex_ST;
+            float4 _FoodCookedTex_ST;
+            float4 _FoodBurnedTex_ST;
 
             Varyings vert (Attributes input)
             {
@@ -338,12 +344,47 @@
                 return rimLight * rimlightBrightness;
             }
 
-            half4 GetCookedColor(float3 loacl_pos, float2 uv){
-                float3 v_alpha = ((loacl_pos - _bound_center) / _bound_size) + 0.5;
-                return half4(v_alpha, 1);
+            // float3 GetNormizedPos(float3 world_pos, float2 uv, float3 loacl_pos){
+            //     float3 half_size = _bound_size / 2;
+            //     float3 p0 = float3(_bound_center.x - half_size.x, _bound_center.y - half_size.y, _bound_center.z - half_size.z);
+            //     float3 p1 = float3(_bound_center.x + half_size.x, _bound_center.y - half_size.y, _bound_center.z - half_size.z);
+            //     float3 p3 = float3(_bound_center.x - half_size.x, _bound_center.y - half_size.y, _bound_center.z + half_size.z);
+            //     float3 p4 = float3(_bound_center.x - half_size.x, _bound_center.y + half_size.y, _bound_center.z - half_size.z);
+            //     p0 = mul(unity_ObjectToWorld, float4(p0, 1));
+            //     p1 = mul(unity_ObjectToWorld, float4(p1, 1));
+            //     p3 = mul(unity_ObjectToWorld, float4(p3, 1));
+            //     p4 = mul(unity_ObjectToWorld, float4(p4, 1));
+
+            //     float3 vx = p1 - p0;
+            //     float3 vy = p4 - p0;
+            //     float3 vz = p3 - p0;
+
+            //     float3 size = float3(length(vx),length(vy),length(vz));
+                
+            //     vx = normalize(vx);
+            //     vy = normalize(vy);
+            //     vz = normalize(vz);
+            //     float3 p02w = world_pos - p0;
+            //     // return half4(p02w, 1);
+            //     return float3(dot(p02w, vx) / (size.x), dot(p02w, vy)/ (size.y), dot(p02w, vz)/ (size.z));
+            // }
+
+            float3 GetNormizedPos(float3 loacl_pos){
+                return (((loacl_pos - _bound_center) / _bound_size) + 0.5);
+            }
+
+            float GetHeat(float3 v_alpha){
                 float4 mid_surface = lerp(_heat1, _heat2, v_alpha.y);
                 float2 mid_line = lerp(mid_surface.xy, mid_surface.wz, v_alpha.z);
-                float heat = lerp(mid_line.x, mid_line.y, v_alpha.x) / 5;
+                return lerp(mid_line.x, mid_line.y, v_alpha.x);
+            }
+
+            half4 GetCookedColor(float heat, float2 uv){
+                half4 rawColor = SAMPLE_TEXTURE2D(_FoodRawTex,sampler_FoodRawTex,TRANSFORM_TEX(uv,_FoodRawTex));//half4(1,0,0,1)
+                half4 cookedColor = SAMPLE_TEXTURE2D(_FoodCookedTex,sampler_FoodCookedTex,TRANSFORM_TEX(uv,_FoodCookedTex));//half4(0, 1, 0, 1)
+                half4 burnedColor = SAMPLE_TEXTURE2D(_FoodBurnedTex,sampler_FoodBurnedTex,TRANSFORM_TEX(uv,_FoodBurnedTex));//half4(0,0,0,1)
+
+                heat /= 5;
                 // 1 <0.5
                 // (1.5- heated)     0.5< <1.5
                 // 0 >1.5
@@ -359,11 +400,110 @@
                 // heated - 2   2< <3
                 // 1 0 <3
                 float burned_weight = saturate(heat - 2);
-
-                return half4(1,0,0,1) * raw_weight + half4(0, 1, 0, 1) * cooked_weight + half4(0, 0, 0, 1) * burned_weight;
-                
-                // half4 mainTex = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,TRANSFORM_TEX(input.uv,_MainTex))*_MainColor;
+                return rawColor * raw_weight + cookedColor * cooked_weight + burnedColor * burned_weight;
             }
+
+            // half4 GetCookedColor(float heat, float2 uv){
+            //     if (heat < 2.5)
+            //     {
+            //         return SAMPLE_TEXTURE2D(_FoodRawTex,sampler_FoodRawTex,TRANSFORM_TEX(uv,_FoodRawTex));//half4(1,0,0,1)
+            //     }
+            //     else if (heat < 7.5)
+            //     {
+            //         half4 rawColor = SAMPLE_TEXTURE2D(_FoodRawTex,sampler_FoodRawTex,TRANSFORM_TEX(uv,_FoodRawTex));//half4(1,0,0,1)
+            //         half4 cookedColor = SAMPLE_TEXTURE2D(_FoodCookedTex,sampler_FoodCookedTex,TRANSFORM_TEX(uv,_FoodCookedTex));//half4(0, 1, 0, 1)
+            //         float alpha = (heat - 2.5) / 5;
+            //         return lerp(rawColor, cookedColor, alpha);
+            //     }
+            //     else if (heat < 10)
+            //     {
+            //         return SAMPLE_TEXTURE2D(_FoodCookedTex,sampler_FoodCookedTex,TRANSFORM_TEX(uv,_FoodCookedTex));//half4(0, 1, 0, 1)
+            //     }
+            //     else if (heat < 15)
+            //     {
+            //         half4 cookedColor = SAMPLE_TEXTURE2D(_FoodCookedTex,sampler_FoodCookedTex,TRANSFORM_TEX(uv,_FoodCookedTex));//half4(0, 1, 0, 1)
+            //         half4 burnedColor = SAMPLE_TEXTURE2D(_FoodBurnedTex,sampler_FoodBurnedTex,TRANSFORM_TEX(uv,_FoodBurnedTex));//half4(0,0,0,1)
+            //         float alpha = (heat - 10) / 5;
+            //         return lerp(cookedColor, burnedColor, alpha);
+            //     }
+            //     else
+            //     {
+            //         return SAMPLE_TEXTURE2D(_FoodBurnedTex,sampler_FoodBurnedTex,TRANSFORM_TEX(uv,_FoodBurnedTex));//half4(0,0,0,1)
+            //     }
+            // }
+
+        // half4 GetCookedColor(float3 world_pos, float2 uv, float3 loacl_pos){
+        //         float3 half_size = _bound_size / 2;
+        //         float3 p0 = float3(_bound_center.x - half_size.x, _bound_center.y - half_size.y, _bound_center.z - half_size.z);
+        //         float3 p1 = float3(_bound_center.x + half_size.x, _bound_center.y - half_size.y, _bound_center.z - half_size.z);
+        //         float3 p3 = float3(_bound_center.x - half_size.x, _bound_center.y - half_size.y, _bound_center.z + half_size.z);
+        //         float3 p4 = float3(_bound_center.x - half_size.x, _bound_center.y + half_size.y, _bound_center.z - half_size.z);
+        //         p0 = mul(unity_ObjectToWorld, float4(p0, 1));
+        //         p1 = mul(unity_ObjectToWorld, float4(p1, 1));
+        //         p3 = mul(unity_ObjectToWorld, float4(p3, 1));
+        //         p4 = mul(unity_ObjectToWorld, float4(p4, 1));
+
+        //         float3 vx = p1 - p0;
+        //         float3 vy = p4 - p0;
+        //         float3 vz = p3 - p0;
+
+        //         float3 size = float3(length(vx),length(vy),length(vz));
+                
+        //         vx = normalize(vx);
+        //         vy = normalize(vy);
+        //         vz = normalize(vz);
+        //         float3 p02w = world_pos - p0;
+        //         // return half4(p02w, 1);
+        //         float3 v_alpha = float3(dot(p02w, vx) / (size.x), dot(p02w, vy)/ (size.y), dot(p02w, vz)/ (size.z));
+                
+        //         float3 v_alpha2 = (((loacl_pos - _bound_center) / _bound_size) + 0.5);
+        //         return half4(v_alpha, 1);
+        //         float4 mid_surface = lerp(_heat1, _heat2, v_alpha.y);
+        //         float2 mid_line = lerp(mid_surface.xy, mid_surface.wz, v_alpha.z);
+        //         float heat = lerp(mid_line.x, mid_line.y, v_alpha.x);
+        //         // heat /= 5;
+
+        //         // 1 <0.5
+        //         // (1.5- heated)     0.5< <1.5
+        //         // 0 >1.5
+        //         float raw_weight = saturate(1.5 - heat);
+        //         // 0  <0.5
+        //         // heated - 0.5   0.5< <1.5
+        //         // 1  1.5< <2
+        //         // 3- heats 2< < 3
+        //         // 0  >3
+        //         int well_cooked = step(heat, 1.5) * step(2, heat);
+        //         float cooked_weight = min(saturate(3 - heat), saturate(heat - 0.5)) * (1-well_cooked) + well_cooked;
+        //         // 0 <2
+        //         // heated - 2   2< <3
+        //         // 1 0 <3
+        //         float burned_weight = saturate(heat - 2);
+
+        //         if (heat < 2.5)
+        //         {
+        //             return half4(1,0,0,1);
+        //         }
+        //         else if (heat < 7.5)
+        //         {
+        //             float alpha = (heat - 2.5) / 5;
+        //             return lerp(half4(1,0,0,1), half4(0, 1, 0, 1), alpha);
+        //         }
+        //         else if (heat < 10)
+        //         {
+        //             return half4(0,1,0,1);
+        //         }
+        //         else if (heat < 15)
+        //         {
+        //             float alpha = (heat - 10) / 5;
+        //             return lerp(half4(0,1,0,1), half4(0, 0, 0, 1), alpha);
+        //         }
+        //         else
+        //         {
+        //             return half4(0,0,0,1);
+        //         }
+
+        //         return half4(1,0,0,1) * raw_weight + half4(0, 1, 0, 1) * cooked_weight + half4(0, 0, 0, 1) * burned_weight;
+        //     }
 
             half4 frag (Varyings input) : SV_Target
             {
@@ -397,7 +537,7 @@
             	half4 maskSGRI = 1;
 
                 #if _FOOD_COOKED
-            	half4 mainTex = GetCookedColor(input.positionOS, input.uv);
+            	half4 mainTex = GetCookedColor(GetHeat(GetNormizedPos(input.positionOS)), input.uv) * _MainColor;
                 #else
                 half4 mainTex = SAMPLE_TEXTURE2D(_MainTex,sampler_MainTex,TRANSFORM_TEX(input.uv,_MainTex))*_MainColor;
                 #endif

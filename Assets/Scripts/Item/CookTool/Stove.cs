@@ -22,11 +22,7 @@ public class Stove : InteractItemBase
         isFireOn = !isFireOn;
         if (isPanOn)
         {
-            pan.Heat();
-        }
-        else
-        {
-            pan.Unheat();
+            if (isFireOn) { pan.Heat(); } else { pan.Unheat(); }
         }
     }
 

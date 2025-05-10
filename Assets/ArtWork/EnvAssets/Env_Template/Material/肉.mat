@@ -25,6 +25,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - _FOOD_COOKED
   - _SMOOTHNORMAL_TEXCOORD3
   - _UNIFORM_OUTLINE_WIDTH
   - _USE_SHADOW
@@ -85,15 +86,15 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FoodBurnedTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 51a5c74203fa44e479734c49f8d8daa0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FoodCookedTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: cca4e69045cc507458e9ec33a57f01be, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _FoodRawTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 75b388fbfd112a2418b9ee1baee9faba, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -220,7 +221,7 @@ Material:
     - _ZWrite1: 1
     - _ZWrite2: 1
     - _aoSetting: 0
-    - _foodCooked: 0
+    - _foodCooked: 1
     - _group1: 0
     - _group2: 0
     - _group3: 0
