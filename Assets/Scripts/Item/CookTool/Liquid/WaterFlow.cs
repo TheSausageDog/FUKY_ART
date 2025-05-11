@@ -34,7 +34,7 @@ public class WaterFlow : MonoBehaviour
     {
         if (other.TryGetComponent<LiquidContainer>(out var _bowl))
         {
-            _bowl.AddLiquid(liquid_color, dropVolume, this);
+            // _bowl.AddLiquid(liquid_color, dropVolume, this);
         }
         else
         {

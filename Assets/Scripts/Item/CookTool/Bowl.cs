@@ -23,7 +23,7 @@ public class Bowl : InteractItemBase
     public void Awake()
     {
         liquidContainer = GetComponent<LiquidContainer>();
-        liquidContainer.onLiquidChanged += AddLiquid;
+        // liquidContainer.onLiquidChanged += AddLiquid;
     }
 
     protected void AddLiquid(float delta_volume, WaterFlow source)
