@@ -4,20 +4,50 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
-
+[RequireComponent(typeof(ObiCollider))]
 public class LiquidContainer : MonoBehaviour
 {
     public ObiSolver solver;
 
+    public ObiRigidbody obiRigidbody;
+
+    protected ObiCollider obiCollider;
+
+    void Awake()
+    {
+        obiCollider = GetComponent<ObiCollider>();
+    }
+
     void OnEnable()
     {
-        // solver.OnCollision += Solver_OnCollision;
+        solver.OnCollision += Solver_OnCollision;
     }
 
     void OnDisable()
     {
-        // solver.OnCollision -= Solver_OnCollision;
+        solver.OnCollision -= Solver_OnCollision;
     }
+
+    void Solver_OnCollision(object sender, ObiNativeContactList e)
+    {
+        // calculate an acceleration that counteracts gravity:
+        // Vector4 antiGravityAccel = -(Vector4)solver.parameters.gravity * Time.deltaTime;
+
+        var world = ObiColliderWorld.GetInstance();
+        foreach (Oni.Contact contact in e)
+        {
+            ObiColliderBase col = world.colliderHandles[contact.bodyB].owner;
+            if (col == obiCollider)
+            {
+                int particleIndex = solver.simplices[contact.bodyA];
+
+                // set the particle velocity:
+                solver.life[particleIndex] = 3;
+            }
+        }
+    }
+
+
 
     // public Material liquid_material;
 
