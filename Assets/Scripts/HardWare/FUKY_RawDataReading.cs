@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 
 public class FUKY_RawDataReading : MonoBehaviour
 {
+    public Transform Player;
     public Transform TestObject;
     [Tooltip("缩放值会缩放相应坐标")]
     [Range(0.001F, 1F)]
@@ -173,14 +174,14 @@ public class FUKY_RawDataReading : MonoBehaviour
 
         if (Raw_Rotation != Last_Raw_Rotation)
         {
-            RotateFreq = 1 / LastRotateUpdateTime;
-            RotateFreq = Mathf.Clamp(RotateFreq, 0.01F, 1);
+            RotateFreq =  1/LastRotateUpdateTime;
+            //RotateFreq = Mathf.Clamp(RotateFreq, 0.01F, 1);
             LastRotateUpdateTime = 0f;
         }
         if (Raw_Locator_TargetPos != Last_LocatorPos)
         {
-            PosFreq = 1 / LastPosUpdateTime;
-            PosFreq = Mathf.Clamp(PosFreq, 0.01F, 1);
+            PosFreq = 1/ LastPosUpdateTime;
+            //PosFreq = Mathf.Clamp(PosFreq, 0.01F, 1);
             LastPosUpdateTime = 0f;
         }
 
@@ -194,6 +195,10 @@ public class FUKY_RawDataReading : MonoBehaviour
         OE_Locator_TargetPos = PosFilter.Filter(Raw_Locator_TargetPos);
         TestObject.localPosition = OE_Locator_TargetPos;
         TestObject.localRotation = OE_Rotation;
+        LastPosUpdateTime += Time.deltaTime;
+        LastRotateUpdateTime += Time.deltaTime;
+        
+
     }
 
     void OnDestroy()
