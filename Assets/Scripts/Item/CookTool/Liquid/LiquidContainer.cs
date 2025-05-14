@@ -3,46 +3,70 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
-[RequireComponent(typeof(ObiCollider))]
+[RequireComponent(typeof(Collider))]
 public class LiquidContainer : MonoBehaviour
 {
     public ObiSolver solver;
 
-    public ObiRigidbody obiRigidbody;
+    protected Collider containerArea;
 
-    protected ObiCollider obiCollider;
+    protected QueryShape queryShape;
+
+    protected int queryIndex;
 
     void Awake()
     {
-        obiCollider = GetComponent<ObiCollider>();
-    }
-
-    void OnEnable()
-    {
-        solver.OnCollision += Solver_OnCollision;
-    }
-
-    void OnDisable()
-    {
-        solver.OnCollision -= Solver_OnCollision;
-    }
-
-    void Solver_OnCollision(object sender, ObiNativeContactList e)
-    {
-        // calculate an acceleration that counteracts gravity:
-        // Vector4 antiGravityAccel = -(Vector4)solver.parameters.gravity * Time.deltaTime;
-
-        var world = ObiColliderWorld.GetInstance();
-        foreach (Oni.Contact contact in e)
+        containerArea = GetComponent<Collider>();
+        if (containerArea.GetType() == typeof(BoxCollider))
         {
-            ObiColliderBase col = world.colliderHandles[contact.bodyB].owner;
-            if (col == obiCollider)
+            BoxCollider boxCollider = (BoxCollider)containerArea;
+            queryShape = new QueryShape
             {
-                int particleIndex = solver.simplices[contact.bodyA];
+                type = QueryShape.QueryType.Box,
+                center = boxCollider.center,
+                size = boxCollider.size,
+                contactOffset = 0,
+                maxDistance = 0,
+                filter = ObiUtils.MakeFilter(ObiUtils.CollideWithEverything, 0)
+            };
+        }
+        else
+        {
+            Debug.LogWarning("LiquidContainer 暂不支持其他触发器");
+        }
+    }
 
-                // set the particle velocity:
-                solver.life[particleIndex] = 3;
+    void Update()
+    {
+        queryIndex = solver.EnqueueSpatialQuery(queryShape, new AffineTransform(transform.position, transform.rotation, transform.localScale));
+    }
+
+    private void Start()
+    {
+        solver.OnSpatialQueryResults += Solver_OnSpatialQueryResults;
+    }
+
+    private void OnDestroy()
+    {
+        solver.OnSpatialQueryResults -= Solver_OnSpatialQueryResults;
+    }
+
+    void Solver_OnSpatialQueryResults(ObiSolver s, ObiNativeQueryResultList queryResults)
+    {
+        for (int i = 0; i < queryResults.count; ++i)
+        {
+            if (queryResults[i].queryIndex == queryIndex)
+            {
+                if (queryResults[i].distance < 0)
+                {
+                    int particleIndex = solver.simplices[queryResults[i].simplexIndex];
+
+                    // change the color of the particle depending on which box it is inside of:
+
+                    solver.life[particleIndex] = 3;
+                }
             }
         }
     }

@@ -15,7 +15,7 @@ public class Pot : PickupInteractableItem
         isPour = !isPour;
         if (!isPour)
         {
-            waterFlow.EndDrop();
+            waterFlow.isFlowing = false;
         }
     }
 
@@ -23,7 +23,7 @@ public class Pot : PickupInteractableItem
     {
         base.OnThrow();
         isPour = false;
-        waterFlow.EndDrop();
+        waterFlow.isFlowing = false;
     }
 
     public override void Update()
@@ -36,11 +36,11 @@ public class Pot : PickupInteractableItem
             {
                 slope += Time.deltaTime;
                 slope = Mathf.Min(slope, 1);
-                transform.eulerAngles = new Vector3(Mathf.Lerp(0, 45, slope), 0, 0);
+                transform.eulerAngles = new Vector3(Mathf.Lerp(0, 75, slope), 0, 0);
             }
             else
             {
-                waterFlow.StartDrop();
+                waterFlow.isFlowing = true;
             }
         }
         else
@@ -49,7 +49,7 @@ public class Pot : PickupInteractableItem
             {
                 slope -= Time.deltaTime;
                 slope = Mathf.Max(slope, 0);
-                transform.eulerAngles = new Vector3(Mathf.Lerp(0, 45, slope), 0, 0);
+                transform.eulerAngles = new Vector3(Mathf.Lerp(0, 75, slope), 0, 0);
             }
         }
     }
