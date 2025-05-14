@@ -26,11 +26,11 @@ MonoBehaviour:
   reflectionCubemap: {fileID: 8900000, guid: c33edd744b24a4969856286e6004bf8f, type: 3}
   smoothness: 1
   metallic: 0
-  turbidity: {r: 0.9150943, g: 0.8585364, b: 0.07338022, a: 0}
-  thickness: 2
+  turbidity: {r: 0.9150943, g: 0.85898006, b: 0.038848326, a: 1}
+  thickness: 30
   indexOfRefraction: 1.5
   diffuseMap: {fileID: 0}
-  diffuseColor: {r: 0.6132076, g: 0.5955221, b: 0.3037113, a: 0.45490196}
+  diffuseColor: {r: 0.6132076, g: 0.5955221, b: 0.3037113, a: 1}
   normalMap: {fileID: 2800000, guid: d0e01d13c41f549fcbdb8b40f6ca948b, type: 3}
   normalMapIntensity: 1
   normalMapVelocityRange: {x: 10, y: 0}

@@ -11,8 +11,6 @@ using UnityEngine;
 /// </summary>
 public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 {
-    public Transform holdPos; // 物品持有位置
-    public Transform handTarget;
     private Vector3 handTargetOffset;
 
     public float pickUpRange = 5f; // 拾取范围
@@ -20,15 +18,16 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 
     // private bool isHolding = false;
 
-    private Camera _camera; // 主摄像机
+    public GameObject uiCursor;
 
     [Header("手部相关")]
-    [SerializeField] private Transform handPos;
-    [SerializeField] private Transform CameraPos;
-    [SerializeField] private float CameraFieldOfViewOrgin;
-    [SerializeField] private float CameraFieldOfViewOffset;
+    [SerializeField] private Transform holdPos; // 物品持有位置
+    [SerializeField] private Transform handTarget;
+    [SerializeField] private float CameraFieldOfViewOrgin = 0;
+    [SerializeField] private float CameraFieldOfViewOffset = 0;
+    [SerializeField] private float maxHandMovingSpeed = 5;
 
-    public GameObject selectedObj; // 当前手部范围内的物体
+    protected GameObject selectedObj; // 当前手部范围内的物体
     // private float pickUpTimer = 0f; // 长按拾取计时器
 
     [Header("按下Alt后手移动的灵敏度")]
@@ -44,12 +43,10 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     protected override void Awake()
     {
         base.Awake();
-        _camera = Camera.main;
-        handTargetOffset = Vector3.forward;
+        handTargetOffset = Vector3.forward * 1f;
+        handTarget.localPosition = handTargetOffset;
         // handTarget.transform.localPosition;
     }
-
-
 
     public void OnHandTriggerEnter(GameObject other)
     {
@@ -70,6 +67,27 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         }
     }
 
+    RaycastHit[] hits = new RaycastHit[128];
+    private void FixedUpdate()
+    {
+        Vector3 dir = Camera.main.transform.forward;
+        // funkyControl ? (fukyCursor.transform.position - Camera.main.transform.position) : Camera.main.transform.forward;
+        int count = Physics.RaycastNonAlloc(Camera.main.transform.position, dir, hits, pickUpRange);
+
+        Array.Sort(hits, 0, count, Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
+
+        for (int i = 0; i < count; i++)
+        {
+            if (hits[i].collider.gameObject.CompareTag("canInteract"))
+            {
+                OnHandTriggerEnter(hits[i].collider.gameObject);
+                //                Debug.Log(hits[i].collider.gameObject.name);
+                return;
+            }
+        }
+        OnHandTriggerExit();
+    }
+
     void Update()
     {
         // 控制 handTarget 的移动
@@ -87,6 +105,17 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 
         if (PlayerBlackBoard.isHeldObj)
         {
+            float distanceToTarget = Vector3.Distance(handTarget.position, holdPos.position);
+            if (distanceToTarget > maxHandMovingSpeed * Time.deltaTime)
+            {
+                Vector3 directionToTarget = (handTarget.position - holdPos.position).normalized;
+                holdPos.position += directionToTarget * maxHandMovingSpeed * Time.deltaTime;
+            }
+            else
+            {
+                holdPos.position = handTarget.position;
+            }
+
             if (PlayerInputController.IsInteractPressed() && PlayerBlackBoard.heldItem.isInteractable)
             {
                 PlayerBlackBoard.heldItem.OnInteract();
@@ -114,7 +143,6 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 
     private void MoveHandTarget()
     {
-        if (_camera == null) return;
         // 如果没有持有物体，则允许鼠标移动 handTarget
         // if (!PlayerBlackBoard.isHeldObj || PlayerBlackBoard.holdingKnife)
         // {
@@ -208,40 +236,50 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
             {
                 if (selectedObj.TryGetComponent<InteractItemBase>(out var interactItemScript)) { interactItemScript.OnInteract(); }
             }
-
-
         }
     }
 
     public void PickObject(HoldableItem pickItem)
     {
+        uiCursor.SetActive(false);
+        holdPos.transform.position = pickItem.transform.position;
+        pickItem.transform.eulerAngles = Vector3.zero;
         pickItem.OnPickup(holdPos);
         pickItem.gameObject.tag = "isPicking";
         Utils.SetLayerRecursive(pickItem.transform, "Player");
         Physics.IgnoreCollision(pickItem.itemCollider, GetComponent<Collider>(), true);
 
-        PlayerBlackBoard.OnItemHeld((HoldableItem)pickItem);
+        PlayerBlackBoard.OnItemHeld(pickItem);
 
-        _camera.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
+        Camera.main.DOFieldOfView(CameraFieldOfViewOffset, 0.5f);
     }
 
     public void DropObject()
     {
+        uiCursor.SetActive(true);
         PlayerBlackBoard.heldItem.OnThrow();
         Physics.IgnoreCollision(PlayerBlackBoard.heldItem.itemCollider, GetComponent<Collider>(), false);
         PlayerBlackBoard.heldItem.gameObject.tag = "canInteract";
         Utils.SetLayerRecursive(PlayerBlackBoard.heldItem.transform, "Default");
         PlayerBlackBoard.OnItemDrop();
 
-        _camera.DOFieldOfView(CameraFieldOfViewOrgin, 0.5f);
+        Camera.main.DOFieldOfView(CameraFieldOfViewOrgin, 0.5f);
     }
 
     private void OnDrawGizmos()
     {
-        if (handPos != null)
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, pickUpRange);
-        }
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, pickUpRange);
+        Gizmos.color = Color.green;
+
+        Vector3 size = new Vector3(Mathf.Abs(xMinMax.x - xMinMax.y), Mathf.Abs(yMinMax.x - yMinMax.y), Mathf.Abs(zMinMax.x - zMinMax.y));
+        Vector3 center = new Vector3(xMinMax.x + xMinMax.y, yMinMax.x + yMinMax.y, zMinMax.x + zMinMax.y) * 0.5f;
+        Gizmos.DrawWireCube(transform.TransformPoint(center), size);
+
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(handTarget.position, 0.1f);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(holdPos.position, 0.1f);
     }
 }

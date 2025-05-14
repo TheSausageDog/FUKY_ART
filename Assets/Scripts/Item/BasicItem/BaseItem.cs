@@ -55,12 +55,12 @@ public abstract class HoldableItem : MonoBehaviour
 
 public abstract class PickableItem : HoldableItem
 {
-    public override void OnPickup(Transform holdPos)
-    {
-        transform.parent = holdPos.transform.parent.parent;
+    // public override void OnPickup(Transform holdPos)
+    // {
+    //     transform.parent = holdPos.transform.parent.parent;
 
-        base.OnPickup(holdPos);
-    }
+    //     base.OnPickup(holdPos);
+    // }
 
     public override void OnThrow()
     {

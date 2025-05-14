@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class HandInteractionController : MonoListener
 {
-    public GameObject fukyCursor;
+    // public GameObject fukyCursor;
     public GameObject normalCursor;
 
     public PickUpAndInteract pick;
