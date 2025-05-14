@@ -14,6 +14,7 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     public Transform holdPos; // 物品持有位置
     public Transform handTarget;
     private Vector3 handTargetOffset;
+    public FUKY_RawDataReading RawDataTest;
 
     public float pickUpRange = 5f; // 拾取范围
     private float rotationSensitivity = 1f; // 旋转灵敏度
@@ -140,7 +141,7 @@ public class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         // if (!needLock)
         // {
         // 更新 handTarget 的本地位置
-        Vector3 newLocalPosition = transform.InverseTransformPoint(handTarget.position) + screen_move;
+        Vector3 newLocalPosition = RawDataTest.OE_Locator_TargetPos + screen_move;
 
         // 限制 handTarget 的本地位置
         newLocalPosition.x = Mathf.Clamp(newLocalPosition.x, xMinMax.x, xMinMax.y);

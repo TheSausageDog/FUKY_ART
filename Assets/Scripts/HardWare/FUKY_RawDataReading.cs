@@ -5,16 +5,49 @@ using System.Threading;
 using System.Runtime.InteropServices;
 
 
-public class SharedMemoryReader : MonoBehaviour
+public class FUKY_RawDataReading : MonoBehaviour
 {
     public Transform TestObject;
+    [Tooltip("缩放值会缩放相应坐标")]
+    [Range(0.001F, 1F)]
+    public float Scaler;
+    [Tooltip("Z轴单独的偏移")]
+    [Range(-500F, 500F)]
+    public float Z_Offset;
 
-
+    [Tooltip("X轴单独的缩放")]
+    [Range(0.001f, 10f)]
+    public float X_Scale;
+    [Tooltip("Y轴单独的缩放")]
+    [Range(0.001f, 10f)]
+    public float Y_Scale;
+    [Tooltip("Z轴单独的缩放")]
+    [Range(0.001f, 10f)]
+    public float Z_Scale;
+    #region 滤波器
+    //位置信息更新
+    private OneEuroFilter<Vector3> PosFilter;
+    //旋转信息更新
+    private OneEuroFilter<Quaternion> RotationFilter;
+    [Header("OneEuro滤波器设置")]
+    [Tooltip("较高minCutoff值会导致更多的高频噪声通过，而较低的值则会使输出更加平滑")]
+    public float minCutoff = 0.2f;
+    [Tooltip("增加beta会使滤波器在快速移动时更加响应，但也可能引入更多的高频噪声。\r\n减小beta则会使滤波器更加平滑，但可能导致在快速移动时响应滞后。")]
+    public float beta = 0.2f;
+    [Tooltip("较高的dCutoff值会使滤波器对速度变化更加敏感，而较低的值则会使输出在速度变化时更加平滑")]
+    public float dCutoff = 0.6f;
+    [Tooltip("位置数据的更新频率")]
+    public float PosFreq = 0.02f;//数据的更新频率
+    [Tooltip("旋转数据的更新频率")]
+    public float RotateFreq = 0.02f;//数据的更新频率
+    public float LastPosUpdateTime = 0.00f;//上一次更新时间
+    public float LastRotateUpdateTime = 0.02f;//上一次更新时间
+    #endregion
     // 共享内存配置（需与Python端完全一致）
     private const string MOUSE_MEM_NAME = "FUKY_Mouse_Memory";
-    private const int MOUSE_MEM_SIZE = 32; // 注意：Python端定义的32字节
+    private const int MOUSE_MEM_SIZE = 32; // Python端定义的32字节
     private const string LOCATOR_MEM_NAME = "FUKY_Locator_Memory";
-    private const int LOCATOR_MEM_SIZE = 12; // 注意：Python端定义的32字节
+    private const int LOCATOR_MEM_SIZE = 12; // Python端定义的32字节
     // 内存映射对象
     private MemoryMappedFile _mouseMemFile;
     private MemoryMappedViewAccessor _mouseAccessor;
@@ -43,10 +76,16 @@ public class SharedMemoryReader : MonoBehaviour
     }
 
     // 当前数据
-    public Vector3 Acceleration { get; private set; }
-    public Quaternion Rotation { get; private set; }
+    public Vector3 Raw_Acceleration { get; private set; }
+    public Quaternion Raw_Rotation { get; private set; }
+    public Vector3 Raw_Locator_TargetPos { get; private set; }
 
-    public Vector3 Locator_TargetPos { get; private set; }
+
+    public Quaternion OE_Rotation { get; private set; }
+    public Vector3 OE_Locator_TargetPos { get; private set; }
+
+    private Vector3 Last_LocatorPos;//上一帧的灯珠位置值
+    private Quaternion Last_Raw_Rotation;//上一帧鼠标的旋转值
 
     void Start()
     {
@@ -85,6 +124,9 @@ public class SharedMemoryReader : MonoBehaviour
         {
             Debug.LogError($"共享内存初始化失败: {e.Message}");
         }
+
+        RotationFilter = new OneEuroFilter<Quaternion>(50);
+        PosFilter = new OneEuroFilter<Vector3>(50);
     }
 
     void Update()
@@ -99,37 +141,59 @@ public class SharedMemoryReader : MonoBehaviour
             _mouseAccessor.Read(0, out data);
 
             // 转换数据格式
-            Acceleration = new Vector3(
+            Raw_Acceleration = new Vector3(
                 data.accelX,
                 data.accelY,
                 data.accelZ
             );
 
             // 注意：四元数坐标系的转换（可能需要调整符号）
-            Rotation = new Quaternion(
+            Raw_Rotation = new Quaternion(
                 data.quatX,
                 data.quatY,
                 data.quatZ,
                 data.quatW
             );
-            Debug.Log("加速度数据:"+ Acceleration + "四元数数据:" + Rotation);
-            
+            Debug.Log("加速度数据:"+ Raw_Acceleration + "四元数数据:" + Raw_Rotation);
 
             _locatorAccessor.Read(0, out data2);
 
-            Locator_TargetPos = new Vector3(
-                data2.CoordX,
-                data2.CoordY,
-                data2.CoordZ
-            );
-            Debug.Log("定位器坐标数据:" + Locator_TargetPos);
-            TestObject.position = Locator_TargetPos;
-            TestObject.rotation = Rotation;
+            Raw_Locator_TargetPos = new Vector3(
+                -data2.CoordX * X_Scale,
+                data2.CoordY * Y_Scale ,
+                (data2.CoordZ + Z_Offset) * Z_Scale
+            ) * Scaler;
+            Debug.Log("定位器坐标数据:" + Raw_Locator_TargetPos);
+
         }
         catch (Exception e)
         {
             Debug.LogError($"读取失败: {e.Message}");
         }
+
+        if (Raw_Rotation != Last_Raw_Rotation)
+        {
+            RotateFreq = 1 / LastRotateUpdateTime;
+            RotateFreq = Mathf.Clamp(RotateFreq, 0.01F, 1);
+            LastRotateUpdateTime = 0f;
+        }
+        if (Raw_Locator_TargetPos != Last_LocatorPos)
+        {
+            PosFreq = 1 / LastPosUpdateTime;
+            PosFreq = Mathf.Clamp(PosFreq, 0.01F, 1);
+            LastPosUpdateTime = 0f;
+        }
+
+        Last_LocatorPos = Raw_Locator_TargetPos;
+        Last_Raw_Rotation = Raw_Rotation;
+
+        RotationFilter.UpdateParams(RotateFreq, minCutoff, beta, dCutoff);
+        PosFilter.UpdateParams(PosFreq, minCutoff, beta, dCutoff);
+
+        OE_Rotation = RotationFilter.Filter(Raw_Rotation);
+        OE_Locator_TargetPos = PosFilter.Filter(Raw_Locator_TargetPos);
+        TestObject.localPosition = OE_Locator_TargetPos;
+        TestObject.localRotation = OE_Rotation;
     }
 
     void OnDestroy()
