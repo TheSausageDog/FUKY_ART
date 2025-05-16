@@ -7,10 +7,8 @@ public class RecipeManager : SingletonMono<RecipeManager>
 {
     private List<Recipe> recipes = new List<Recipe>();
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
-
         recipes = Resources.LoadAll<Recipe>("Data/Recipe").ToList();
     }
 

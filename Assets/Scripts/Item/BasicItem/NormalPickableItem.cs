@@ -41,6 +41,7 @@ public class NormalPickableItem : PickableItem
             // transform.rotation = handTarget.rotation;
 
             transform.position = holdPos.position;
+            transform.rotation = holdPos.rotation;
         }
     }
 

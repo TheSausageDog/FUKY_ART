@@ -29,9 +29,8 @@ public class TaskManager : SingletonMono<TaskManager>
 
     protected bool task_dirty = false;
 
-    protected override void Awake()
+    protected void Awake()
     {
-        base.Awake();
         animator = missionUI.GetComponent<Animator>();
         uiTaskText = missionUI.GetChild(0).GetComponent<Text>();
         uiDetailsText = missionUI.GetChild(1).GetComponent<Text>();
@@ -42,22 +41,28 @@ public class TaskManager : SingletonMono<TaskManager>
     {
         if (task_dirty)
         {
-            if(tasks.Count != 0){
+            if (tasks.Count != 0)
+            {
                 foreach (var task in tasks)
                 {
                     uiTaskText.text = task.Key;
-                    if(task.Value.steps.Count != 0){
+                    if (task.Value.steps.Count != 0)
+                    {
                         foreach (var step in task.Value.steps)
                         {
                             uiDetailsText.text = step.Key;
                             break;
                         }
-                    }else{
+                    }
+                    else
+                    {
                         uiDetailsText.text = "";
                     }
                     break;
                 }
-            }else{
+            }
+            else
+            {
                 uiTaskText.text = "";
                 uiDetailsText.text = "";
             }

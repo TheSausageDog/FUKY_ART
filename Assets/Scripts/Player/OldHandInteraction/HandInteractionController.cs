@@ -60,19 +60,19 @@ public class HandInteractionController : MonoListener
     {
         Vector3 dir = Camera.main.transform.forward;
         // funkyControl ? (fukyCursor.transform.position - Camera.main.transform.position) : Camera.main.transform.forward;
-        int count = Physics.RaycastNonAlloc(Camera.main.transform.position, dir, hits, pick.pickUpRange);
+        // int count = Physics.RaycastNonAlloc(Camera.main.transform.position, dir, hits, pick.pickUpRange);
 
-        Array.Sort(hits, 0, count, Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
+        // Array.Sort(hits, 0, count, Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
 
-        for (int i = 0; i < count; i++)
-        {
-            if (hits[i].collider.gameObject.CompareTag("canInteract"))
-            {
-                pick.OnHandTriggerEnter(hits[i].collider.gameObject);
-                //                Debug.Log(hits[i].collider.gameObject.name);
-                return;
-            }
-        }
+        // for (int i = 0; i < count; i++)
+        // {
+        //     if (hits[i].collider.gameObject.CompareTag("canInteract"))
+        //     {
+        //         pick.OnHandTriggerEnter(hits[i].collider.gameObject);
+        //         //                Debug.Log(hits[i].collider.gameObject.name);
+        //         return;
+        //     }
+        // }
         pick.OnHandTriggerExit();
     }
 }
