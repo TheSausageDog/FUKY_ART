@@ -84,6 +84,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
 
     public Vector3 deltaTranslate { get; private set; }
     public Quaternion deltaRotation { get; private set; }
+    public Vector3 deltaEuler { get; private set; }
 
     void Start()
     {
@@ -182,9 +183,10 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         }
 
         lastRawTranslate = rawTranslate;
-        lastRawRotation = rawRotation;
-        deltaRotation = rawRotation * Quaternion.Inverse(lastRawRotation);
 
+        deltaRotation = rawRotation * Quaternion.Inverse(lastRawRotation);
+        deltaEuler = rawRotation.eulerAngles - lastRawRotation.eulerAngles;
+        lastRawRotation = rawRotation;
 
         PosFilter.UpdateParams(PosFreq, minCutoff, beta, dCutoff);
 

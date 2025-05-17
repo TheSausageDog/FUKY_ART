@@ -4,16 +4,20 @@ public class FukyPickUpAndInteract : PickUpAndInteract
 {
     protected override void MoveHandTarget()
     {
-        // Vector3 newLocalPosition = transform.InverseTransformPoint(data.handTarget.position) + screen_move;
+        //why minus?
+        Vector3 newLocalPosition = transform.InverseTransformPoint(data.handTarget.position) - FUKYMouse.Instance.deltaTranslate;
 
-        // // 限制 handTarget 的本地位置
-        // newLocalPosition.x = Mathf.Clamp(newLocalPosition.x, data.xMinMax.x, data.xMinMax.y);
-        // newLocalPosition.y = Mathf.Clamp(newLocalPosition.y, data.yMinMax.x, data.yMinMax.y);
-        // newLocalPosition.z = Mathf.Clamp(newLocalPosition.z, data.zMinMax.x, data.zMinMax.y);
+        newLocalPosition.x = Mathf.Clamp(newLocalPosition.x, data.xMinMax.x, data.xMinMax.y);
+        newLocalPosition.y = Mathf.Clamp(newLocalPosition.y, data.yMinMax.x, data.yMinMax.y);
+        newLocalPosition.z = Mathf.Clamp(newLocalPosition.z, data.zMinMax.x, data.zMinMax.y);
 
-        // Vector3 clampedWorldPosition = transform.TransformPoint(newLocalPosition);
+        // data.handTarget.position = transform.TransformPoint(newLocalPosition);
 
-        data.handTarget.localPosition += FUKYMouse.Instance.deltaTranslate;
-        data.handTarget.localRotation *= FUKYMouse.Instance.deltaRotation;
+        // Vector3 euler_rotation = FUKYMouse.Instance.deltaRotation.eulerAngles;
+        // data.handTarget.rotation = data.handTarget.rotation * FUKYMouse.Instance.deltaRotation;
+
+        // data.handTarget.rotation *= Quaternion.AngleAxis(euler_rotation.y, transform.up) * Quaternion.AngleAxis(euler_rotation.z, transform.right) * Quaternion.AngleAxis(euler_rotation.x, transform.forward);
+
+        data.handTarget.rotation = FUKYMouse.Instance.rawRotation;
     }
 }
