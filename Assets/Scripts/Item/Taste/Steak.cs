@@ -46,6 +46,34 @@ public class Steak : Food
 
     public override void Heat(float _heat)
     {
+        int down_face = GetDownFace();
+
+        for (int i = 0; i < 4; i++)
+        {
+            heats[face[down_face][i]] += _heat;
+        }
+
+        SetMaterialHeat();
+    }
+
+    public override void DryHeat(float _heat)
+    {
+        int down_face = GetDownFace();
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (heats[face[down_face][i]] < 11)
+            {
+                heats[face[down_face][i]] = 11;
+            }
+            heats[face[down_face][i]] += _heat;
+        }
+
+        SetMaterialHeat();
+    }
+
+    protected int GetDownFace()
+    {
         float min_angle = Vector3.Dot(GetDirection(0), Vector3.down);
         int min_index = 0;
         for (int i = 1; i < 6; i++)
@@ -57,12 +85,11 @@ public class Steak : Food
                 min_angle = angle;
             }
         }
+        return min_index;
+    }
 
-        for (int i = 0; i < 4; i++)
-        {
-            heats[face[min_index][i]] += _heat;
-        }
-
+    protected void SetMaterialHeat()
+    {
         SetMaterials((Material material) => { material.SetVector("_heat1", new Vector4(heats[0], heats[1], heats[2], heats[3])); });
         SetMaterials((Material material) => { material.SetVector("_heat2", new Vector4(heats[4], heats[5], heats[6], heats[7])); });
     }
@@ -78,7 +105,7 @@ public class Steak : Food
         return Vector3.zero;
     }
 
-    void OnDrawGizmos()
+    void OnDrawGizmosSelected()
     {
         Vector3 half_size = bounds.size / 2;
         Vector3[] points = new Vector3[8];

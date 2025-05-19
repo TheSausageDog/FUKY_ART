@@ -16,6 +16,8 @@ public class LiquidContainer : MonoBehaviour
 
     protected int queryIndex;
 
+    public int volume { get; protected set; }
+
     void Awake()
     {
         containerArea = GetComponent<Collider>();
@@ -55,6 +57,7 @@ public class LiquidContainer : MonoBehaviour
 
     void Solver_OnSpatialQueryResults(ObiSolver s, ObiNativeQueryResultList queryResults)
     {
+        volume = queryResults.count;
         for (int i = 0; i < queryResults.count; ++i)
         {
             if (queryResults[i].queryIndex == queryIndex)

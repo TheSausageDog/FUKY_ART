@@ -3,18 +3,36 @@ using UnityEngine;
 
 public class Pan : MonoBehaviour
 {
+    public LiquidContainer oilNSauce;
+
     protected bool heated = false;
+
+    protected bool hasOil = false;
 
     protected HashSet<Food> foods = new HashSet<Food>();
 
     void Update()
     {
+        if (oilNSauce.volume != 0)
+        {
+            hasOil = true;
+        }
         if (heated)
         {
             float heat = Time.deltaTime;
-            foreach (var food in foods)
+            if (hasOil)
             {
-                food.Heat(heat);
+                foreach (var food in foods)
+                {
+                    food.Heat(heat);
+                }
+            }
+            else
+            {
+                foreach (var food in foods)
+                {
+                    food.DryHeat(heat);
+                }
             }
         }
     }

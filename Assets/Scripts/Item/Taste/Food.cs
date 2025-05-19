@@ -113,4 +113,12 @@ public class Food : TasteObject
         }
     }
 
+    public virtual void DryHeat(float _heat)
+    {
+        if (heated < 11)
+        {
+            heated = 11;
+        }
+        Heat(_heat);
+    }
 }

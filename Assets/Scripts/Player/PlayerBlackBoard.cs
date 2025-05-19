@@ -17,14 +17,6 @@ public class PlayerBlackBoard : MonoListener
     // [NonSerialized] public static Vector3 knifeOrginPos;
     [NonSerialized] public static Vector3 moveLock;
 
-    public float _handSpeed = 1;
-
-    public static float handSpeed;
-
-    void Start()
-    {
-        handSpeed = _handSpeed;
-    }
 
     [Listen(EventType.OnKnifeTouchBegin)]
     private void OnKnifeTouchBegin(Vector3 dir)

@@ -161,7 +161,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 data2.CoordY * Y_Scale,
                 data2.CoordZ * Z_Scale
             ) * Scaler;
-            // Debug.Log("定位器坐标数据:" + rawTranslate);
+            Debug.Log("定位器坐标数据:" + rawTranslate);
 
         }
         catch (Exception e)
