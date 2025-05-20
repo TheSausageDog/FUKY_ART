@@ -149,18 +149,18 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
             );
 
             // 注意：四元数坐标系的转换（可能需要调整符号）
-            rawRotation = quaternion.Euler(Rotation_Offset)* new Quaternion(
+            rawRotation = new Quaternion(
                 -data.quatX,
+                -data.quatZ,
                 -data.quatY,
-                data.quatZ,
                 data.quatW
-            );
+            )* quaternion.Euler(Rotation_Offset);
             Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
 
             _locatorAccessor.Read(0, out data2);
 
             rawTranslate = new Vector3(
-                -data2.CoordX * X_Scale,
+                data2.CoordX * X_Scale,
                 data2.CoordY * Y_Scale,
                 data2.CoordZ * Z_Scale
             ) * Scaler;
