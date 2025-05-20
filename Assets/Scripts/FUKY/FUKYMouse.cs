@@ -3,20 +3,22 @@ using System;
 using System.IO.MemoryMappedFiles;
 using System.Threading;
 using System.Runtime.InteropServices;
+//using System.Numerics;
+using Unity.Mathematics;
 
 
 public class FUKYMouse : SingletonMono<FUKYMouse>
 {
+
     [Tooltip("缩放值会缩放相应坐标")]
     [Range(0.001F, 1F)]
     public float Scaler;
-    // [Tooltip("Z轴单独的偏移")]
-    // [Range(-500F, 500F)]
-    // public float Z_Offset;
-
-    [Tooltip("X轴单独的缩放")]
+    [Tooltip("偏移量")]
     [Range(0.001f, 10f)]
     public float X_Scale;
+
+    [Tooltip("X轴单独的缩放")]
+    public Vector3 Rotation_Offset;
     [Tooltip("Y轴单独的缩放")]
     [Range(0.001f, 10f)]
     public float Y_Scale;
@@ -79,7 +81,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     public Vector3 filteredTranslate { get; private set; }
 
     private Vector3 lastRawTranslate;//上一帧的灯珠位置值
-    private Vector3 lastFilteredTranslate;//上一帧的灯珠位置值
+    private Vector3 lastFilteredTranslate;//上一帧的位置值
     private Quaternion lastRawRotation;//上一帧鼠标的旋转值
 
     public Vector3 deltaTranslate { get; private set; }
@@ -129,6 +131,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
 
     void Update()
     {
+
         if (_mouseAccessor == null) return;
 
         try
@@ -146,13 +149,13 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
             );
 
             // 注意：四元数坐标系的转换（可能需要调整符号）
-            rawRotation = new Quaternion(
-                data.quatX,
-                data.quatY,
+            rawRotation = quaternion.Euler(Rotation_Offset)* new Quaternion(
+                -data.quatX,
+                -data.quatY,
                 data.quatZ,
                 data.quatW
             );
-            // Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
+            Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
 
             _locatorAccessor.Read(0, out data2);
 
@@ -161,7 +164,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 data2.CoordY * Y_Scale,
                 data2.CoordZ * Z_Scale
             ) * Scaler;
-            Debug.Log("定位器坐标数据:" + rawTranslate);
+            //Debug.Log("定位器坐标数据:" + rawTranslate);
 
         }
         catch (Exception e)
@@ -193,7 +196,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         // OE_Rotation = RotationFilter.Filter(Raw_Rotation);
         filteredTranslate = PosFilter.Filter(rawTranslate);
 
-        deltaTranslate = filteredTranslate - lastFilteredTranslate;
+        deltaTranslate = -(filteredTranslate - lastFilteredTranslate);
         lastFilteredTranslate = filteredTranslate;
 
 
