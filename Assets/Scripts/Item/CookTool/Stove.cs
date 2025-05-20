@@ -6,6 +6,8 @@ public class Stove : InteractItemBase
 {
     public bool isFireOn { protected set; get; } = false;
 
+    public Transform fire;
+
     protected bool isPanOn = false;
 
     public Pan pan;
@@ -20,6 +22,7 @@ public class Stove : InteractItemBase
     public override void OnInteract()
     {
         isFireOn = !isFireOn;
+        fire.gameObject.SetActive(isFireOn);
         if (isPanOn)
         {
             if (isFireOn) { pan.Heat(); } else { pan.Unheat(); }
