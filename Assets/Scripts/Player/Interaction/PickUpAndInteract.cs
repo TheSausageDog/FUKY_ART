@@ -152,9 +152,9 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 
         if (selectedObj != null)
         {
-            if (Vector3.Distance(selectedObj.transform.position, transform.position) > data.pickUpRange)
+            if (Vector3.Distance(selectedObj.transform.position, Camera.main.transform.position) > data.pickUpRange)
             {
-                Debug.LogWarning("物体超出拾取范围！");
+                // Debug.LogWarning("物体超出拾取范围！");
                 return;
             }
             if (PlayerInputController.IsPickUpPressed())

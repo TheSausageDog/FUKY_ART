@@ -9,6 +9,8 @@ public class NormalPickableItem : PickableItem
 
     protected Transform holdPos;
 
+    protected virtual Quaternion rotateOffset { get { return Quaternion.identity; } }
+
     public override void Start()
     {
         base.Start();
@@ -41,7 +43,7 @@ public class NormalPickableItem : PickableItem
             // transform.rotation = handTarget.rotation;
 
             transform.position = holdPos.position;
-            transform.rotation = holdPos.rotation;
+            transform.rotation = holdPos.rotation * rotateOffset;
         }
     }
 

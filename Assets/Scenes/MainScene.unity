@@ -3433,8 +3433,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6601618200134915766, guid: 832a906965fe8bb458b53ad33ebd357e,
         type: 3}
-      propertyPath: m_IsTrigger
+      propertyPath: m_Convex
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6601618200134915766, guid: 832a906965fe8bb458b53ad33ebd357e,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3494,6 +3499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attachPoint: {fileID: 1565647616}
   keepRigbody: 0
+  bladeCollider: {fileID: 371496097}
 --- !u!114 &371496096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3511,6 +3517,12 @@ MonoBehaviour:
   cuttingObjects: []
   planeSize: 0.25
   planeColor: {r: 0, g: 1, b: 0, a: 1}
+--- !u!64 &371496097 stripped
+MeshCollider:
+  m_CorrespondingSourceObject: {fileID: 6601618200134915766, guid: 832a906965fe8bb458b53ad33ebd357e,
+    type: 3}
+  m_PrefabInstance: {fileID: 371496092}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &408686174
 GameObject:
   m_ObjectHideFlags: 0
@@ -7716,6 +7728,52 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1610161875}
   m_SourcePrefab: {fileID: 100100000, guid: 894b2da098be7ae419992ec9e33189b4, type: 3}
+--- !u!1 &815203513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 815203515}
+  - component: {fileID: 815203514}
+  m_Layer: 0
+  m_Name: BurstCollisionWorld
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &815203514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815203513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellSpans:
+    m_AlignBytes: 16
+--- !u!4 &815203515
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815203513}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &824461248
 GameObject:
   m_ObjectHideFlags: 0
@@ -11291,7 +11349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ade56e1a3cfe441b3651a46a5a0dc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handTargetOffset: {x: 0, y: 0, z: 1}
+  handTargetOffset: {x: 0.2, y: -0.4, z: 1}
   rotationSensitivity: 1
   pickUpRange: 2
   uiCursor: {fileID: 1783300650}
@@ -15358,52 +15416,6 @@ MonoBehaviour:
   filter: -65535
   m_SourceCollider: {fileID: 1611287115}
   m_DistanceField: {fileID: 0}
---- !u!1 &1615870091
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1615870093}
-  - component: {fileID: 1615870092}
-  m_Layer: 0
-  m_Name: BurstCollisionWorld
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1615870092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615870091}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellSpans:
-    m_AlignBytes: 16
---- !u!4 &1615870093
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1615870091}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1622055803 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4195813133538654363, guid: 4aed363292a472b4da5ffdc5aed70288,
@@ -22370,4 +22382,4 @@ SceneRoots:
   - {fileID: 667223598}
   - {fileID: 565383992}
   - {fileID: 1047405891}
-  - {fileID: 1615870093}
+  - {fileID: 815203515}
