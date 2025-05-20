@@ -16,6 +16,13 @@ public class StoveKnob : InteractItemBase
     public override void OnInteract()
     {
         isOn = !isOn;
-        animator.SetBool("open", isOn);
+        if (isOn)
+        {
+            animator.SetTrigger("Open");
+        }
+        else
+        {
+            animator.SetTrigger("Close");
+        }
     }
 }
