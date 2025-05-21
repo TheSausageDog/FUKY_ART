@@ -18,22 +18,18 @@ public class AttachedPickableItem : NormalPickableItem
         base.OnThrow();
         if (attachPoint != null && attachPoint.IsContain(itemCollider))
         {
-            transform.position = attachPoint.transform.position;
-            transform.rotation = attachPoint.transform.rotation;
-            if (!keepRigbody)
-            {
-                Destroy(itemRigidbody);
-                itemRigidbody = null;
-            }
+            ResetAttach();
         }
-        // if (attachPoint != null)
-        // {
-        //     float dist = Vector3.Distance(attachPoint.position, transform.position);
-        //     if (dist < 0.5)
-        //     {
-        //         // Destroy(gameObject.GetComponent<Rigidbody>());
-        //         transform.parent = attachPoint;
-        //     }
-        // }
+    }
+
+    public void ResetAttach()
+    {
+        transform.position = attachPoint.transform.position;
+        transform.rotation = attachPoint.transform.rotation;
+        if (!keepRigbody)
+        {
+            Destroy(itemRigidbody);
+            itemRigidbody = null;
+        }
     }
 }

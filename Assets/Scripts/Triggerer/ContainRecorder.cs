@@ -11,6 +11,18 @@ public class ContainRecorder : MonoBehaviour
     //     inside.Remove(null);
     // }
 
+    public bool IsContain(GameObject other)
+    {
+        if (other.TryGetComponent<Collider>(out var otherCollider))
+        {
+            return IsContain(otherCollider);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public bool IsContain(Collider other)
     {
         return inside.Contains(other);
