@@ -32,7 +32,8 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         {
             OnHandTriggerExit();
             selectedObj = other;
-            Utils.SetLayerRecursive(selectedObj.transform, "Outline");
+            if (selectedObj.layer != LayerMask.NameToLayer("OutlineSecond"))
+                Utils.SetLayerRecursive(selectedObj.transform, "Outline");
         }
     }
 
@@ -40,7 +41,8 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     {
         if (selectedObj != null)
         {
-            Utils.SetLayerRecursive(selectedObj.transform, "Default");
+            if (selectedObj.layer != LayerMask.NameToLayer("OutlineSecond"))
+                Utils.SetLayerRecursive(selectedObj.transform, "Default");
             selectedObj = null;
         }
     }
@@ -179,6 +181,7 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         data.holdPos.position = pickItem.transform.position;
         pickItem.transform.eulerAngles = Vector3.zero;
         data.holdPos.rotation = pickItem.transform.rotation;
+        data.handTarget.rotation = pickItem.transform.rotation;
         pickItem.OnPickup(data.holdPos);
         pickItem.gameObject.tag = "isPicking";
         Utils.SetLayerRecursive(pickItem.transform, "Player");

@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour
 {
+    public Material highLightMaterial;
+
     public Transform uiDialog;
 
     public Transform areaTrigger;
@@ -29,6 +31,10 @@ public class LevelController : MonoBehaviour
     protected TutorialStepBase[] levelSteps;
     protected int nextStepIndex;
     protected TutorialStepBase currentStep;
+
+    protected float highlightWidth = 0;
+    protected float deltaHighlight = 0.005f;
+    protected Vector2 highlightRange = new Vector2(0, 0.15f);
 
     // Start is called before the first frame update
     void Start()
@@ -79,16 +85,39 @@ public class LevelController : MonoBehaviour
                 }
             }
         }
+
+        highlightWidth += deltaHighlight;
+        if (deltaHighlight > 0)
+        {
+            if (highlightWidth > highlightRange.y)
+            {
+                highlightWidth = highlightRange.y;
+                deltaHighlight = -deltaHighlight;
+            }
+        }
+        else
+        {
+            if (highlightWidth < highlightRange.x)
+            {
+                highlightWidth = highlightRange.x;
+                deltaHighlight = -deltaHighlight;
+            }
+        }
+        highLightMaterial.SetFloat("_Width", highlightWidth);
     }
 
     public void LoadNewLevel(string levelName)
     {
         asyncOperation = SceneManager.LoadSceneAsync(levelName, loadSceneParameters);
-        if(asyncOperation == null){
-            if(levelName == null){
+        if (asyncOperation == null)
+        {
+            if (levelName == null)
+            {
                 Debug.LogError("levelName is Null");
                 return;
-            }else{
+            }
+            else
+            {
                 Debug.LogError("Unknow error");
                 return;
             }

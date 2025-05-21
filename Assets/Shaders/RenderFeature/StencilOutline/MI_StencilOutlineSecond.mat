@@ -30,10 +30,10 @@ Material:
     - _OutlineWidth: 11
     - _StencilTest: 0
     - _UseUV3: 1
-    - _Width: 0.115
+    - _Width: 0.13500002
     - _ZTest: 8
     - _ZTest2: 8
     m_Colors:
-    - _Color: {r: 1, g: 0.015723169, b: 0.015723169, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
