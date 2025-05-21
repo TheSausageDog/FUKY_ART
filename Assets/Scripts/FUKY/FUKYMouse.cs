@@ -16,6 +16,12 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     [Tooltip("偏移量")]
     [Range(0.001f, 10f)]
     public float X_Scale;
+    
+    [Tooltip("纵轴偏移量")]
+    [Range(0.001f, 10f)]
+    public float Z_OFFSET;
+
+    public bool InVerse;
 
     [Tooltip("X轴单独的缩放")]
     public Vector3 Rotation_Offset;
@@ -159,19 +165,32 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 -data.quatY,
                 data.quatW
             ) * quaternion.Euler(Rotation_Offset);
-            //Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
+            Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
             
 
             // 读取数据结构 定位器数据
             _locatorAccessor.Read(0, out data2);
-            rawTranslate = new Vector3(
-                data2.CoordX * X_Scale,
-                data2.CoordY * Y_Scale,
-                data2.CoordZ * Z_Scale
-            ) * Scaler;
+            if (InVerse)
+            {
+                rawTranslate = new Vector3
+                (
+                    -data2.CoordX * X_Scale,
+                    data2.CoordY * Y_Scale,
+                    data2.CoordZ * Z_Scale + Z_OFFSET
+                ) * Scaler;
+            }
+            else
+            {
+                rawTranslate = new Vector3
+                (
+                    data2.CoordX * X_Scale,
+                    data2.CoordY * Y_Scale,
+                    data2.CoordZ * Z_Scale + Z_OFFSET
+                ) * Scaler;
+            }
             //Debug.Log("定位器坐标数据:" + rawTranslate);
 
-            
+
             // 读取按钮数据 
             byte buttonState = _BTN_Accessor.ReadByte(0);
             // 解析按钮位状态（使用位掩码）
