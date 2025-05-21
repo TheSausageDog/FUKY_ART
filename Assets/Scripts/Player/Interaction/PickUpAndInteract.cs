@@ -177,9 +177,8 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     {
         data.uiCursor.SetActive(false);
         data.holdPos.position = pickItem.transform.position;
-        pickItem.transform.eulerAngles = Vector3.zero;
-        data.holdPos.rotation = pickItem.transform.rotation;
         pickItem.OnPickup(data.holdPos);
+        data.holdPos.rotation = pickItem.transform.rotation;
         pickItem.gameObject.tag = "isPicking";
         Utils.SetLayerRecursive(pickItem.transform, "Player");
         Physics.IgnoreCollision(pickItem.itemCollider, GetComponent<Collider>(), true);

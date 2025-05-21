@@ -49,6 +49,7 @@ public class NormalPickableItem : PickableItem
 
     public override void OnPickup(Transform _holdPos)
     {
+        transform.eulerAngles = Vector3.zero;
         holdPos = _holdPos;
         SetPickedRigidbody(itemRigidbody);
         base.OnPickup(_holdPos);
