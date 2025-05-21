@@ -76,7 +76,6 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
             if (PlayerInputController.IsLeftShiftPressed())
             {
                 data.handTarget.position = data.holdPos.position;
-                data.handTarget.rotation = data.holdPos.rotation;
             }
             else
             {
@@ -96,7 +95,6 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
             {
                 data.holdPos.position = data.handTarget.position;
             }
-            data.holdPos.rotation = data.handTarget.rotation;
 
             if (PlayerInputController.IsInteractPressed() && PlayerBlackBoard.heldItem.isInteractable)
             {
@@ -181,7 +179,6 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         data.holdPos.position = pickItem.transform.position;
         pickItem.transform.eulerAngles = Vector3.zero;
         data.holdPos.rotation = pickItem.transform.rotation;
-        data.handTarget.rotation = pickItem.transform.rotation;
         pickItem.OnPickup(data.holdPos);
         pickItem.gameObject.tag = "isPicking";
         Utils.SetLayerRecursive(pickItem.transform, "Player");

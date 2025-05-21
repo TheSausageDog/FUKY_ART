@@ -18,6 +18,6 @@ public class FukyPickUpAndInteract : PickUpAndInteract
 
         // data.handTarget.rotation *= Quaternion.AngleAxis(euler_rotation.y, transform.up) * Quaternion.AngleAxis(euler_rotation.z, transform.right) * Quaternion.AngleAxis(euler_rotation.x, transform.forward);
 
-        data.handTarget.rotation = FUKYMouse.Instance.rawRotation;
+        data.holdPos.rotation = FUKYMouse.Instance.rawRotation;
     }
 }
