@@ -86,15 +86,15 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         if (PlayerBlackBoard.isHeldObj)
         {
             float distanceToTarget = Vector3.Distance(data.handTarget.position, data.holdPos.position);
-            if (distanceToTarget > data.maxHandMovingSpeed * Time.deltaTime)
-            {
-                Vector3 directionToTarget = (data.handTarget.position - data.holdPos.position).normalized;
-                data.holdPos.position += directionToTarget * data.maxHandMovingSpeed * Time.deltaTime;
-            }
-            else
-            {
-                data.holdPos.position = data.handTarget.position;
-            }
+            // if (distanceToTarget > data.maxHandMovingSpeed * Time.deltaTime)
+            // {
+            //     Vector3 directionToTarget = (data.handTarget.position - data.holdPos.position).normalized;
+            //     data.holdPos.position += directionToTarget * data.maxHandMovingSpeed * Time.deltaTime;
+            // }
+            // else
+            // {
+            data.holdPos.position = data.handTarget.position;
+            // }
 
             if (PlayerInputController.IsInteractPressed() && PlayerBlackBoard.heldItem.isInteractable)
             {
