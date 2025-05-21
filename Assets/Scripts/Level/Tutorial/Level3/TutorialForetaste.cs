@@ -7,6 +7,6 @@ public class TutorialForetaste : TutorialStep
 
     public override bool TutorialUpdate()
     {
-        return ForetasteManager.Instance.foretasteRecords.Count == 0;
+        return TasteManager.Instance.foretasteRecords.Count == 0;
     }
 }

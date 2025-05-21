@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -31,6 +32,8 @@ public class OrderManager : SingletonMono<OrderManager>
     public void NewOrder(Recipe recipe = null)
     {
         foodTray.SetActive(true);
+        cup.GetComponent<AttachedPickableItem>().ResetAttach();
+        plate.GetComponent<AttachedPickableItem>().ResetAttach();
         // foodTray.transform.position = trayStart.position;
         // foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 4;
         order = new Order(recipe);
@@ -50,11 +53,6 @@ public class OrderManager : SingletonMono<OrderManager>
                     // foodTray.AddComponent<Rigidbody>();
                     //what a mass
                     foodTray.AddComponent<NormalPickableItem>();
-                    // cup.AddComponent<Rigidbody>().mass = 3;
-                    // cup.GetComponent<AttachedPickableItem>().enabled = true;
-                    // plate.AddComponent<Rigidbody>().mass = 3;
-                    // plate.GetComponent<AttachedPickableItem>().enabled = true;
-                    // foodTray.GetComponent<Rigidbody>().mass = 3;
                     menu.tag = "canInteract";
                 }
                 // else
@@ -102,9 +100,23 @@ public class OrderManager : SingletonMono<OrderManager>
 
     public void SubmitOrder()
     {
-        if (submitArea.inside.Contains(foodTray.GetComponent<Collider>()))
+        if (submitArea.IsContain(foodTray))
         {
-            Debug.Log("提交了给评分");
+            if (submitArea.IsContain(plate))
+            {
+                TasteReport tasteReport = TasteManager.Instance.GetTaste(plate.GetComponent<TasteCollector>());
+                Debug.Log(tasteReport);
+                List<Food> foods = plate.GetComponent<TasteCollector>().checkArea.foods;
+                foreach (Food food in foods)
+                {
+                    Destroy(food.gameObject);
+                }
+            }
+            else
+            {
+                Debug.Log("没有菜盘子");
+            }
+
             orderItem = null;
             foodTray.SetActive(false);
             animator.Play("FoodTrayAnimation");

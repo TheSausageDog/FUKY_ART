@@ -44,11 +44,11 @@ public enum FoodType
 
 public enum TasteType
 {
-    Sour,
-    Sweet,
-    Bitter,
-    Salty,
-    Fresh,
+    // Sour,
+    // Sweet,
+    // Bitter,
+    // Salty,
+    // Fresh,
     Spicy,
     Pepper
 }
