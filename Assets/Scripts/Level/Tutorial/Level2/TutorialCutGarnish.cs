@@ -28,6 +28,6 @@ public class TutorialCutGarnish : TutorialStep
                 }
             }
         }
-        return !(hasMushroom && hasPepper);
+        return !(hasMushroom || hasPepper);
     }
 }
