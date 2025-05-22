@@ -82,6 +82,13 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
                 MoveHandTarget();
             }
         }
+        else
+        {
+            if (PlayerInputController.IsLeftShiftPressed())
+            {
+                data.handTarget.localPosition = data.handTargetOffset;
+            }
+        }
 
         if (PlayerBlackBoard.isHeldObj)
         {
