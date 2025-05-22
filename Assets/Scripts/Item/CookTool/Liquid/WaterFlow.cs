@@ -9,13 +9,14 @@ using static UnityEngine.ParticleSystem;
 public class WaterFlow : MonoBehaviour
 {
     // public float angleTreshold = 30f;
+    public float speed = 1;
     protected bool _isFlowing;
     public bool isFlowing
     {
         set
         {
             _isFlowing = value;
-            emitter.gameObject.SetActive(_isFlowing);
+            obiEmitter.speed = _isFlowing ? speed : 0;
         }
         get
         {
@@ -25,12 +26,13 @@ public class WaterFlow : MonoBehaviour
 
     // public float dropVolume = 0.1f;
 
-    public Transform emitter;
-
     public Transform outlet;
+
+    protected ObiEmitter obiEmitter;
 
     void Awake()
     {
+        obiEmitter = GetComponent<ObiEmitter>();
         isFlowing = false;
     }
 
@@ -39,8 +41,8 @@ public class WaterFlow : MonoBehaviour
     {
         if (isFlowing)
         {
-            emitter.position = outlet.position;
-            emitter.rotation = outlet.rotation;
+            transform.position = outlet.position;
+            transform.rotation = outlet.rotation;
         }
     }
 }
