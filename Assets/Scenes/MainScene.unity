@@ -16199,7 +16199,7 @@ MonoBehaviour:
   highLightMaterial: {fileID: 2100000, guid: 1c901dd45b1cbf6498f425c418a9c50e, type: 2}
   uiDialog: {fileID: 976294127}
   areaTrigger: {fileID: 1972598770}
-  startLevelName: TutorialLevel1
+  startLevelName: TutorialLevel0
 --- !u!114 &1651822396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18776,6 +18776,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6974187739953525637, guid: 6d863ea5c24f3d14292fe118392663b7,
+        type: 3}
+      propertyPath: breakingForce
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7138549200061650913, guid: 6d863ea5c24f3d14292fe118392663b7,
         type: 3}

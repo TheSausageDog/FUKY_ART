@@ -132,10 +132,8 @@ GameObject:
   m_Component:
   - component: {fileID: 740148215}
   - component: {fileID: 740148217}
-  - component: {fileID: 740148218}
   - component: {fileID: 740148219}
   - component: {fileID: 740148220}
-  - component: {fileID: 740148221}
   - component: {fileID: 740148222}
   m_Layer: 0
   m_Name: LevelController
@@ -172,22 +170,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stayObject: []
---- !u!114 &740148218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740148213}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e757d3b6ec4db354eb64277522514173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogText: "\u547C\u558A\u8001\u8C2D\u522B\u6478\u9C7C\u4E86\uFF0C\u8D76\u7D27\u4E0A\u5DE5\uFF0C\u6765\u5355\u4E86"
-  taskName: 
-  taskStepName: 
-  duration: 5
 --- !u!114 &740148219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,25 +197,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3cb78c2f8eca1694a8f7c4d373fcf7cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogText: "\u8001\u8C2D\u51C6\u5907\u5F00\u5DE5\uFF0C\u63D0\u793A\u73A9\u5BB6\u9700\u8981\u5C06\u9910\u76D8\u79FB\u52A8\u5230\u5DE5\u4F5C\u533A"
+  dialogText: 
   taskName: "\u590D\u5DE5\u590D\u4EA7"
   taskStepName: "\u5C06\u9910\u76D8\u79FB\u52A8\u5230\u5DE5\u4F5C\u533A"
---- !u!114 &740148221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740148213}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e757d3b6ec4db354eb64277522514173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogText: "\u63A5\u4E0B\u6765\u6211\u8BE5\u5E72\u4EC0\u4E48\u5462\uFF0C\u60F3\u60F3\uFF0C\u4ED6\u5988\u7684"
-  taskName: 
-  taskStepName: 
-  duration: 5
 --- !u!114 &740148222
 MonoBehaviour:
   m_ObjectHideFlags: 0
