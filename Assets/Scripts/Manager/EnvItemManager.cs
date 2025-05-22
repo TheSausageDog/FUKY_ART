@@ -16,7 +16,7 @@ public class EnvItemManager : MonoBehaviour
 
     public GameObject tray;
 
-    public GameObject cup;
+    // public GameObject cup;
 
     public GameObject plate;
 

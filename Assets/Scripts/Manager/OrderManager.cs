@@ -8,7 +8,7 @@ public class OrderManager : SingletonMono<OrderManager>
 {
     public GameObject foodTray;
 
-    public GameObject cup;
+    // public GameObject cup;
 
     public GameObject plate;
     public GameObject menu;
@@ -32,7 +32,7 @@ public class OrderManager : SingletonMono<OrderManager>
     public void NewOrder(Recipe recipe = null)
     {
         foodTray.SetActive(true);
-        cup.GetComponent<AttachedPickableItem>().ResetAttach();
+        // cup.GetComponent<AttachedPickableItem>().ResetAttach();
         plate.GetComponent<AttachedPickableItem>().ResetAttach();
         // foodTray.transform.position = trayStart.position;
         // foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 4;
@@ -89,7 +89,7 @@ public class OrderManager : SingletonMono<OrderManager>
         }
         //weird to write here
         foodTray.tag = "canInteract";
-        cup.tag = "canInteract";
+        // cup.tag = "canInteract";
         plate.tag = "canInteract";
     }
 
