@@ -47,6 +47,7 @@ public class CanContainer : NormalPickableItem
                         child.parent = null;
                         child.gameObject.AddComponent<Rigidbody>();
                         child.gameObject.AddComponent<NormalPickableItem>();
+                        child.tag = "canInteract";
                     }
                     Destroy(content);
                 }
