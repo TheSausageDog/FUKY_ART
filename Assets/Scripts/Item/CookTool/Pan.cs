@@ -9,7 +9,7 @@ public class Pan : MonoBehaviour
 
     protected bool heated = false;
 
-    protected bool hasOil = false;
+    protected bool hasOil = true;
 
     protected HashSet<Food> foods = new HashSet<Food>();
 
