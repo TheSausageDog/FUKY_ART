@@ -32,6 +32,7 @@ public class OrderManager : SingletonMono<OrderManager>
     public void NewOrder(Recipe recipe = null)
     {
         foodTray.SetActive(true);
+        plate.SetActive(true);
         // cup.GetComponent<AttachedPickableItem>().ResetAttach();
         plate.GetComponent<AttachedPickableItem>().ResetAttach();
         // foodTray.transform.position = trayStart.position;
@@ -111,6 +112,7 @@ public class OrderManager : SingletonMono<OrderManager>
                 {
                     Destroy(food.gameObject);
                 }
+                plate.SetActive(false);
             }
             else
             {
