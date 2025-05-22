@@ -133,7 +133,6 @@ GameObject:
   - component: {fileID: 740148215}
   - component: {fileID: 740148218}
   - component: {fileID: 740148219}
-  - component: {fileID: 740148221}
   - component: {fileID: 740148216}
   m_Layer: 0
   m_Name: LevelController
@@ -195,23 +194,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 018ecefa7d5124345b2048522ddd42bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogText: "\u4E5F\u8BB8\u6211\u8BE5\u67E5\u770B\u4E00\u4E0B\u684C\u9762\u4E0A\u90FD\u662F\u4EC0\u4E48"
+  dialogText: 
   taskName: "\u63A5\u8FD1\u684C\u9762"
   taskStepName: "\u8D70\u5411\u6599\u7406\u53F0"
---- !u!114 &740148221
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740148213}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e757d3b6ec4db354eb64277522514173, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogText: "\u970D\uFF0C\u6765\u6D3B\u4E86\uFF1F"
-  duration: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
