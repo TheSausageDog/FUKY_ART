@@ -15,7 +15,8 @@ public class TutorialCutGarnish : TutorialStep
 
     public override bool TutorialUpdate()
     {
-        bool hasMushroom = false, hasPepper = false;
+        // bool hasMushroom = false, hasPepper = false;
+        bool hasSlicer = false;
         foreach (var inside in containRecorder.inside)
         {
             if (inside != null && inside.TryGetComponent<Food>(out Food food) && inside.TryGetComponent<BzSliceableObject>(out BzSliceableObject sliceObj))
@@ -23,11 +24,12 @@ public class TutorialCutGarnish : TutorialStep
                 FoodType foodType = food.foodType;
                 if (sliceObj.cutted)
                 {
-                    if (foodType == FoodType.Mushroom) { hasMushroom = true; }
-                    if (foodType == FoodType.Pepper) { hasPepper = true; }
+                    hasSlicer = true;
+                    // if (foodType == FoodType.Mushroom) { hasMushroom = true; }
+                    // if (foodType == FoodType.Pepper) { hasPepper = true; }
                 }
             }
         }
-        return !(hasMushroom || hasPepper);
+        return !hasSlicer;
     }
 }
