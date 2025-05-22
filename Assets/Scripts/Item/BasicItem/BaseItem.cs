@@ -17,11 +17,12 @@ public abstract class HoldableItem : MonoBehaviour
 
     public abstract bool isInteractable { get; }
 
-    public Collider itemCollider { get; protected set; }
+    // public Collider itemCollider { get; protected set; }
+    public Collider itemCollider => GetComponent<Collider>();
 
     public virtual void Start()
     {
-        itemCollider = GetComponent<Collider>();
+        // itemCollider = GetComponent<Collider>();
     }
 
     public virtual void OnPickup(Transform holdPos)

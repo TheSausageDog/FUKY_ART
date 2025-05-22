@@ -30,7 +30,7 @@ Material:
     - _OutlineWidth: 11
     - _StencilTest: 0
     - _UseUV3: 1
-    - _Width: 0.054999992
+    - _Width: 0.040000003
     - _ZTest: 8
     - _ZTest2: 8
     m_Colors:
