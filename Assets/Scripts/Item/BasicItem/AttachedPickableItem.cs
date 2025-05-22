@@ -8,8 +8,11 @@ public class AttachedPickableItem : NormalPickableItem
 
     public override void OnPickup(Transform _holdPos)
     {
-        if (itemRigidbody == null)
-            itemRigidbody = gameObject.AddComponent<Rigidbody>();
+        if (!TryGetComponent<Rigidbody>(out var _))
+        {
+            gameObject.AddComponent<Rigidbody>();
+        }
+
         base.OnPickup(_holdPos);
     }
 
@@ -29,7 +32,6 @@ public class AttachedPickableItem : NormalPickableItem
         if (!keepRigbody)
         {
             Destroy(itemRigidbody);
-            itemRigidbody = null;
         }
     }
 }

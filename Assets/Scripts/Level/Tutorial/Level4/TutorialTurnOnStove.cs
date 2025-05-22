@@ -12,7 +12,7 @@ public class TutorialTurnOnStove : TutorialStep
     public override void TutorialStart(LevelController _levelController)
     {
         base.TutorialStart(_levelController);
-        OrderManager.Instance.NewOrder();
+        OrderManager.Instance.NewOrder(levelController.envItemManager.chinesePlate);
         Utils.SetLayerRecursive(levelController.envItemManager.stoveSwitch.transform, "OutlineSecond");
         stove = levelController.envItemManager.stove.GetComponent<Stove>();
     }

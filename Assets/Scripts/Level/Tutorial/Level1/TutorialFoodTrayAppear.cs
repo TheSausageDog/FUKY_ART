@@ -14,7 +14,7 @@ public class TutorialFoodTrayAppear : TutorialStep
     public override void TutorialStart(LevelController _levelController)
     {
         base.TutorialStart(_levelController);
-        OrderManager.Instance.NewOrder();
+        OrderManager.Instance.NewOrder(levelController.envItemManager.ironPlate);
         menuPickable = levelController.envItemManager.menu.GetComponent<CheckItem>();
         menuPickable.AddComponent<HighLightedItem>().isHighlighted = true;
     }

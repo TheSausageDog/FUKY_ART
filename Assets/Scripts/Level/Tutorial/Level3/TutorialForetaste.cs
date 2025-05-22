@@ -9,7 +9,7 @@ public class TutorialForetaste : TutorialStep
     public override void TutorialStart(LevelController _levelController)
     {
         base.TutorialStart(_levelController);
-        foods = levelController.envItemManager.plate.GetComponent<TasteCollector>().checkArea;
+        foods = levelController.envItemManager.ironPlate.GetComponent<TasteCollector>().checkArea;
     }
 
     public override bool TutorialUpdate()
