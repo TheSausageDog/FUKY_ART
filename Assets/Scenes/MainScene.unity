@@ -15893,7 +15893,7 @@ MonoBehaviour:
   highLightMaterial: {fileID: 2100000, guid: 1c901dd45b1cbf6498f425c418a9c50e, type: 2}
   uiDialog: {fileID: 976294127}
   areaTrigger: {fileID: 1972598770}
-  startLevelName: TutorialLevel1
+  startLevelName: TutorialLevel0
 --- !u!114 &1651822396
 MonoBehaviour:
   m_ObjectHideFlags: 0
