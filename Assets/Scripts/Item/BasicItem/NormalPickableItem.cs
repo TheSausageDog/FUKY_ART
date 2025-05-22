@@ -7,6 +7,8 @@ public class NormalPickableItem : PickableItem
 
     public override bool isInteractable { get { return false; } }
 
+    public bool resetRotate = false;
+
     protected Transform holdPos;
 
     protected virtual Quaternion rotateOffset { get { return Quaternion.identity; } }
@@ -49,7 +51,10 @@ public class NormalPickableItem : PickableItem
 
     public override void OnPickup(Transform _holdPos)
     {
-        transform.eulerAngles = Vector3.zero;
+        if (resetRotate)
+        {
+            transform.eulerAngles = Vector3.zero;
+        }
         holdPos = _holdPos;
         SetPickedRigidbody(itemRigidbody);
         base.OnPickup(_holdPos);
