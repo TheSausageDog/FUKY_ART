@@ -5,6 +5,8 @@ public class Pan : MonoBehaviour
 {
     public LiquidContainer oilNSauce;
 
+    public float heatSpeed = 1f;
+
     protected bool heated = false;
 
     protected bool hasOil = false;
@@ -19,7 +21,7 @@ public class Pan : MonoBehaviour
         }
         if (heated)
         {
-            float heat = Time.deltaTime;
+            float heat = heatSpeed * Time.deltaTime;
             if (hasOil)
             {
                 foreach (var food in foods)

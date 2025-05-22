@@ -856,6 +856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
 --- !u!54 &62885335
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2531,52 +2532,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 194924486}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &201201164
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 201201166}
-  - component: {fileID: 201201165}
-  m_Layer: 0
-  m_Name: BurstCollisionWorld
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &201201165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201201164}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellSpans:
-    m_AlignBytes: 16
---- !u!4 &201201166
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 201201164}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &217774868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3649,6 +3604,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda1d6ccb767b484b913651836131f2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
   attachPoint: {fileID: 1565647616}
   keepRigbody: 0
   bladeCollider: {fileID: 371496097}
@@ -3972,6 +3928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
 --- !u!4 &462528355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4374757939463148173, guid: ad24f5aec7939454f92a548523cbc647,
@@ -4933,6 +4890,19 @@ MonoBehaviour:
   - {fileID: 505378155}
   _isTrigger: 0
   _material: {fileID: 0}
+--- !u!114 &505378164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505378148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resetRotate: 0
 --- !u!1 &506464981
 GameObject:
   m_ObjectHideFlags: 0
@@ -8428,6 +8398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
 --- !u!114 &853951203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11036,6 +11007,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
 --- !u!114 &1112065631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11992,6 +11964,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
 --- !u!114 &1214886868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12711,6 +12684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c148be575abd56f41848ccc4a5a5d0cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
   waterFlow: {fileID: 1296457808}
 --- !u!54 &1296457810
 Rigidbody:
@@ -16640,6 +16614,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a254b302305b53429470571576ca663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
   attachPoint: {fileID: 2050784882}
   keepRigbody: 1
 --- !u!114 &1652461560
@@ -17602,6 +17577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3b97b282d4b0f04d982024ec9802e0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
 --- !u!1001 &1721161086
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18829,6 +18805,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 505378155}
+    - targetCorrespondingSourceObject: {fileID: 6006650897358431956, guid: 6d863ea5c24f3d14292fe118392663b7,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 505378164}
     - targetCorrespondingSourceObject: {fileID: 7936392777500541476, guid: 6d863ea5c24f3d14292fe118392663b7,
         type: 3}
       insertIndex: -1
@@ -19221,6 +19201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a254b302305b53429470571576ca663, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resetRotate: 0
   attachPoint: {fileID: 408686177}
   keepRigbody: 1
 --- !u!114 &1854487851
@@ -19990,6 +19971,52 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
+--- !u!1 &1936269088
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1936269090}
+  - component: {fileID: 1936269089}
+  m_Layer: 0
+  m_Name: BurstCollisionWorld
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1936269089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936269088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellSpans:
+    m_AlignBytes: 16
+--- !u!4 &1936269090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1936269088}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1968544282
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21441,6 +21468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   oilNSauce: {fileID: 714771716}
+  heatSpeed: 1
 --- !u!64 &2087247689
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -23302,4 +23330,4 @@ SceneRoots:
   - {fileID: 565383992}
   - {fileID: 1047405891}
   - {fileID: 1831173807}
-  - {fileID: 201201166}
+  - {fileID: 1936269090}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using BzKovSoft.ObjectSlicer.Samples;
 using UnityEngine;
 
-public class CanContainer : NormalPickableItem
+public class CanContainer : MonoBehaviour
 {
     public GameObject[] breakingStage;
 
@@ -17,9 +17,8 @@ public class CanContainer : NormalPickableItem
 
     public bool opened { get; protected set; } = false;
 
-    public override void Start()
+    public void Start()
     {
-        base.Start();
         breakingStage[0].SetActive(true);
         breakingIndex = 0;
     }
