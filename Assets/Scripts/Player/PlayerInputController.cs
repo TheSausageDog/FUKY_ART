@@ -6,6 +6,8 @@ public class PlayerInputController : MonoBehaviour
 
     protected static bool isRotating = false;
 
+    public FUKYMouse mymouse;
+
     // public 
 
     void Update()
