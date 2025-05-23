@@ -16,7 +16,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
         data.handTarget.localPosition = NewPos;
 
         // 将世界空间的旋转转换到相机空间
-        Quaternion cameraSpaceRotation = Quaternion.Inverse(PlayerCamera.rotation) * FUKYMouse.Instance.rawRotation;
+        Quaternion cameraSpaceRotation = Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
         data.holdPos.rotation = cameraSpaceRotation;
 
 

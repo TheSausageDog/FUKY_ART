@@ -9,27 +9,32 @@ using Unity.Mathematics;
 
 public class FUKYMouse : SingletonMono<FUKYMouse>
 {
-
-    [Tooltip("缩放值会缩放相应坐标")]
+    ///////////////////////////////////////////////////////////////////////////
+    // 配置参数 公开在前私有在后
+    ///////////////////////////////////////////////////////////////////////////
+    #region Configuration Parameters
+    [Header("坐标缩放设置")]
+    [Tooltip("全局缩放系数")]
     [Range(0.001F, 1F)]
     public float Scaler;
-    [Tooltip("偏移量")]
-    [Range(0.001f, 10f)]
-    public float X_Scale;
     [Tooltip("左右位移反转")]
     public bool InVerse;
-
-    [Tooltip("X轴单独的缩放")]
+    [Header("IMU安装轴问题")]
+    [Tooltip("旋转的纠正量，用来处理IMU安装与设备朝向以及Unity坐标不对应的问题")]
     public Vector3 Rotation_Offset;
+    
+    [Header("各轴独立缩放")]
+    [Tooltip("X轴单独的缩放")]
+    [Range(0.001f, 10f)]
+    public float X_Scale;
     [Tooltip("Y轴单独的缩放")]
     [Range(0.001f, 10f)]
     public float Y_Scale;
     [Tooltip("Z轴单独的缩放")]
     [Range(0.001f, 10f)]
     public float Z_Scale;
-    #region 滤波器
-    private OneEuroFilter<Vector3> PosFilter;
-    [Header("OneEuro滤波器设置")]
+
+    [Header("滤波器参数")]
     [Tooltip("较高minCutoff值会导致更多的高频噪声通过，而较低的值则会使输出更加平滑")]
     public float minCutoff = 0.2f;
     [Tooltip("增加beta会使滤波器在快速移动时更加响应，但也可能引入更多的高频噪声。\r\n减小beta则会使滤波器更加平滑，但可能导致在快速移动时响应滞后。")]
@@ -42,8 +47,37 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     public float RotateFreq = 0.02f;//数据的更新频率
     public float LastPosUpdateTime = 0.00f;//上一次更新时间
     public float LastRotateUpdateTime = 0.02f;//上一次更新时间
+    private OneEuroFilter<Vector3> PosFilter;
     #endregion
-    
+
+    ///////////////////////////////////////////////////////////////////////////
+    // 运行时数据 公开在前私有在后
+    ///////////////////////////////////////////////////////////////////////////
+    #region Runtime Data
+    [Header("按钮状态与压感")]
+    public float PressureValue;
+    public bool Left_pressed = false;
+    public bool Right_pressed = false;
+    public bool Middle_pressed = false;
+    public bool isMouseFloating = false;
+
+    public Vector3 filteredTranslate { get; private set; }
+    public Vector3 rawAcceleration { get; private set; }
+    public Quaternion rawRotation { get; private set; }
+    public Vector3 rawTranslate { get; private set; }
+    public Vector3 deltaTranslate { get; private set; }
+    public Quaternion deltaRotation { get; private set; }
+    public Vector3 deltaEuler { get; private set; }
+    public byte buttonState { get; private set; }
+
+    private Vector3 lastRawTranslate;//上一帧的灯珠位置值
+    private Vector3 lastFilteredTranslate;//上一帧的位置值
+    private Quaternion lastRawRotation;//上一帧鼠标的旋转值
+    #endregion
+    ///////////////////////////////////////////////////////////////////////////
+    // 共享内存设置和数据结构 公开在前私有在后
+    ///////////////////////////////////////////////////////////////////////////
+    #region Share Mem and data sturture
     // 共享内存配置（必须与Python代码完全一致）
     private const string IMU_MEM_NAME = "IMU_Memory";
     private const string BTN_MEM_NAME = "BTN_Memory";
@@ -52,17 +86,13 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     // 内存映射对象
     private MemoryMappedFile _IMU_MemFile;
     private MemoryMappedViewAccessor _IMU_Accessor;
-
     private MemoryMappedFile _BTN_MemFile;
     private MemoryMappedViewAccessor _BTN_Accessor;
-
     private MemoryMappedFile _PRESS_MemFile;
     private MemoryMappedViewAccessor _PRESS_Accessor;
-
     private MemoryMappedFile _locatorMemFile;
     private MemoryMappedViewAccessor _locatorAccessor;
-
-    // 数据结构定义（必须与Python打包方式一致）
+    // 数据结构定义（与Python打包方式一致）
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     struct IMUData
     {
@@ -75,7 +105,6 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         public float quatZ;
     }
 
-
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     struct LocatorData
     {
@@ -84,26 +113,10 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         public float CoordZ;
     }
 
+#endregion
 
-    public Vector3 rawAcceleration { get; private set; }
-    public Quaternion rawRotation { get; private set; }
-    public Vector3 rawTranslate { get; private set; }
-    public byte buttonState { get; private set; }
 
-    public float PressureValue;
-    public bool Left_pressed = false;
-    public bool Right_pressed = false;
-    public bool Middle_pressed = false;
-    public bool isMouseFloating = false;
-    public Vector3 filteredTranslate { get; private set; }
 
-    private Vector3 lastRawTranslate;//上一帧的灯珠位置值
-    private Vector3 lastFilteredTranslate;//上一帧的位置值
-    private Quaternion lastRawRotation;//上一帧鼠标的旋转值
-
-    public Vector3 deltaTranslate { get; private set; }
-    public Quaternion deltaRotation { get; private set; }
-    public Vector3 deltaEuler { get; private set; }
 
     void Start()
     {
