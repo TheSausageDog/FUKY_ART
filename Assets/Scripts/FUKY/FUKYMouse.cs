@@ -93,14 +93,12 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     public Quaternion rawRotation { get; private set; }
     public Vector3 rawTranslate { get; private set; }
     public byte buttonState { get; private set; }
-    public ushort Pressure { get; private set; }
 
+    public float PressureValue;
     public bool Left_pressed = false;
     public bool Right_pressed = false;
     public bool Middle_pressed = false;
     public bool isMouseFloating = false;
-    public ushort PressureValue { get; private set; } // 压力值（0-65535）
-
     public Vector3 filteredTranslate { get; private set; }
 
     private Vector3 lastRawTranslate;//上一帧的灯珠位置值
@@ -160,9 +158,10 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 data.accelZ
             );
             rawRotation = new Quaternion(
-                -data.quatX,
-                -data.quatZ,
-                -data.quatY,
+
+                data.quatZ,
+                data.quatX,
+                data.quatY,
                 data.quatW
             ) * quaternion.Euler(Rotation_Offset);
             Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
@@ -203,9 +202,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
 
             byte low = _PRESS_Accessor.ReadByte(0);
             byte high = _PRESS_Accessor.ReadByte(1);
-            Pressure = (ushort)((high << 8) | low);
-            //Debug.Log($"Pressure: {Pressure} (0x{Pressure:X4})");
-
+            PressureValue =math.max(0, ((ushort)((high << 8) | low) / 65535.0f)-0.3f)/0.7f;
         }
         catch (Exception e)
         {

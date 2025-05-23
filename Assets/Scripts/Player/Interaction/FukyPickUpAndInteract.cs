@@ -28,10 +28,10 @@ public class FukyPickUpAndInteract : PickUpAndInteract
         //}
         //else
         //{
-            Vector3 NewPos = new Vector3(FUKYMouse.Instance.filteredTranslate.x, FUKYMouse.Instance.filteredTranslate.y, FUKYMouse.Instance.filteredTranslate.z - Z_Offset);
-            //直接值的方式
-            data.handTarget.localPosition = NewPos;
-        data.handTarget.rotation = FUKYMouse.Instance.rawRotation; //* Quaternion.Inverse(transform.rotation);
+        Vector3 NewPos = new Vector3(FUKYMouse.Instance.filteredTranslate.x, FUKYMouse.Instance.filteredTranslate.y, FUKYMouse.Instance.filteredTranslate.z - Z_Offset);
+        //直接值的方式
+        data.handTarget.localPosition = NewPos;
+        data.handTarget.rotation = Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
 
         //}
 
