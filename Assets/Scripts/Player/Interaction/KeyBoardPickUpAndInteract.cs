@@ -9,9 +9,9 @@ public class KeyBoardPickUpAndInteract : PickUpAndInteract
             Vector2 mouseInput = PlayerInputController.GetMouseInput() * data.rotationSensitivity;
             float scrollInput = PlayerInputController.GetScrollInput() * 10;
 
-            data.handTarget.transform.Rotate(Vector3.up, mouseInput.x, Space.Self);
-            data.handTarget.transform.Rotate(Vector3.right, mouseInput.y, Space.Self);
-            data.handTarget.transform.Rotate(Vector3.forward, scrollInput, Space.Self);
+            data.holdPos.transform.Rotate(Vector3.up, mouseInput.x, Space.Self);
+            data.holdPos.transform.Rotate(Vector3.right, mouseInput.y, Space.Self);
+            data.holdPos.transform.Rotate(Vector3.forward, scrollInput, Space.Self);
         }
         else
         {

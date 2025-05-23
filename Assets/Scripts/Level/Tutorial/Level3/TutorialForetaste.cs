@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class TutorialForetaste : TutorialStep
 {
+    protected FoodRecorder foods;
+
+    public override void TutorialStart(LevelController _levelController)
+    {
+        base.TutorialStart(_levelController);
+        foods = levelController.envItemManager.ironPlate.GetComponent<TasteCollector>().checkArea;
+    }
 
     public override bool TutorialUpdate()
     {
-        return ForetasteManager.Instance.foretasteRecords.Count == 0;
+        return foods.foods.Count == 0;
     }
 }

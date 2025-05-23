@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Obi;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -16,7 +17,13 @@ public class LiquidContainer : MonoBehaviour
 
     protected int queryIndex;
 
+    protected HashSet<int> lastActiveLiquid = new HashSet<int>();
+
     public int volume { get; protected set; }
+
+    public delegate void OnLiquidChanged(Dictionary<WaterFlow, int> add, Dictionary<WaterFlow, int> minus);
+
+    public OnLiquidChanged onLiquidChanged = (Dictionary<WaterFlow, int> _, Dictionary<WaterFlow, int> _) => { };
 
     void Awake()
     {
@@ -58,6 +65,9 @@ public class LiquidContainer : MonoBehaviour
     void Solver_OnSpatialQueryResults(ObiSolver s, ObiNativeQueryResultList queryResults)
     {
         volume = queryResults.count;
+        Dictionary<WaterFlow, int> newLiquid = new Dictionary<WaterFlow, int>();
+        Dictionary<WaterFlow, int> lostLiquid = new Dictionary<WaterFlow, int>();
+        HashSet<int> activeLiquid = new HashSet<int>();
         for (int i = 0; i < queryResults.count; ++i)
         {
             if (queryResults[i].queryIndex == queryIndex)
@@ -65,17 +75,49 @@ public class LiquidContainer : MonoBehaviour
                 if (queryResults[i].distance < 0)
                 {
                     int particleIndex = solver.simplices[queryResults[i].simplexIndex];
-
-                    // change the color of the particle depending on which box it is inside of:
-
                     solver.life[particleIndex] = 3;
+
+                    activeLiquid.Add(particleIndex);
                 }
             }
         }
+
+        foreach (int particleIndex in lastActiveLiquid)
+        {
+            if (!activeLiquid.Contains(particleIndex))
+            {
+                WaterFlow waterFlow = solver.particleToActor[particleIndex].actor.GetComponent<WaterFlow>();
+                if (lostLiquid.ContainsKey(waterFlow))
+                {
+                    lostLiquid[waterFlow]++;
+                }
+                else
+                {
+                    lostLiquid[waterFlow] = 1;
+                }
+            }
+        }
+        foreach (int particleIndex in activeLiquid)
+        {
+            if (!lastActiveLiquid.Contains(particleIndex))
+            {
+                WaterFlow waterFlow = solver.particleToActor[particleIndex].actor.GetComponent<WaterFlow>();
+                if (newLiquid.ContainsKey(waterFlow))
+                {
+                    newLiquid[waterFlow]++;
+                }
+                else
+                {
+                    newLiquid[waterFlow] = 1;
+                }
+            }
+        }
+        if (lostLiquid.Count != 0 || newLiquid.Count != 0)
+        {
+            onLiquidChanged(newLiquid, lostLiquid);
+        }
+        lastActiveLiquid = activeLiquid;
     }
-
-
-
     // public Material liquid_material;
 
     // public float threshold_start = 0f;
@@ -88,9 +130,6 @@ public class LiquidContainer : MonoBehaviour
 
     // public float liquid_full = 5;
 
-    // public delegate void OnLiquidChanged(float delta_volume, WaterFlow source);
-
-    // public OnLiquidChanged onLiquidChanged = (float _, WaterFlow _) => { };
 
     // public virtual void Start()
     // {

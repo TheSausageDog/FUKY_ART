@@ -11,7 +11,7 @@ namespace BzKovSoft.ObjectSlicer
 	/// </summary>
 	public class BzMeshDataDissector
 	{
-		private const float MinWidth = 0.0001f;
+		private const float MinWidth = 0.05f;
 		private readonly IBzSliceAdapter _adapter;
 		private readonly bool _objectGrouping;
 		private readonly Plane _plane;
@@ -111,7 +111,7 @@ namespace BzKovSoft.ObjectSlicer
 					bool negSide = !side1 | !side2 | !side3;
 
 					if (negSide & posSide)
- 					{
+					{
 						meshEditor.DivideByPlane(
 							i1, i2, i3,
 							triangles,
@@ -156,7 +156,7 @@ namespace BzKovSoft.ObjectSlicer
 			{
 				return SliceResult.Neg;
 			}
-			
+
 
 
 			return SliceResult.Sliced;

@@ -12,7 +12,7 @@ public class TutorialOpenFridge : TutorialStep
     public override void TutorialStart(LevelController _levelController)
     {
         base.TutorialStart(_levelController);
-        fridge = levelController.envItemManager.fridge.transform.GetChild(1).GetComponent<FridgeItem>();
+        fridge = levelController.envItemManager.fridge.transform.GetChild(1).GetChild(0).GetComponent<FridgeItem>();
         fridgeHightlighted = levelController.envItemManager.fridge.AddComponent<HighLightedItem>();
         fridgeHightlighted.isHighlighted = true;
     }

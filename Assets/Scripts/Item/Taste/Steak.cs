@@ -1,3 +1,5 @@
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Steak : Food
@@ -70,6 +72,21 @@ public class Steak : Food
         }
 
         SetMaterialHeat();
+    }
+
+    public override float GetDoneness()
+    {
+        return heats.Average();
+    }
+
+    public override DonenessTag GetDonenessTag()
+    {
+        DonenessTag maxTag = TasteManager.GetDonenessTag(heats.Max());
+        if (maxTag == DonenessTag.Bruned)
+        {
+            return DonenessTag.Bruned;
+        }
+        return TasteManager.GetDonenessTag(GetDoneness());
     }
 
     protected int GetDownFace()

@@ -7,26 +7,19 @@ using UnityEngine;
 
 public class Knife : AttachedPickableItem
 {
-    // public BoxCollider Collider;
+    public Collider bladeCollider;
 
-    // protected override bool keepRigbody {get{ return false; }}
-    public override void OnPickup(Transform holdPos)
+    protected override Quaternion rotateOffset { get { return Quaternion.Euler(-90, 0, 0); } }
+
+    public override void OnPickup(Transform _holdPos)
     {
-        transform.DORotate(new Vector3(-90, 3, 3), 0.5f);
-        base.OnPickup(holdPos);
-        //Collider.enabled = false;
-
-
+        base.OnPickup(_holdPos);
+        bladeCollider.isTrigger = true;
     }
 
-    // public override void OnThrow()
-    // {
-    //     base.OnThrow();
-    //     // Destroy(itemRigidbody);
-
-    //     //Collider.enabled = true;
-    // }
-
-
-
+    public override void OnThrow()
+    {
+        base.OnThrow();
+        bladeCollider.isTrigger = false;
+    }
 }

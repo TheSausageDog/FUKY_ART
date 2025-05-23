@@ -18,9 +18,9 @@ public class TutorialSeasoning : TutorialStep
         }
         else
         {
-            if (foretasteIndex != ForetasteManager.Instance.foretasteRecords.Count)
+            if (foretasteIndex != TasteManager.Instance.foretasteRecords.Count)
             {
-                if (!ForetasteManager.Instance.foretasteRecords[foretasteIndex].TryGetValue(TasteType.Spicy, out float value))
+                if (!TasteManager.Instance.foretasteRecords[foretasteIndex].TryGetValue(TasteType.Spicy, out float value))
                 {
                     value = 0;
                 }

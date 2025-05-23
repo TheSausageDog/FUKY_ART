@@ -32,7 +32,8 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         {
             OnHandTriggerExit();
             selectedObj = other;
-            Utils.SetLayerRecursive(selectedObj.transform, "Outline");
+            if (selectedObj.layer != LayerMask.NameToLayer("OutlineSecond"))
+                Utils.SetLayerRecursive(selectedObj.transform, "Outline");
         }
     }
 
@@ -40,7 +41,8 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     {
         if (selectedObj != null)
         {
-            Utils.SetLayerRecursive(selectedObj.transform, "Default");
+            if (selectedObj.layer != LayerMask.NameToLayer("OutlineSecond"))
+                Utils.SetLayerRecursive(selectedObj.transform, "Default");
             selectedObj = null;
         }
     }
@@ -74,27 +76,32 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
             if (PlayerInputController.IsLeftShiftPressed())
             {
                 data.handTarget.position = data.holdPos.position;
-                data.handTarget.rotation = data.holdPos.rotation;
             }
             else
             {
                 MoveHandTarget();
             }
         }
+        else
+        {
+            if (PlayerInputController.IsLeftShiftPressed())
+            {
+                data.handTarget.localPosition = data.handTargetOffset;
+            }
+        }
 
         if (PlayerBlackBoard.isHeldObj)
         {
             float distanceToTarget = Vector3.Distance(data.handTarget.position, data.holdPos.position);
-            if (distanceToTarget > data.maxHandMovingSpeed * Time.deltaTime)
-            {
-                Vector3 directionToTarget = (data.handTarget.position - data.holdPos.position).normalized;
-                data.holdPos.position += directionToTarget * data.maxHandMovingSpeed * Time.deltaTime;
-            }
-            else
-            {
-                data.holdPos.position = data.handTarget.position;
-            }
-            data.holdPos.rotation = data.handTarget.rotation;
+            // if (distanceToTarget > data.maxHandMovingSpeed * Time.deltaTime)
+            // {
+            //     Vector3 directionToTarget = (data.handTarget.position - data.holdPos.position).normalized;
+            //     data.holdPos.position += directionToTarget * data.maxHandMovingSpeed * Time.deltaTime;
+            // }
+            // else
+            // {
+            data.holdPos.position = data.handTarget.position;
+            // }
 
             if (PlayerInputController.IsInteractPressed() && PlayerBlackBoard.heldItem.isInteractable)
             {
@@ -152,11 +159,11 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 
         if (selectedObj != null)
         {
-            if (Vector3.Distance(selectedObj.transform.position, transform.position) > data.pickUpRange)
-            {
-                Debug.LogWarning("物体超出拾取范围！");
-                return;
-            }
+            // if (Vector3.Distance(selectedObj.transform.position, Camera.main.transform.position) > data.pickUpRange)
+            // {
+            //     // Debug.LogWarning("物体超出拾取范围！");
+            //     return;
+            // }
             if (PlayerInputController.IsPickUpPressed())
             {
                 if (selectedObj.TryGetComponent<HoldableItem>(out var holdItemScript))
@@ -177,9 +184,8 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     {
         data.uiCursor.SetActive(false);
         data.holdPos.position = pickItem.transform.position;
-        pickItem.transform.eulerAngles = Vector3.zero;
-        data.holdPos.rotation = pickItem.transform.rotation;
         pickItem.OnPickup(data.holdPos);
+        data.holdPos.rotation = pickItem.transform.rotation;
         pickItem.gameObject.tag = "isPicking";
         Utils.SetLayerRecursive(pickItem.transform, "Player");
         Physics.IgnoreCollision(pickItem.itemCollider, GetComponent<Collider>(), true);

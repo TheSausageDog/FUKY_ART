@@ -4,7 +4,7 @@ using UnityEngine;
 public class FukyPickUpAndInteract : PickUpAndInteract
 {   public Transform Player;
     //public bool DeltaMethord = false;
-    [Tooltip("ZÖáµ¥¶ÀµÄÆ«ÒÆ")]
+    [Tooltip("Zï¿½áµ¥ï¿½ï¿½ï¿½ï¿½Æ«ï¿½ï¿½")]
     [Range(-500F, 500F)]
     public float Z_Offset;
     protected override void MoveHandTarget()
@@ -12,7 +12,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
         //why minus?
         //if (DeltaMethord)
         //{
-        //    //Ïà¶ÔÎ»ÒÆÁ¿µÄ·½Ê½
+        //    //ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ä·ï¿½Ê½
         //    Vector3 newLocalPosition = transform.InverseTransformPoint(data.handTarget.position) - FUKYMouse.Instance.deltaTranslate;
 
         //    newLocalPosition.x = Mathf.Clamp(newLocalPosition.x, data.xMinMax.x, data.xMinMax.y);
@@ -29,11 +29,11 @@ public class FukyPickUpAndInteract : PickUpAndInteract
         //else
         //{
         Vector3 NewPos = new Vector3(FUKYMouse.Instance.filteredTranslate.x, FUKYMouse.Instance.filteredTranslate.y, FUKYMouse.Instance.filteredTranslate.z - Z_Offset);
-        //Ö±½ÓÖµµÄ·½Ê½
+        //Ö±ï¿½ï¿½Öµï¿½Ä·ï¿½Ê½
         data.handTarget.localPosition = NewPos;
         data.handTarget.rotation = Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
 
         //}
-
+        data.holdPos.rotation = FUKYMouse.Instance.rawRotation;
     }
 }

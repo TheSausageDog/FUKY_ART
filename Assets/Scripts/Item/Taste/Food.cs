@@ -22,33 +22,34 @@ public class Food : TasteObject
 
     protected float heated = 0f;
 
-    protected void SetTasteByType()
-    {
-        tastes.Clear();
-        switch (foodType)
-        {
-            case FoodType.Mushroom:
-                tastes[TasteType.Fresh] = 1f;
-                break;
-            case FoodType.Pepper:
-                tastes[TasteType.Spicy] = 1f;
-                break;
-            case FoodType.Sausage:
-                tastes[TasteType.Salty] = 1f;
-                break;
-        }
-    }
+    // protected void SetTasteByType()
+    // {
+    //     tastes.Clear();
+    //     switch (foodType)
+    //     {
+    //         case FoodType.Mushroom:
+    //             tastes[TasteType.Fresh] = 1f;
+    //             break;
+    //         case FoodType.Pepper:
+    //             tastes[TasteType.Spicy] = 1f;
+    //             break;
+    //         case FoodType.Sausage:
+    //             tastes[TasteType.Salty] = 1f;
+    //             break;
+    //     }
+    // }
 
     public override void Start()
     {
-        if (foodType != FoodType.None)
-        {
-            SetTasteByType();
-        }
-        else
-        {
-            base.Start();
-        }
+        // if (foodType != FoodType.None)
+        // {
+        //     SetTasteByType();
+        // }
+        // else
+        // {
+        base.Start();
+        // }
+
         Renderer[] renderers = GetComponents<Renderer>();
         Renderer[] renderers2 = GetComponentsInChildren<Renderer>();
         int length = renderers.Length + renderers2.Length;
@@ -72,44 +73,51 @@ public class Food : TasteObject
         foreach (var material in materials)
         {
             f(material);
-            material.SetColor("_MainColor", Color.white);
+            // material.SetColor("_MainColor", Color.white);
         }
     }
 
-    ///
-    ///  raw       cooked    burned
-    /// 0--2.5----7.5--10------15
-    ///
+    public virtual float GetDoneness()
+    {
+        return heated;
+    }
+
+    public virtual DonenessTag GetDonenessTag()
+    {
+        return TasteManager.GetDonenessTag(GetDoneness());
+    }
+
+
+
     public virtual void Heat(float _heat)
     {
         heated += _heat;
-        if (heated < 2.5)
+        DonenessTag donenessTag = GetDonenessTag();
+        switch (donenessTag)
         {
-            SetMaterials((Material material) => { material.SetColor("_MainColor", Color.white); });
-        }
-        else if (heated < 7.5)
-        {
-            float alpha = (heated - 2.5f) / 5;
-            Color color = Color.Lerp(Color.white, new Color(138f / 255, 51 / 255, 36 / 255), alpha);
-            SetMaterials((Material material) => { material.SetColor("_MainColor", color); });
-        }
-        else if (heated < 10)
-        {
-            SetMaterials((Material material) => { material.SetColor("_MainColor", new Color(138f / 255, 51 / 255, 36 / 255)); });
-        }
-        else if (heated < 15)
-        {
-            float alpha = (heated - 10f) / 5;
-            Color color = Color.Lerp(new Color(138f / 255, 51 / 255, 36 / 255), Color.white * 0.1f, alpha);
-            SetMaterials((Material material) => { material.SetColor("_MainColor", color); });
-
-        }
-        else
-        {
-            foreach (var material in materials)
-            {
-                material.SetColor("_MainColor", Color.white * 0.1f);
-            }
+            case DonenessTag.Raw:
+                SetMaterials((Material material) => { material.SetColor("_MainColor", Color.white); });
+                break;
+            case DonenessTag.HalfDone:
+                {
+                    float alpha = (heated - 2.5f) / 5;
+                    Color color = Color.Lerp(Color.white, new Color(138f / 255, 51 / 255, 36 / 255), alpha);
+                    SetMaterials((Material material) => { material.SetColor("_MainColor", color); });
+                }
+                break;
+            case DonenessTag.Cooked:
+                SetMaterials((Material material) => { material.SetColor("_MainColor", new Color(138f / 255, 51 / 255, 36 / 255)); });
+                break;
+            case DonenessTag.HalfBruned:
+                {
+                    float alpha = (heated - 10f) / 5;
+                    Color color = Color.Lerp(new Color(138f / 255, 51 / 255, 36 / 255), Color.white * 0.1f, alpha);
+                    SetMaterials((Material material) => { material.SetColor("_MainColor", color); });
+                }
+                break;
+            case DonenessTag.Bruned:
+                SetMaterials((Material material) => { material.SetColor("_MainColor", Color.white * 0.1f); });
+                break;
         }
     }
 

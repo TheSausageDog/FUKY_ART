@@ -13,7 +13,7 @@ public class CheckItem : PickableItem
         if (isHolding && !PlayerInputController.IsMoveHandHeld())
         {
             transform.position = Camera.main.transform.position + objectSize * Camera.main.transform.forward;
-            transform.LookAt(transform.position + Camera.main.transform.up, -Camera.main.transform.forward);
+            transform.LookAt(transform.position - Camera.main.transform.right, -Camera.main.transform.forward);
         }
     }
 }

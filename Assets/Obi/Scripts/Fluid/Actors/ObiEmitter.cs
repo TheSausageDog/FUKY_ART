@@ -96,7 +96,7 @@ namespace Obi
         [Tooltip("Spawned particles are tinted by the corresponding emitter shape's color.")]
         public bool useShapeColor = true;
 
-        [HideInInspector] [SerializeField] private List<ObiEmitterShape> emitterShapes = new List<ObiEmitterShape>();
+        [HideInInspector][SerializeField] private List<ObiEmitterShape> emitterShapes = new List<ObiEmitterShape>();
         private IEnumerator<EmitPoint> distEnumerator;
 
         private EmittedParticleData emissionData;
@@ -340,11 +340,11 @@ namespace Obi
             emissionData.phase = ObiUtils.MakePhase(groupID, ObiUtils.ParticleFlags.SelfCollide | particleFlags);
         }
 
-       /* protected override void SwapWithFirstInactiveParticle(int actorIndex)
-        {
-            base.SwapWithFirstInactiveParticle(actorIndex);
-            life.Swap(actorIndex, activeParticleCount);
-        }*/
+        /* protected override void SwapWithFirstInactiveParticle(int actorIndex)
+         {
+             base.SwapWithFirstInactiveParticle(actorIndex);
+             life.Swap(actorIndex, activeParticleCount);
+         }*/
 
         /// <summary>
         /// Activates one particle. Specialized implementation, optimized to activate large amounts of particles per step. Does not
@@ -549,7 +549,8 @@ namespace Obi
             if (isEmitting || pooledParticles > Mathf.FloorToInt(minPoolSize * particleCount))
             {
                 // SimulationStart might be called before our awake, so we need to lazy initialize emitPoints:
-                if (emitPoints == null)                    emitPoints = new ObiNativeEmitPointList();
+                if (emitPoints == null)
+                    emitPoints = new ObiNativeEmitPointList();
 
                 // stream emission:
                 switch (emissionMethod)

@@ -11,6 +11,7 @@ public class FridgeItem : DragItem
         temp_target = targetPosition;
         Vector3 forward = targetPosition - transform.position;
         forward.y = 0;
+        if (forward.z > 0) { forward.z = 0; }
         if (forward.x > 0) { forward.x = 0; }
         Quaternion target_rot = Quaternion.LookRotation(forward, Vector3.up);
         transform.rotation = Quaternion.Lerp(transform.rotation, target_rot, speed * Time.deltaTime);
