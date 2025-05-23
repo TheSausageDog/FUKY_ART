@@ -153,13 +153,13 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 data.accelY,
                 data.accelZ
             );
-            rawRotation = new Quaternion(
+            rawRotation = quaternion.Euler(Rotation_Offset) * new Quaternion(
                 data.quatY,
-                -data.quatX,
-                -data.quatZ,
+                data.quatX,
+                data.quatZ,
                 data.quatW
-            ) * quaternion.Euler(Rotation_Offset);
-            Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
+            );
+            //Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
             
 
             // 读取数据结构 定位器数据
@@ -182,7 +182,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                     data2.CoordZ * Z_Scale
                 ) * Scaler;
             }
-            //Debug.Log("定位器坐标数据:" + rawTranslate);
+            Debug.Log("定位器坐标数据:" + rawTranslate);
 
 
             // 读取按钮数据 

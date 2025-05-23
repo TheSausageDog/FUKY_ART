@@ -14,8 +14,13 @@ public class FukyPickUpAndInteract : PickUpAndInteract
 
         Vector3 NewPos = new Vector3(FUKYMouse.Instance.filteredTranslate.x, FUKYMouse.Instance.filteredTranslate.y, FUKYMouse.Instance.filteredTranslate.z - Z_Offset);
         data.handTarget.localPosition = NewPos;
-        data.handTarget.rotation = Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
 
-        data.holdPos.rotation = FUKYMouse.Instance.rawRotation;
+        // 将世界空间的旋转转换到相机空间
+        Quaternion cameraSpaceRotation = Quaternion.Inverse(PlayerCamera.rotation) * FUKYMouse.Instance.rawRotation;
+        data.holdPos.rotation = cameraSpaceRotation;
+
+
+        //data.handTarget.rotation = Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
+        //data.holdPos.rotation = FUKYMouse.Instance.rawRotation;
     }
 }
