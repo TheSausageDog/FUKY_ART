@@ -16,11 +16,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     [Tooltip("偏移量")]
     [Range(0.001f, 10f)]
     public float X_Scale;
-    
-    [Tooltip("纵轴偏移量")]
-    [Range(0.001f, 10f)]
-    public float Z_OFFSET;
-
+    [Tooltip("左右位移反转")]
     public bool InVerse;
 
     [Tooltip("X轴单独的缩放")]
@@ -158,10 +154,9 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 data.accelZ
             );
             rawRotation = new Quaternion(
-
-                data.quatZ,
-                data.quatX,
                 data.quatY,
+                -data.quatX,
+                -data.quatZ,
                 data.quatW
             ) * quaternion.Euler(Rotation_Offset);
             Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
@@ -175,7 +170,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 (
                     -data2.CoordX * X_Scale,
                     data2.CoordY * Y_Scale,
-                    data2.CoordZ * Z_Scale + Z_OFFSET
+                    data2.CoordZ * Z_Scale
                 ) * Scaler;
             }
             else
@@ -184,7 +179,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 (
                     data2.CoordX * X_Scale,
                     data2.CoordY * Y_Scale,
-                    data2.CoordZ * Z_Scale + Z_OFFSET
+                    data2.CoordZ * Z_Scale
                 ) * Scaler;
             }
             //Debug.Log("定位器坐标数据:" + rawTranslate);
