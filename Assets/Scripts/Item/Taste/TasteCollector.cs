@@ -16,7 +16,10 @@ public class TasteCollector : MonoBehaviour
 
     public void Awake()
     {
-        liquidContainer.onLiquidChanged += AddLiquid;
+        if (liquidContainer != null)
+        {
+            liquidContainer.onLiquidChanged += AddLiquid;
+        }
     }
 
     protected void AddLiquid(Dictionary<WaterFlow, int> add, Dictionary<WaterFlow, int> minus)

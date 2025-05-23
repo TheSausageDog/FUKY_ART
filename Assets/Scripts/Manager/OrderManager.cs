@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Obi;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,7 +11,7 @@ public class OrderManager : SingletonMono<OrderManager>
 
     // public GameObject cup;
 
-    public GameObject plate;
+    protected GameObject plate;
     public GameObject menu;
 
     public ContainRecorder submitArea;
@@ -24,17 +25,24 @@ public class OrderManager : SingletonMono<OrderManager>
     protected Order order = null;
     public OrderItem orderItem;
 
+    protected bool appear = true;
+
     void Start()
     {
         animator = foodTray.GetComponent<Animator>();
     }
 
-    public void NewOrder(Recipe recipe = null)
+    public void NewOrder(GameObject _plate, Recipe recipe = null)
     {
         foodTray.SetActive(true);
+        plate = _plate;
         plate.SetActive(true);
         // cup.GetComponent<AttachedPickableItem>().ResetAttach();
         plate.GetComponent<AttachedPickableItem>().ResetAttach();
+        plate.transform.parent = foodTray.transform;
+        animator.enabled = true;
+        appear = true;
+        animator.Play("FoodTrayAnimation");
         // foodTray.transform.position = trayStart.position;
         // foodTray.GetComponent<Rigidbody>().velocity = (trayTarget.position - foodTray.transform.position) * 4;
         order = new Order(recipe);
@@ -48,13 +56,28 @@ public class OrderManager : SingletonMono<OrderManager>
             if (animator.enabled)
             {
                 AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
-                if (stateInfo.normalizedTime >= 1.0f && stateInfo.IsName("FoodTrayAnimation"))
+                if (stateInfo.normalizedTime >= 1.0f)
                 {
-                    animator.enabled = false;
-                    // foodTray.AddComponent<Rigidbody>();
-                    //what a mass
-                    foodTray.AddComponent<NormalPickableItem>();
-                    menu.tag = "canInteract";
+                    if (appear && stateInfo.IsName("FoodTrayAnimation"))
+                    {
+                        animator.enabled = false;
+                        foodTray.AddComponent<Rigidbody>();
+                        plate.AddComponent<Rigidbody>();
+                        // foodTray.AddComponent<NormalPickableItem>();
+                        menu.tag = "canInteract";
+                    }
+                    else if (!appear && stateInfo.IsName("Submit"))
+                    {
+                        animator.enabled = false;
+                        List<Food> foods = plate.GetComponent<TasteCollector>().checkArea.foods;
+                        foreach (Food food in foods)
+                        {
+                            Destroy(food.gameObject);
+                        }
+                        plate.SetActive(false);
+                        foodTray.SetActive(false);
+                        orderItem = null;
+                    }
                 }
                 // else
                 // {
@@ -110,19 +133,21 @@ public class OrderManager : SingletonMono<OrderManager>
                 List<Food> foods = plate.GetComponent<TasteCollector>().checkArea.foods;
                 foreach (Food food in foods)
                 {
-                    Destroy(food.gameObject);
+                    if (food.TryGetComponent<Rigidbody>(out var rigidbody)) { Destroy(rigidbody); }
+                    food.transform.parent = foodTray.transform;
                 }
-                plate.SetActive(false);
             }
             else
             {
                 Debug.Log("没有菜盘子");
             }
 
-            orderItem = null;
-            foodTray.SetActive(false);
-            animator.Play("FoodTrayAnimation");
+            { if (foodTray.TryGetComponent<Rigidbody>(out var rigidbody)) { Destroy(rigidbody); } }
+            { if (plate.TryGetComponent<ObiRigidbody>(out var rigidbody)) { Destroy(rigidbody); } }
+            { if (plate.TryGetComponent<Rigidbody>(out var rigidbody)) { Destroy(rigidbody); } }
+            appear = false;
             animator.enabled = true;
+            animator.Play("Submit");
         }
         else
         {

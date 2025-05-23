@@ -3,7 +3,7 @@ using UnityEngine;
 //Just moving
 public class NormalPickableItem : PickableItem
 {
-    public Rigidbody itemRigidbody { get; protected set; }
+    public Rigidbody itemRigidbody => GetComponent<Rigidbody>();
 
     public override bool isInteractable { get { return false; } }
 
@@ -12,12 +12,6 @@ public class NormalPickableItem : PickableItem
     protected Transform holdPos;
 
     protected virtual Quaternion rotateOffset { get { return Quaternion.identity; } }
-
-    public override void Start()
-    {
-        base.Start();
-        itemRigidbody = GetComponent<Rigidbody>();
-    }
 
     public virtual void Update()
     {

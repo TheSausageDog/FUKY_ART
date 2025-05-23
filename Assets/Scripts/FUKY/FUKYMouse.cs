@@ -3,20 +3,28 @@ using System;
 using System.IO.MemoryMappedFiles;
 using System.Threading;
 using System.Runtime.InteropServices;
+//using System.Numerics;
+using Unity.Mathematics;
 
 
 public class FUKYMouse : SingletonMono<FUKYMouse>
 {
+
     [Tooltip("缩放值会缩放相应坐标")]
     [Range(0.001F, 1F)]
     public float Scaler;
-    // [Tooltip("Z轴单独的偏移")]
-    // [Range(-500F, 500F)]
-    // public float Z_Offset;
-
-    [Tooltip("X轴单独的缩放")]
+    [Tooltip("偏移量")]
     [Range(0.001f, 10f)]
     public float X_Scale;
+    
+    [Tooltip("纵轴偏移量")]
+    [Range(0.001f, 10f)]
+    public float Z_OFFSET;
+
+    public bool InVerse;
+
+    [Tooltip("X轴单独的缩放")]
+    public Vector3 Rotation_Offset;
     [Tooltip("Y轴单独的缩放")]
     [Range(0.001f, 10f)]
     public float Y_Scale;
@@ -39,29 +47,38 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     public float LastPosUpdateTime = 0.00f;//上一次更新时间
     public float LastRotateUpdateTime = 0.02f;//上一次更新时间
     #endregion
-    // 共享内存配置（需与Python端完全一致）
-    private const string MOUSE_MEM_NAME = "FUKY_Mouse_Memory";
-    private const int MOUSE_MEM_SIZE = 32; // Python端定义的32字节
+    
+    // 共享内存配置（必须与Python代码完全一致）
+    private const string IMU_MEM_NAME = "IMU_Memory";
+    private const string BTN_MEM_NAME = "BTN_Memory";
+    private const string PRESS_MEM_NAME = "PRESS_Memory";
     private const string LOCATOR_MEM_NAME = "FUKY_Locator_Memory";
-    private const int LOCATOR_MEM_SIZE = 12; // Python端定义的32字节
     // 内存映射对象
-    private MemoryMappedFile _mouseMemFile;
-    private MemoryMappedViewAccessor _mouseAccessor;
+    private MemoryMappedFile _IMU_MemFile;
+    private MemoryMappedViewAccessor _IMU_Accessor;
+
+    private MemoryMappedFile _BTN_MemFile;
+    private MemoryMappedViewAccessor _BTN_Accessor;
+
+    private MemoryMappedFile _PRESS_MemFile;
+    private MemoryMappedViewAccessor _PRESS_Accessor;
 
     private MemoryMappedFile _locatorMemFile;
     private MemoryMappedViewAccessor _locatorAccessor;
-    // IMU数据结构（与Python打包结构一致）
+
+    // 数据结构定义（必须与Python打包方式一致）
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     struct IMUData
     {
         public float accelX;
         public float accelY;
         public float accelZ;
+        public float quatW;
         public float quatX;
         public float quatY;
         public float quatZ;
-        public float quatW;
     }
+
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     struct LocatorData
@@ -71,15 +88,21 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         public float CoordZ;
     }
 
+
     public Vector3 rawAcceleration { get; private set; }
     public Quaternion rawRotation { get; private set; }
     public Vector3 rawTranslate { get; private set; }
+    public byte buttonState { get; private set; }
 
-
+    public float PressureValue;
+    public bool Left_pressed = false;
+    public bool Right_pressed = false;
+    public bool Middle_pressed = false;
+    public bool isMouseFloating = false;
     public Vector3 filteredTranslate { get; private set; }
 
     private Vector3 lastRawTranslate;//上一帧的灯珠位置值
-    private Vector3 lastFilteredTranslate;//上一帧的灯珠位置值
+    private Vector3 lastFilteredTranslate;//上一帧的位置值
     private Quaternion lastRawRotation;//上一帧鼠标的旋转值
 
     public Vector3 deltaTranslate { get; private set; }
@@ -90,31 +113,21 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     {
         try
         {
-            // 打开已存在的共享内存-鼠标的数据
-            _mouseMemFile = MemoryMappedFile.OpenExisting(
-                MOUSE_MEM_NAME,
-                MemoryMappedFileRights.Read
-            );
+            // IMU 打开已存在的共享内存-IMU的数据     访问器
+            _IMU_MemFile = MemoryMappedFile.OpenExisting(IMU_MEM_NAME);
+            _IMU_Accessor = _IMU_MemFile.CreateViewAccessor();
 
-            // 创建访问器
-            _mouseAccessor = _mouseMemFile.CreateViewAccessor(
-                0,  // 偏移量
-                MOUSE_MEM_SIZE,
-                MemoryMappedFileAccess.Read
-            );
+            // 定位器 打开已存在的共享内存-定位器的数据 访问器
+            _locatorMemFile = MemoryMappedFile.OpenExisting(LOCATOR_MEM_NAME);
+            _locatorAccessor = _locatorMemFile.CreateViewAccessor();
 
-            // 打开已存在的共享内存-定位器的数据
-            _locatorMemFile = MemoryMappedFile.OpenExisting(
-                LOCATOR_MEM_NAME,
-                MemoryMappedFileRights.Read
-            );
+            // 打开已存在的共享内存-鼠标的数据  访问器
+            _BTN_MemFile = MemoryMappedFile.OpenExisting(BTN_MEM_NAME);
+            _BTN_Accessor = _BTN_MemFile.CreateViewAccessor();
 
-            // 创建访问器
-            _locatorAccessor = _locatorMemFile.CreateViewAccessor(
-                0,  // 偏移量
-                LOCATOR_MEM_SIZE,
-                MemoryMappedFileAccess.Read
-            );
+            // 打开已存在的共享内存-鼠标的数据   访问器
+            _PRESS_MemFile = MemoryMappedFile.OpenExisting(PRESS_MEM_NAME);
+            _PRESS_Accessor = _PRESS_MemFile.CreateViewAccessor();
 
 
             Debug.Log("成功连接共享内存");
@@ -129,40 +142,67 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
 
     void Update()
     {
-        if (_mouseAccessor == null) return;
+
+        if (_IMU_Accessor == null) return;
 
         try
         {
-            // 读取数据结构
             IMUData data;
             LocatorData data2;
-            _mouseAccessor.Read(0, out data);
-
-            // 转换数据格式
+            
+            // 读取数据结构 加速度和四元数坐标系的转换
+            _IMU_Accessor.Read(0, out data);
             rawAcceleration = new Vector3(
                 data.accelX,
                 data.accelY,
                 data.accelZ
             );
-
-            // 注意：四元数坐标系的转换（可能需要调整符号）
             rawRotation = new Quaternion(
+
+                data.quatZ,
                 data.quatX,
                 data.quatY,
-                data.quatZ,
                 data.quatW
-            );
-            // Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
+            ) * quaternion.Euler(Rotation_Offset);
+            Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
+            
 
+            // 读取数据结构 定位器数据
             _locatorAccessor.Read(0, out data2);
+            if (InVerse)
+            {
+                rawTranslate = new Vector3
+                (
+                    -data2.CoordX * X_Scale,
+                    data2.CoordY * Y_Scale,
+                    data2.CoordZ * Z_Scale + Z_OFFSET
+                ) * Scaler;
+            }
+            else
+            {
+                rawTranslate = new Vector3
+                (
+                    data2.CoordX * X_Scale,
+                    data2.CoordY * Y_Scale,
+                    data2.CoordZ * Z_Scale + Z_OFFSET
+                ) * Scaler;
+            }
+            //Debug.Log("定位器坐标数据:" + rawTranslate);
 
-            rawTranslate = new Vector3(
-                -data2.CoordX * X_Scale,
-                data2.CoordY * Y_Scale,
-                data2.CoordZ * Z_Scale
-            ) * Scaler;
-            Debug.Log("定位器坐标数据:" + rawTranslate);
 
+            // 读取按钮数据 
+            byte buttonState = _BTN_Accessor.ReadByte(0);
+            // 解析按钮位状态（使用位掩码）
+            Left_pressed = (buttonState & 0x01) != 0;    // 第0位：左键
+            Right_pressed = (buttonState & 0x02) != 0;   // 第1位：右键
+            Middle_pressed = (buttonState & 0x04) != 0;  // 第2位：中键                                           解析第四位（bit3）的浮动状态
+            isMouseFloating = (buttonState & 0x08) != 0; // 第3位：浮动状态
+            //Debug.Log($"按钮值: {buttonState}");
+
+
+            byte low = _PRESS_Accessor.ReadByte(0);
+            byte high = _PRESS_Accessor.ReadByte(1);
+            PressureValue =math.max(0, ((ushort)((high << 8) | low) / 65535.0f)-0.3f)/0.7f;
         }
         catch (Exception e)
         {
@@ -172,13 +212,11 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         if (rawRotation != lastRawRotation)
         {
             RotateFreq = 1 / LastRotateUpdateTime;
-            //RotateFreq = Mathf.Clamp(RotateFreq, 0.01F, 1);
             LastRotateUpdateTime = 0f;
         }
         if (rawTranslate != lastRawTranslate)
         {
             PosFreq = 1 / LastPosUpdateTime;
-            //PosFreq = Mathf.Clamp(PosFreq, 0.01F, 1);
             LastPosUpdateTime = 0f;
         }
 
@@ -193,7 +231,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         // OE_Rotation = RotationFilter.Filter(Raw_Rotation);
         filteredTranslate = PosFilter.Filter(rawTranslate);
 
-        deltaTranslate = filteredTranslate - lastFilteredTranslate;
+        deltaTranslate = -(filteredTranslate - lastFilteredTranslate);
         lastFilteredTranslate = filteredTranslate;
 
 
