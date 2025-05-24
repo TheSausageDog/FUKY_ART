@@ -28,6 +28,10 @@ public class TutorialStep : TutorialStepBase
 
     public string taskStepName = null;
 
+    public string tipsWord = null;
+
+    public List<Sprite> spriteFrames;
+
     public override void TutorialStart(LevelController _levelController)
     {
         base.TutorialStart(_levelController);
@@ -42,6 +46,16 @@ public class TutorialStep : TutorialStepBase
             TaskManager.Instance.showUI = true;
             TaskManager.Instance.AddTaskStep(taskName, taskStepName);
         }
+        if (!string.IsNullOrEmpty(tipsWord))
+        {
+            TipsManager.Instance.showUI = true;
+            TipsManager.Instance.ShowTextTips(tipsWord);
+        }
+        else if (spriteFrames != null && spriteFrames.Count != 0)
+        {
+            TipsManager.Instance.showUI = true;
+            TipsManager.Instance.ShowAnimatedTips(spriteFrames);
+        }
     }
 
     public override void TutorialEnd()
@@ -54,6 +68,15 @@ public class TutorialStep : TutorialStepBase
         {
             TaskManager.Instance.showUI = true;
             TaskManager.Instance.RemoveTaskStep(taskName, taskStepName);
+        }
+        if (!string.IsNullOrEmpty(tipsWord))
+        {
+            TipsManager.Instance.showUI = false;
+        }
+        else if (spriteFrames != null && spriteFrames.Count != 0)
+        {
+            TipsManager.Instance.showUI = false;
+            TipsManager.Instance.ShowTextTips(null);
         }
         base.TutorialEnd();
     }

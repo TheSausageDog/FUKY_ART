@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class TutorialDelayStep : TutorialStepBase
+public class TutorialDelayStep : TutorialStep
 {
     public float duration = 2;
 
