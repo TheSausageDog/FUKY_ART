@@ -12,7 +12,10 @@ public class FukyPickUpAndInteract : PickUpAndInteract
     protected override void MoveHandTarget()
     {
 
-        Vector3 NewPos = new Vector3(FUKYMouse.Instance.filteredTranslate.x, FUKYMouse.Instance.filteredTranslate.y, FUKYMouse.Instance.filteredTranslate.z - Z_Offset);
+        Vector3 NewPos = data.handTarget.localPosition + FUKYMouse.Instance.deltaTranslate * FUKYMouse.Instance.PressureValue; // 使用了delta的方式，更方便控制位移量
+        NewPos.x = Mathf.Clamp(NewPos.x, data.xMinMax.x, data.xMinMax.y);// 限制 handTarget 的本地位置
+        NewPos.y = Mathf.Clamp(NewPos.y, data.yMinMax.x, data.yMinMax.y);
+        NewPos.z = Mathf.Clamp(NewPos.z, data.zMinMax.x, data.zMinMax.y);
         data.handTarget.localPosition = NewPos;
 
         // 将世界空间的旋转转换到相机空间
@@ -20,7 +23,6 @@ public class FukyPickUpAndInteract : PickUpAndInteract
         data.holdPos.rotation = cameraSpaceRotation;
 
 
-        //data.handTarget.rotation = Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
-        //data.holdPos.rotation = FUKYMouse.Instance.rawRotation;
+
     }
 }
