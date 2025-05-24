@@ -4837,52 +4837,6 @@ Transform:
   - {fileID: 555265884}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &487965618
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 487965620}
-  - component: {fileID: 487965619}
-  m_Layer: 0
-  m_Name: BurstCollisionWorld
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &487965619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487965618}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellSpans:
-    m_AlignBytes: 16
---- !u!4 &487965620
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487965618}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &505378148 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6006650897358431956, guid: 6d863ea5c24f3d14292fe118392663b7,
@@ -8212,6 +8166,52 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 6fb1f5c1136ee51469bb41400a6e626d, type: 2}
+--- !u!1 &780130731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 780130733}
+  - component: {fileID: 780130732}
+  m_Layer: 0
+  m_Name: BurstCollisionWorld
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &780130732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780130731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellSpans:
+    m_AlignBytes: 16
+--- !u!4 &780130733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 780130731}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &792425323
 GameObject:
   m_ObjectHideFlags: 0
@@ -16129,6 +16129,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1622055806}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &1590797133 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+    type: 3}
+  m_PrefabInstance: {fileID: 170386321517330593}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1603349608
 GameObject:
   m_ObjectHideFlags: 0
@@ -17129,6 +17135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1651822401}
+  - component: {fileID: 1651822406}
   - component: {fileID: 1651822399}
   - component: {fileID: 1651822404}
   - component: {fileID: 1651822398}
@@ -17139,7 +17146,6 @@ GameObject:
   - component: {fileID: 1651822402}
   - component: {fileID: 1651822403}
   - component: {fileID: 1651822405}
-  - component: {fileID: 1651822406}
   m_Layer: 0
   m_Name: "\u2014\u2014Manager\u2014\u2014"
   m_TagString: Untagged
@@ -17321,6 +17327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e892f2de5fc0d4d84b3d5aa34afce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AccelerationTest: {fileID: 1590797133}
   Scaler: 0.01
   InVerse: 1
   Rotation_Offset: {x: 3, y: 1.5, z: 0}
@@ -23720,7 +23727,7 @@ PrefabInstance:
     - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.65
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
         type: 3}
@@ -24653,4 +24660,4 @@ SceneRoots:
   - {fileID: 1047405891}
   - {fileID: 1831173807}
   - {fileID: 170386321517330593}
-  - {fileID: 487965620}
+  - {fileID: 780130733}

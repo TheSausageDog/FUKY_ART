@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine;
 using System;
 using System.IO.MemoryMappedFiles;
 using System.Threading;
@@ -9,6 +10,8 @@ using Unity.Mathematics;
 
 public class FUKYMouse : SingletonMono<FUKYMouse>
 {
+    [Tooltip("加速度应用测试")]
+    public Transform AccelerationTest;
     ///////////////////////////////////////////////////////////////////////////
     // 配置参数 公开在前私有在后
     ///////////////////////////////////////////////////////////////////////////
@@ -22,7 +25,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     [Header("IMU安装轴问题")]
     [Tooltip("旋转的纠正量，用来处理IMU安装与设备朝向以及Unity坐标不对应的问题")]
     public Vector3 Rotation_Offset;
-    
+
     [Header("各轴独立缩放")]
     [Tooltip("X轴单独的缩放")]
     [Range(0.001f, 10f)]
@@ -34,7 +37,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     [Range(0.001f, 10f)]
     public float Z_Scale;
 
-    [Header("滤波器参数")]
+    [Header("定位器滤波器参数")]
     [Tooltip("较高minCutoff值会导致更多的高频噪声通过，而较低的值则会使输出更加平滑")]
     public float minCutoff = 0.2f;
     [Tooltip("增加beta会使滤波器在快速移动时更加响应，但也可能引入更多的高频噪声。\r\n减小beta则会使滤波器更加平滑，但可能导致在快速移动时响应滞后。")]
@@ -45,11 +48,41 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     public float PosFreq = 0.02f;//数据的更新频率
     [Tooltip("旋转数据的更新频率")]
     public float RotateFreq = 0.02f;//数据的更新频率
+    [Tooltip("加速度数据的更新频率")]
+    public float AccelFreq = 0.02f;//数据的更新频率
+    
+    [Header("加速度滤波器参数")]
+    [Tooltip("较高minCutoff值会导致更多的高频噪声通过，而较低的值则会使输出更加平滑")]
+    public float A_minCutoff = 0.5f;
+    [Tooltip("增加beta会使滤波器在快速移动时更加响应，但也可能引入更多的高频噪声。\r\n减小beta则会使滤波器更加平滑，但可能导致在快速移动时响应滞后。")]
+    public float A_beta = 0.5f;
+    [Tooltip("较高的dCutoff值会使滤波器对速度变化更加敏感，而较低的值则会使输出在速度变化时更加平滑")]
+    public float A_dCutoff = 0.6f;
+    [Tooltip("位置数据的更新频率")]
+
+
     public float LastPosUpdateTime = 0.00f;//上一次更新时间
+    public float LastAccelUpdateTime = 0.00f;//上一次更新时间
     public float LastRotateUpdateTime = 0.02f;//上一次更新时间
     private OneEuroFilter<Vector3> PosFilter;
-    #endregion
+    private OneEuroFilter<Vector3> AccelFilter;
+    [Header("数据融合参数")]
+    public float imuDamping = 0.1f;    // IMU 速度阻尼
+    public float visionWeight = 0.9f;  // 视觉数据信任权重
+    [Header("融合状态")]
+    public Vector3 fusedPosition;      // 融合后的最终位置
+    private Vector3 imuVelocity;      // IMU 积分速度
+    private Vector3 ImudDeltaMoving;      // IMU 积分速度
+    private Vector3 imuPosition;      // IMU 积分位置
+    private bool hasVisionUpdate;     // 标记视觉数据是否更新
+    [Header("加速度校准参数")]
+    [Tooltip("静止判定阈值（加速度幅值低于此值时认为静止）")]
+    public float staticThreshold = 0.1f;
+    [Tooltip("校准采样次数")]
+    public int MaxCalibrationSamples = 100;
 
+
+    #endregion
     ///////////////////////////////////////////////////////////////////////////
     // 运行时数据 公开在前私有在后
     ///////////////////////////////////////////////////////////////////////////
@@ -60,9 +93,13 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     public bool Right_pressed = false;
     public bool Middle_pressed = false;
     public bool isMouseFloating = false;
+    public Vector3 _velocity;
+    public Vector3 StaticAccel;
 
     public Vector3 filteredTranslate { get; private set; }
+    public Vector3 filteredAccelration { get; private set; }
     public Vector3 rawAcceleration { get; private set; }
+    //public Vector3 calibratedAccel { get; private set; }
     public Quaternion rawRotation { get; private set; }
     public Vector3 rawTranslate { get; private set; }
     public Vector3 deltaTranslate { get; private set; }
@@ -71,8 +108,10 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     public byte buttonState { get; private set; }
 
     private Vector3 lastRawTranslate;//上一帧的灯珠位置值
+    private Vector3 lastRawAcceleration;
     private Vector3 lastFilteredTranslate;//上一帧的位置值
     private Quaternion lastRawRotation;//上一帧鼠标的旋转值
+
     #endregion
     ///////////////////////////////////////////////////////////////////////////
     // 共享内存设置和数据结构 公开在前私有在后
@@ -113,13 +152,16 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         public float CoordZ;
     }
 
-#endregion
+    #endregion
 
 
 
 
     void Start()
     {
+        LastAccelUpdateTime = Time.time;
+        LastPosUpdateTime = Time.time;
+        LastRotateUpdateTime = Time.time;
         try
         {
             // IMU 打开已存在的共享内存-IMU的数据     访问器
@@ -147,6 +189,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         }
 
         PosFilter = new OneEuroFilter<Vector3>(50);
+        AccelFilter = new OneEuroFilter<Vector3>(50);
     }
 
     void Update()
@@ -158,13 +201,13 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         {
             IMUData data;
             LocatorData data2;
-            
+
             // 读取数据结构 加速度和四元数坐标系的转换
             _IMU_Accessor.Read(0, out data);
             rawAcceleration = new Vector3(
-                data.accelX,
-                data.accelY,
-                data.accelZ
+                data.accelY,//X轴
+                data.accelZ,//y轴
+                data.accelX
             );
             rawRotation = quaternion.Euler(Rotation_Offset) * new Quaternion(
                 data.quatY,
@@ -172,8 +215,8 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 data.quatZ,
                 data.quatW
             );
-            //Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
-            
+            Debug.Log("加速度数据:" + rawAcceleration);// + "四元数数据:" + rawRotation);
+
 
             // 读取数据结构 定位器数据
             _locatorAccessor.Read(0, out data2);
@@ -195,7 +238,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                     data2.CoordZ * Z_Scale
                 ) * Scaler;
             }
-            Debug.Log("定位器坐标数据:" + rawTranslate);
+            //Debug.Log("定位器坐标数据:" + rawTranslate);
 
 
             // 读取按钮数据 
@@ -210,43 +253,64 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
 
             byte low = _PRESS_Accessor.ReadByte(0);
             byte high = _PRESS_Accessor.ReadByte(1);
-            PressureValue =math.max(0, ((ushort)((high << 8) | low) / 65535.0f)-0.3f)/0.7f;
+            PressureValue = math.max(0, ((ushort)((high << 8) | low) / 65535.0f) - 0.3f) / 0.7f;
         }
         catch (Exception e)
         {
             Debug.LogError($"读取失败: {e.Message}");
         }
 
-        if (rawRotation != lastRawRotation)
+        if (Quaternion.Angle(rawRotation, lastRawRotation) > 0.01f)
         {
-            RotateFreq = 1 / LastRotateUpdateTime;
-            LastRotateUpdateTime = 0f;
+            float UpdateDeltaTime = Time.time - LastRotateUpdateTime;
+            RotateFreq = UpdateDeltaTime > 0 ? 1f / UpdateDeltaTime : 0;
+
+            deltaRotation = rawRotation * Quaternion.Inverse(lastRawRotation);
+            deltaEuler = rawRotation.eulerAngles - lastRawRotation.eulerAngles;
+            lastRawRotation = rawRotation;
+            LastRotateUpdateTime = Time.time;
         }
+        // 视觉定位更新
         if (rawTranslate != lastRawTranslate)
         {
-            PosFreq = 1 / LastPosUpdateTime;
-            LastPosUpdateTime = 0f;
+            float UpdateDeltaTime = Time.time - LastPosUpdateTime;
+            PosFreq = UpdateDeltaTime > 0 ? 1f / UpdateDeltaTime : 0;
+            
+            hasVisionUpdate = true;
+            lastRawTranslate = rawTranslate;
+            imuPosition = filteredTranslate;
+            filteredTranslate = PosFilter.Filter(rawTranslate);
+            fusedPosition = filteredTranslate;
+            deltaTranslate = -(filteredTranslate - lastFilteredTranslate);
+            lastFilteredTranslate = filteredTranslate;
+            LastPosUpdateTime = Time.time;
         }
+        // 加速度定位更新
+        if (rawAcceleration != lastRawAcceleration)
+        {
+            float UpdateDeltaTime = Time.time - LastAccelUpdateTime;
+            AccelFreq = 1 / UpdateDeltaTime;
+            filteredAccelration = AccelFilter.Filter(rawAcceleration);
+            // 如果没有视觉更新，使用 IMU 积分结果
+            if (!hasVisionUpdate && rawAcceleration.magnitude > staticThreshold) 
+            {
+                // 积分加速度 → 速度 → 位置
+                imuVelocity += (Vector3)filteredAccelration * UpdateDeltaTime;
+                ImudDeltaMoving = imuVelocity * Time.deltaTime * imuDamping;
+                imuPosition += ImudDeltaMoving;
+                fusedPosition = imuPosition; 
+            }
+            LastAccelUpdateTime = Time.time;
+            lastRawAcceleration = rawAcceleration;
+            hasVisionUpdate = false;// 重置视觉更新标记
+        }
+        
 
-        lastRawTranslate = rawTranslate;
-
-        deltaRotation = rawRotation * Quaternion.Inverse(lastRawRotation);
-        deltaEuler = rawRotation.eulerAngles - lastRawRotation.eulerAngles;
-        lastRawRotation = rawRotation;
-
+        AccelFilter.UpdateParams(AccelFreq, A_minCutoff, A_beta, A_dCutoff);
         PosFilter.UpdateParams(PosFreq, minCutoff, beta, dCutoff);
-
-        // OE_Rotation = RotationFilter.Filter(Raw_Rotation);
-        filteredTranslate = PosFilter.Filter(rawTranslate);
-
-        deltaTranslate = -(filteredTranslate - lastFilteredTranslate);
-        lastFilteredTranslate = filteredTranslate;
-
-
-        LastPosUpdateTime += Time.deltaTime;
-        LastRotateUpdateTime += Time.deltaTime;
-
-
+        
+        AccelerationTest.rotation.SetLookRotation(imuVelocity.normalized);
+        AccelerationTest.position = fusedPosition;
     }
 
 }
