@@ -137,28 +137,22 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
             // 打开已存在的共享内存-鼠标的数据   访问器
             _PRESS_MemFile = MemoryMappedFile.OpenExisting(PRESS_MEM_NAME);
             _PRESS_Accessor = _PRESS_MemFile.CreateViewAccessor();
-
-
             Debug.Log("成功连接共享内存");
         }
         catch (Exception e)
         {
             Debug.LogError($"共享内存初始化失败: {e.Message}");
         }
-
         PosFilter = new OneEuroFilter<Vector3>(50);
     }
 
     void Update()
     {
-
         if (_IMU_Accessor == null) return;
-
         try
         {
             IMUData data;
             LocatorData data2;
-            
             // 读取数据结构 加速度和四元数坐标系的转换
             _IMU_Accessor.Read(0, out data);
             rawAcceleration = new Vector3(
@@ -173,8 +167,6 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                 data.quatW
             );
             //Debug.Log("加速度数据:" + rawAcceleration + "四元数数据:" + rawRotation);
-            
-
             // 读取数据结构 定位器数据
             _locatorAccessor.Read(0, out data2);
             if (InVerse)
@@ -197,7 +189,6 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
             }
             Debug.Log("定位器坐标数据:" + rawTranslate);
 
-
             // 读取按钮数据 
             byte buttonState = _BTN_Accessor.ReadByte(0);
             // 解析按钮位状态（使用位掩码）
@@ -210,7 +201,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
 
             byte low = _PRESS_Accessor.ReadByte(0);
             byte high = _PRESS_Accessor.ReadByte(1);
-            PressureValue =math.max(0, ((ushort)((high << 8) | low) / 65535.0f)-0.3f)/0.7f;
+            PressureValue =math.max(0, ((ushort)((high << 8) | low) / 65535.0f));
         }
         catch (Exception e)
         {
@@ -239,7 +230,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         // OE_Rotation = RotationFilter.Filter(Raw_Rotation);
         filteredTranslate = PosFilter.Filter(rawTranslate);
 
-        deltaTranslate = -(filteredTranslate - lastFilteredTranslate);
+        deltaTranslate = filteredTranslate - lastFilteredTranslate;
         lastFilteredTranslate = filteredTranslate;
 
 

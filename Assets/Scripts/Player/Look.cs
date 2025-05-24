@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Look : MonoBehaviour
 {
+
     public float sensitivity = 200f; // 鼠标灵敏度
     private float xRotation = 0f; // 当前X轴的旋转角度
 
@@ -15,6 +16,7 @@ public class Look : MonoBehaviour
 
     private void Update()
     {
+
         if (PlayerInputController.IsMoveHandHeld()) return;
 
         // 获取鼠标输入

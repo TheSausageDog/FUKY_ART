@@ -3,15 +3,23 @@ using UnityEngine;
 public class PlayerInputController : MonoBehaviour
 {
     protected static bool isUplift = false;
-
     protected static bool isRotating = false;
 
-    public FUKYMouse mymouse;
+    protected static bool isLeftClick;
+    protected static bool isRightClick;
+
 
     // public 
 
     void Update()
     {
+        if(FUKYMouse.Instance != null)
+        {
+            isUplift = FUKYMouse.Instance.isMouseFloating;
+            isRotating = FUKYMouse.Instance.isMouseFloating;
+            return;
+        }
+
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             isUplift = !isUplift;
@@ -20,13 +28,12 @@ public class PlayerInputController : MonoBehaviour
         isRotating = Input.GetKey(KeyCode.LeftAlt);
     }
 
-    public static bool IsInteractPressing()
-    {
-        return Input.GetKey(KeyCode.Mouse1);
-    }
-
     public static bool IsInteractPressed()
     {
+        if (FUKYMouse.Instance != null)
+        {
+            return Input.GetKeyDown(KeyCode.Mouse1) || FUKYMouse.Instance.Right_pressed;
+        }
         return Input.GetKeyDown(KeyCode.Mouse1);
     }
 
@@ -72,6 +79,10 @@ public class PlayerInputController : MonoBehaviour
     // 检查是否按下拾取键
     public static bool IsPickUpPressed()
     {
+        if (FUKYMouse.Instance != null)
+        {
+            return Input.GetKeyDown(KeyCode.Mouse0)||FUKYMouse.Instance.Left_pressed;
+        }
         return Input.GetKeyDown(KeyCode.Mouse0);
     }
     public static bool IsPickUpPressing()
@@ -82,6 +93,10 @@ public class PlayerInputController : MonoBehaviour
     // 检查是否按下投掷键
     public static bool IsThrowPressed()
     {
+        if (FUKYMouse.Instance != null)
+        {
+            return Input.GetKeyDown(KeyCode.Mouse0) || FUKYMouse.Instance.Left_pressed;
+        }
         return Input.GetKeyDown(KeyCode.Mouse0);
     }
 
