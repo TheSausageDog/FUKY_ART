@@ -45,7 +45,7 @@ public class SFXManager : SingletonMono<SFXManager>
     /// </summary>
     /// <param name="sfxName">SFX 名称，对应 sfxList 中的项</param>
     /// <param name="position">播放位置</param>
-    public ParticleSystem PlaySfx(SFXName sfxName, Vector3 position, Color color, int count = -1)
+    public ParticleSystem PlaySfx(SFXName sfxName, Vector3 position, Color color = default, int count = -1)
     {
         if (!sfxDict.ContainsKey(sfxName))
         {
@@ -63,7 +63,7 @@ public class SFXManager : SingletonMono<SFXManager>
 
         // 设置播放位置，并激活对象
         psInstance.transform.position = position;
-        psInstance.startColor = color;
+        if(!color.Equals(default))psInstance.startColor = color;
 
         var emission = psInstance.emission;
         ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[emission.burstCount];
