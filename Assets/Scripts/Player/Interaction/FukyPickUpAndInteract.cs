@@ -4,20 +4,19 @@ using UnityEngine.Windows;
 
 public class FukyPickUpAndInteract : PickUpAndInteract
 {
+    public GameObject Fuky_Ball; 
     //摄像机控制参数
     [Header("屏幕边缘控制")]
     [Tooltip("距离屏幕边缘开始旋转的像素阈值")]
-    public float borderThreshold = 50f;
+    [Range(0.05f,0.2f)]
+    public float borderThreshold = 0.1f;
     [Tooltip("旋转速度系数")]
     public float rotationSpeed = 1f;
     private float xRotation; // 垂直旋转累积量
 
     public Transform Player;
     public Camera PlayerCamera;
-    //public bool DeltaMethord = false;
-    [Tooltip("Z轴偏移")]
-    [Range(-10F, 10F)]
-    public float Z_Offset;
+
     protected override void MoveHandTarget()
     {
 
@@ -35,48 +34,58 @@ public class FukyPickUpAndInteract : PickUpAndInteract
     }
     private void HandleScreenEdgeRotation()
     {
-        if (PlayerCamera == null) return;
 
         // 将handTarget的世界坐标转换为屏幕坐标
         Vector3 screenPos = PlayerCamera.WorldToScreenPoint(data.handTarget.position);
 
         // 标准化屏幕坐标 (0-1)
         Vector2 viewportPos = new Vector2(
-            screenPos.x / PlayerCamera.pixelWidth,
-            screenPos.y / PlayerCamera.pixelHeight
+            Mathf.Clamp01(screenPos.x / PlayerCamera.pixelWidth),
+            Mathf.Clamp01(screenPos.y / PlayerCamera.pixelHeight)
         );
 
-        // 计算四个方向的边界偏移量
-        float leftOffset = Mathf.Clamp01(viewportPos.x * PlayerCamera.pixelWidth / borderThreshold);
-        float rightOffset = Mathf.Clamp01((PlayerCamera.pixelWidth - viewportPos.x) * PlayerCamera.pixelWidth / borderThreshold);
-        float topOffset = Mathf.Clamp01((PlayerCamera.pixelHeight - viewportPos.y) * PlayerCamera.pixelHeight / borderThreshold);
-        float bottomOffset = Mathf.Clamp01(viewportPos.y * PlayerCamera.pixelHeight / borderThreshold);
-
-        // 计算旋转输入量
+        //// 计算旋转输入量
         Vector2 rotationInput = Vector2.zero;
 
-        // 水平旋转（Y轴）
-        if (viewportPos.x < borderThreshold / PlayerCamera.pixelWidth)
-            rotationInput.x = -Mathf.Lerp(1f, 0f, leftOffset);
-        else if (viewportPos.x > 1 - (borderThreshold / PlayerCamera.pixelWidth))
-            rotationInput.x = Mathf.Lerp(1f, 0f, rightOffset);
+        //// 水平旋转（Y轴）
+        if (viewportPos.x < borderThreshold)
+        {
+            float leftOffset = Mathf.Clamp01(borderThreshold - viewportPos.x);
+            rotationInput.x = -leftOffset;
+        }
+        else if (viewportPos.x > 1 - borderThreshold)
+        {
+            float rightOffset = Mathf.Clamp01(viewportPos.x - 0.9f);
+            rotationInput.x = rightOffset;
+        }
 
-        // 垂直旋转（X轴）
-        if (viewportPos.y < borderThreshold / PlayerCamera.pixelHeight)
-            rotationInput.y = -Mathf.Lerp(1f, 0f, bottomOffset);
-        else if (viewportPos.y > 1 - (borderThreshold / PlayerCamera.pixelHeight))
-            rotationInput.y = Mathf.Lerp(1f, 0f, topOffset);
+        //// 垂直旋转（X轴）
+        if (viewportPos.y < borderThreshold)
+        {
+            float bottomOffset = Mathf.Clamp01(borderThreshold - viewportPos.y);
+            rotationInput.y = -bottomOffset;
+        }
+        else if (viewportPos.y > 1 - borderThreshold)
+        {
+            float topOffset = Mathf.Clamp01( viewportPos.y - 0.9f);
+            rotationInput.y = topOffset;
+        }
 
-        // 应用旋转
-        ApplyPlayerCameraeraRotation(rotationInput * rotationSpeed * Time.deltaTime);
+
+        //// 应用旋转
+        ApplyPlayerCameraeraRotation(rotationInput * rotationSpeed * Time.deltaTime );
     }
 
     private void ApplyPlayerCameraeraRotation(Vector2 input)
     {
         // 垂直旋转（X轴）水平旋转（Y轴）
-        xRotation -= input.y;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        PlayerCamera.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        float currentXRotation = PlayerCamera.transform.localEulerAngles.x;
+        if (currentXRotation > 180) currentXRotation -= 360;
+
+
+        currentXRotation -= input.y;
+        currentXRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        PlayerCamera.transform.localRotation = Quaternion.Euler(currentXRotation, 0f, 0f);
         PlayerCamera.transform.root.Rotate(Vector3.up * input.x);
     }
 }
