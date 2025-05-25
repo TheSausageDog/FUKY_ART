@@ -62,7 +62,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
             if (FUKYMouse.Instance.PressureValue > StartRotateThershold)
             {
                 Vector3 Fuky_ball_Vector = Fuky_Ball.transform.position - data.handTarget.position;
-                quaternion Curr_Quat = data.
+                //quaternion Curr_Quat = 
             }
             return;
         }

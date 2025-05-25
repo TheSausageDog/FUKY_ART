@@ -2646,6 +2646,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 194924486}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &202682239 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1776450733189834560, guid: 51345d27af53093458d50ecb111c196e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1691258599073173557}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &217774868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3157,52 +3163,6 @@ MonoBehaviour:
     m_DampPosition: 0.1
     m_DampRotation: 0.1
     m_MaintainAim: 1
---- !u!1 &278494626
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 278494628}
-  - component: {fileID: 278494627}
-  m_Layer: 0
-  m_Name: BurstCollisionWorld
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &278494627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278494626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellSpans:
-    m_AlignBytes: 16
---- !u!4 &278494628
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278494626}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &278649985
 GameObject:
   m_ObjectHideFlags: 0
@@ -3744,6 +3704,52 @@ MonoBehaviour:
   filter: -65535
   m_SourceCollider: {fileID: 349969489}
   m_DistanceField: {fileID: 0}
+--- !u!1 &356760285
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 356760287}
+  - component: {fileID: 356760286}
+  m_Layer: 0
+  m_Name: BurstCollisionWorld
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &356760286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356760285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellSpans:
+    m_AlignBytes: 16
+--- !u!4 &356760287
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 356760285}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &357076196
 GameObject:
   m_ObjectHideFlags: 0
@@ -12430,6 +12436,10 @@ MonoBehaviour:
   Fuky_Range: {fileID: 323544275}
   InRotate: 0
   Range: 0.5
+  StartRotateThershold: 0.7
+  TargetRenderer: {fileID: 202682239}
+  minColor: {r: 0, g: 1, b: 0, a: 1}
+  maxColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1001 &1198120769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24105,11 +24115,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 859254253}
     m_Modifications:
-    - target: {fileID: 618364056848235157, guid: 51345d27af53093458d50ecb111c196e,
-        type: 3}
-      propertyPath: m_Layer
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2223964066447877407, guid: 51345d27af53093458d50ecb111c196e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -24160,11 +24165,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2898527635306465411, guid: 51345d27af53093458d50ecb111c196e,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6235928581030244859, guid: 51345d27af53093458d50ecb111c196e,
         type: 3}
       propertyPath: m_Name
@@ -24172,8 +24172,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6235928581030244859, guid: 51345d27af53093458d50ecb111c196e,
         type: 3}
-      propertyPath: m_Layer
-      value: 5
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24287,6 +24287,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 870738464804248901, guid: 43779fc6fd3de1742b0f1eb2096bc1d8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3352166225598508747, guid: 43779fc6fd3de1742b0f1eb2096bc1d8,
         type: 3}
@@ -25128,4 +25133,4 @@ SceneRoots:
   - {fileID: 565383992}
   - {fileID: 1047405891}
   - {fileID: 1831173807}
-  - {fileID: 278494628}
+  - {fileID: 356760287}
