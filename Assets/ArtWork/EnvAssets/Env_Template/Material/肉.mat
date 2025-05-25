@@ -27,7 +27,6 @@ Material:
   m_ValidKeywords:
   - _FOOD_COOKED
   - _SMOOTHNORMAL_TEXCOORD3
-  - _UNIFORM_OUTLINE_WIDTH
   - _USE_SHADOW
   - _USE_SSAO
   m_InvalidKeywords:
@@ -180,7 +179,7 @@ Material:
     - _OcclusionMult: 0.5
     - _OcclusionStrength: 1
     - _OutlineColInBaseColor: 0
-    - _OutlineWidth: 20.15
+    - _OutlineWidth: 1.58
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
@@ -208,7 +207,7 @@ Material:
     - _TransmissionSetting: 0
     - _TransmissionUseShadow: 0
     - _UVSec: 0
-    - _UniformOutline: 1
+    - _UniformOutline: 0
     - _UseSSAO: 1
     - _UseShadow: 1
     - _UseVertexColorA: 0
