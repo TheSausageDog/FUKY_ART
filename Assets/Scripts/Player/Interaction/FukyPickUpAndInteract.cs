@@ -1,3 +1,4 @@
+using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Windows;
@@ -19,11 +20,15 @@ public class FukyPickUpAndInteract : PickUpAndInteract
     public GameObject Fuky_Ball;
     public GameObject Fuky_Range;
     public bool InRotate = false;
+    public bool InRotateActive = false;
     public float Range = 0.5f;
     [Range(0.5f,0.9f)]
     public float StartRotateThershold = 0.7f;
-    private quaternion OffsetQuat = quaternion.identity;
-
+    //private Vector3 initialDirection; // 记录初始方向
+    //private quaternion initialRotation; // 记录初始旋转差
+    Vector3 LastFukyDirection = Vector3.zero;
+    [Tooltip("旋转的纠正量")]
+    public quaternion Adj_Rotation = quaternion.identity;
     [Header("FUKYBALL颜色控制")]
     private MaterialPropertyBlock materialPropertyBlock; // 需要动态修改的材质
     public Renderer TargetRenderer; // 关联的渲染器组件
@@ -41,6 +46,15 @@ public class FukyPickUpAndInteract : PickUpAndInteract
     {
         if (PlayerInputController.IsRotateHeld())
         {
+
+            //更新UI的颜色
+            UpdateMaterialColor();
+            //移动小球
+            Vector3 NewPos = Fuky_Ball.transform.localPosition + FUKYMouse.Instance.deltaTranslate * FUKYMouse.Instance.PressureValue;
+            Vector3 offset = NewPos - data.handTarget.localPosition;
+            if (offset.magnitude > Range){NewPos = data.handTarget.localPosition + offset.normalized * Range; }// 超出半径时，强制到球体表面
+            Fuky_Ball.transform.localPosition = NewPos;
+            //在第一次进入旋转状态的时候，把两个当UI的3D物体移动到操控对象上
             if (!InRotate)
             {
                 Fuky_Ball.transform.position = data.handTarget.position;
@@ -50,30 +64,39 @@ public class FukyPickUpAndInteract : PickUpAndInteract
                 InRotate =true;
                 return;
             }
-            Vector3 NewPos = Fuky_Ball.transform.position + FUKYMouse.Instance.deltaTranslate * FUKYMouse.Instance.PressureValue; // 使用了delta的方式，更方便控制位移量
-                                                                                                                                  // 将 NewPos 限制在球体内
-            Vector3 offset = NewPos - data.handTarget.position;
-            if (offset.magnitude > Range)
+            //如果在按左键过程中按下了右键，就计算当前手持物品到小球的向量，并保存向量到手持物体forward的相对旋转
+            if (FUKYMouse.Instance.Right_pressed)
             {
-                NewPos = data.handTarget.position + offset.normalized * Range; // 超出半径时，强制到球体表面
+
+                Vector3 currentFukyDirection;
+
+                currentFukyDirection = (Fuky_Ball.transform.position - data.handTarget.position).normalized;
+                if (!InRotateActive)
+                {
+                    //initialDirection = data.holdPos.forward;
+                    //initialRotation = Quaternion.FromToRotation(data.holdPos.forward, currentFukyDirection);
+                    InRotateActive = true;
+                    LastFukyDirection = currentFukyDirection;
+                    return;
+                }
+                
+                Adj_Rotation = Adj_Rotation * Quaternion.FromToRotation(LastFukyDirection, currentFukyDirection);
+
+                data.holdPos.rotation = Adj_Rotation * Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation ;
+                LastFukyDirection = currentFukyDirection.normalized;
+                return;
             }
-            Fuky_Ball.transform.position = NewPos;
-            UpdateMaterialColor();
-            if (FUKYMouse.Instance.PressureValue > StartRotateThershold)
-            {
-                Vector3 Fuky_ball_Vector = Fuky_Ball.transform.position - data.handTarget.position;
-                //quaternion Curr_Quat = 
-            }
+            InRotateActive =false;
             return;
+        }
+        if (InRotate)
+        {
+            InRotate = false;
+            Fuky_Ball.SetActive(false);
+            Fuky_Range.SetActive(false);
         }
         if (FUKYMouse.Instance.Right_pressed)
         {
-            if (InRotate) 
-            {
-                InRotate = false;
-                Fuky_Ball.SetActive(false);
-                Fuky_Range.SetActive(false);
-            }
             Vector3 NewPos = data.handTarget.localPosition + FUKYMouse.Instance.deltaTranslate * FUKYMouse.Instance.PressureValue; // 使用了delta的方式，更方便控制位移量
             NewPos.x = Mathf.Clamp(NewPos.x, data.xMinMax.x, data.xMinMax.y);// 限制 handTarget 的本地位置
             NewPos.y = Mathf.Clamp(NewPos.y, data.yMinMax.x, data.yMinMax.y);
@@ -81,7 +104,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
             data.handTarget.localPosition = NewPos;
 
             // 将世界空间的旋转转换到相机空间
-            Quaternion PlayerCameraeraSpaceRotation = Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * OffsetQuat * FUKYMouse.Instance.rawRotation;
+            Quaternion PlayerCameraeraSpaceRotation = Adj_Rotation * Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
             data.holdPos.rotation = PlayerCameraeraSpaceRotation;
 
             HandleScreenEdgeRotation();
@@ -115,30 +138,12 @@ public class FukyPickUpAndInteract : PickUpAndInteract
             rotationInput = rightOffset;
         }
 
-        //// 垂直旋转（X轴）
-        //if (viewportPos.y < borderThreshold)
-        //{
-        //    float bottomOffset = Mathf.Clamp01(borderThreshold - viewportPos.y);
-        //    rotationInput.y = -bottomOffset;
-        //}
-        //else if (viewportPos.y > 1 - borderThreshold)
-        //{
-        //    float topOffset = Mathf.Clamp01( viewportPos.y - 0.9f);
-        //    rotationInput.y = topOffset;
-        //}
-        //// 应用旋转
-        //ApplyPlayerCameraeraRotation(rotationInput * rotationSpeed * Time.deltaTime );
         PlayerCamera.transform.root.Rotate(Vector3.up * rotationInput * rotationSpeed * Time.deltaTime);
     }
 
     private void ApplyPlayerCameraeraRotation(float input)
     {
-        // 垂直旋转（X轴）水平旋转（Y轴）
-        //float currentXRotation = PlayerCamera.transform.localEulerAngles.x;
-        //if (currentXRotation > 180) currentXRotation -= 360;
-        //currentXRotation -= input.y;
-        //currentXRotation = Mathf.Clamp(currentXRotation, -90f, 90f);
-        //PlayerCamera.transform.localRotation = Quaternion.Euler(currentXRotation, 0f, 0f);
+
         PlayerCamera.transform.root.Rotate(Vector3.up * input);
     }
 

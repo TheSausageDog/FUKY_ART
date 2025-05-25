@@ -83,6 +83,18 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _FoodBurnedTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoodCookedTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _FoodRawTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 7e82829a355b28b4288fd573553647c8, type: 3}
         m_Scale: {x: 1, y: 1}
@@ -166,7 +178,7 @@ Material:
     - _OcclusionMult: 0.5
     - _OcclusionStrength: 1
     - _OutlineColInBaseColor: 0.185
-    - _OutlineWidth: 15.02
+    - _OutlineWidth: 22.03
     - _Parallax: 0.02
     - _PresetGroup: 0
     - _QueueOffset: 0
@@ -207,6 +219,7 @@ Material:
     - _ZWrite1: 1
     - _ZWrite2: 1
     - _aoSetting: 0
+    - _foodCooked: 0
     - _group1: 0
     - _group2: 0
     - _group3: 0
