@@ -3704,52 +3704,6 @@ MonoBehaviour:
   filter: -65535
   m_SourceCollider: {fileID: 349969489}
   m_DistanceField: {fileID: 0}
---- !u!1 &356760285
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 356760287}
-  - component: {fileID: 356760286}
-  m_Layer: 0
-  m_Name: BurstCollisionWorld
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &356760286
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356760285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellSpans:
-    m_AlignBytes: 16
---- !u!4 &356760287
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 356760285}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &357076196
 GameObject:
   m_ObjectHideFlags: 0
@@ -3831,6 +3785,74 @@ MonoBehaviour:
   filter: -65535
   m_SourceCollider: {fileID: 357076198}
   m_DistanceField: {fileID: 0}
+--- !u!1001 &361876116
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5731053
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8784435064745866461, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+        type: 3}
+      propertyPath: m_Name
+      value: Capsule
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4457e573b6d4a5e4fbe52fc01e00157a, type: 3}
 --- !u!1001 &371496092
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3992,6 +4014,52 @@ MeshCollider:
     type: 3}
   m_PrefabInstance: {fileID: 371496092}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &409720047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 409720049}
+  - component: {fileID: 409720048}
+  m_Layer: 0
+  m_Name: BurstCollisionWorld
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &409720048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409720047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellSpans:
+    m_AlignBytes: 16
+--- !u!4 &409720049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409720047}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &418148628
 GameObject:
   m_ObjectHideFlags: 0
@@ -6959,6 +7027,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3831578e3316d041b73e0e29a8c2dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &659756928 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3078138916796647350, guid: 4457e573b6d4a5e4fbe52fc01e00157a,
+    type: 3}
+  m_PrefabInstance: {fileID: 361876116}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &664416880 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2258077655694153424, guid: 6d863ea5c24f3d14292fe118392663b7,
@@ -17594,6 +17668,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e892f2de5fc0d4d84b3d5aa34afce1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AccelTest: {fileID: 659756928}
+  CalibrationThershold: 0.1
+  Speed: {x: 0, y: 0, z: 0}
+  amp: 10
   Scaler: 0.05
   InVerse: 1
   Rotation_Offset: {x: 3, y: 1.5, z: 0}
@@ -17603,10 +17681,15 @@ MonoBehaviour:
   minCutoff: 0.2
   beta: 0.2
   dCutoff: 0.2
+  A_minCutoff: 0.6
+  A_beta: 0.6
+  A_dCutoff: 0.2
   PosFreq: 20
   RotateFreq: 20
+  AccelFreq: 20
   LastPosUpdateTime: 0.05
   LastRotateUpdateTime: 0.02
+  LastAccelerationUpdateTime: 0.02
   PressureValue: 0.1
   Left_pressed: 0
   Right_pressed: 0
@@ -25133,4 +25216,5 @@ SceneRoots:
   - {fileID: 565383992}
   - {fileID: 1047405891}
   - {fileID: 1831173807}
-  - {fileID: 356760287}
+  - {fileID: 361876116}
+  - {fileID: 409720049}

@@ -9,6 +9,16 @@ using Unity.Mathematics;
 
 public class FUKYMouse : SingletonMono<FUKYMouse>
 {
+    [Header("加速度实验对象")]
+    public Transform AccelTest;
+    public float CalibrationThershold = 0.1f;
+    public Vector3 Speed = Vector3.zero;
+    [Range(1f, 50f)]
+    public float amp = 30f;
+    private Vector3 RecordStartPos = Vector3.zero;
+    private bool InCalibrate = false;
+
+
     ///////////////////////////////////////////////////////////////////////////
     // 配置参数 公开在前私有在后
     ///////////////////////////////////////////////////////////////////////////
@@ -34,20 +44,32 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     [Range(0.001f, 10f)]
     public float Z_Scale;
 
-    [Header("滤波器参数")]
+    [Header("Pos滤波器参数")]//==========
     [Tooltip("较高minCutoff值会导致更多的高频噪声通过，而较低的值则会使输出更加平滑")]
     public float minCutoff = 0.2f;
     [Tooltip("增加beta会使滤波器在快速移动时更加响应，但也可能引入更多的高频噪声。\r\n减小beta则会使滤波器更加平滑，但可能导致在快速移动时响应滞后。")]
     public float beta = 0.2f;
     [Tooltip("较高的dCutoff值会使滤波器对速度变化更加敏感，而较低的值则会使输出在速度变化时更加平滑")]
     public float dCutoff = 0.6f;
+    [Header("Accel滤波器参数")]//============
+    [Tooltip("较高minCutoff值会导致更多的高频噪声通过，而较低的值则会使输出更加平滑")]
+    public float A_minCutoff = 0.6f;
+    [Tooltip("增加beta会使滤波器在快速移动时更加响应，但也可能引入更多的高频噪声。\r\n减小beta则会使滤波器更加平滑，但可能导致在快速移动时响应滞后。")]
+    public float A_beta = 0.6f;
+    [Tooltip("较高的dCutoff值会使滤波器对速度变化更加敏感，而较低的值则会使输出在速度变化时更加平滑")]
+    public float A_dCutoff = 0.2f;
+
     [Tooltip("位置数据的更新频率")]
     public float PosFreq = 0.02f;//数据的更新频率
     [Tooltip("旋转数据的更新频率")]
     public float RotateFreq = 0.02f;//数据的更新频率
-    public float LastPosUpdateTime = 0.00f;//上一次更新时间
+    [Tooltip("加速度数据的更新频率")]
+    public float AccelFreq = 0.02f;//数据的更新频率
+    public float LastPosUpdateTime = 0.02f;//上一次更新时间
     public float LastRotateUpdateTime = 0.02f;//上一次更新时间
+    public float LastAccelerationUpdateTime = 0.02f;
     private OneEuroFilter<Vector3> PosFilter;
+    private OneEuroFilter<Vector3> AccelFilter;
     #endregion
 
     ///////////////////////////////////////////////////////////////////////////
@@ -71,6 +93,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
     public byte buttonState { get; private set; }
 
     private Vector3 lastRawTranslate;//上一帧的灯珠位置值
+    private Vector3 lastRawAcceleration;
     private Vector3 lastFilteredTranslate;//上一帧的位置值
     private Quaternion lastRawRotation;//上一帧鼠标的旋转值
     #endregion
@@ -142,6 +165,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
             Debug.LogError($"共享内存初始化失败: {e.Message}");
         }
         PosFilter = new OneEuroFilter<Vector3>(50);
+        AccelFilter = new OneEuroFilter<Vector3>(50);
     }
 
     void Update()
@@ -151,12 +175,12 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         {
             IMUData data;
             LocatorData data2;
-            // 读取数据结构 加速度和四元数坐标系的转换
+            // 读取数据结构 加速度和四元数
             _IMU_Accessor.Read(0, out data);
             rawAcceleration = new Vector3(
-                data.accelX,
                 data.accelY,
-                data.accelZ
+                data.accelZ,
+                data.accelX
             );
             rawRotation = quaternion.Euler(Rotation_Offset) * new Quaternion(
                 data.quatY,
@@ -216,6 +240,11 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
             PosFreq = 1 / LastPosUpdateTime;
             LastPosUpdateTime = 0f;
         }
+        if (rawAcceleration != lastRawAcceleration)
+        {
+            AccelFreq = 1 / LastAccelerationUpdateTime;
+            LastAccelerationUpdateTime = 0f;
+        }
 
         lastRawTranslate = rawTranslate;
 
@@ -224,8 +253,8 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
         lastRawRotation = rawRotation;
 
         PosFilter.UpdateParams(PosFreq, minCutoff, beta, dCutoff);
+        AccelFilter.UpdateParams(AccelFreq, A_minCutoff, A_beta, A_dCutoff);
 
-        // OE_Rotation = RotationFilter.Filter(Raw_Rotation);
         filteredTranslate = PosFilter.Filter(rawTranslate);
 
         deltaTranslate = filteredTranslate - lastFilteredTranslate;
@@ -234,6 +263,32 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
 
         LastPosUpdateTime += Time.deltaTime;
         LastRotateUpdateTime += Time.deltaTime;
+        LastAccelerationUpdateTime += Time.deltaTime; 
+
+        if(rawAcceleration.magnitude > CalibrationThershold)
+        {
+            Speed = rawAcceleration * LastAccelerationUpdateTime / 2;
+            Vector3 est = Speed * LastAccelerationUpdateTime;
+            AccelTest.position += AccelFilter.Filter(est) * amp;
+            if(AccelTest.position.magnitude > 3f)
+            {
+                AccelTest.position = Vector3.zero;
+            }
+        }
+
+        //if (!isMouseFloating && rawAcceleration.magnitude < CalibrationThershold)
+        //{
+        //    if (!InCalibrate)
+        //    {
+        //        RecordStartPos = AccelTest.position;
+        //        InCalibrate = true;
+        //    }
+
+        //}
+        //else
+        //{
+        //    InCalibrate =false;
+        //}
 
 
     }
