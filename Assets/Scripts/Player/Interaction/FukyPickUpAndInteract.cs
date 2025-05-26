@@ -22,22 +22,32 @@ public class FukyPickUpAndInteract : PickUpAndInteract
     public bool InRotate = false;
     public bool InRotateActive = false;
     public float Range = 0.5f;
-    [Range(0.5f,0.9f)]
+
+    [Header("二次旋转控制")]
+    [Tooltip("如果压力超过该量就进入旋转控制模式")]
+    [Range(0.5f, 0.9f)]
     public float StartRotateThershold = 0.7f;
-    private quaternion Init_Rota_Range_LookAt; // 记录初始旋转差
-    [Tooltip("旋转的纠正量")]
-    public quaternion Adj_Rotation = quaternion.identity;
-    [Header("FUKYBALL颜色控制")]
-    private MaterialPropertyBlock materialPropertyBlock; // 需要动态修改的材质
     public Renderer TargetRenderer; // 关联的渲染器组件
     public Color minColor = Color.green;
     public Color maxColor = Color.red;
-    private int _EmissionShaderID; // Shader中_EmissionColor属性的ID
-    private int baseColorShaderID; // Shader中_BaseColor属性的ID
+    private quaternion Adj_Rotation = quaternion.identity;
+    private MaterialPropertyBlock materialPropertyBlock; // 需要动态修改的材质
+    private int EmissionShaderID; // Shader中_EmissionColor属性的ID
+    private int BaseColorShaderID; // Shader中_BaseColor属性的ID
+    private quaternion Init_Rota_Range_LookAt; // 记录初始LookAt旋转
+    private quaternion Init_Delta_Rotation; // 记录初始旋转差
+
+    [Header("第一人称握持位置控制")]
+    [Tooltip("如果压力超过该量就进入实际控制模式")]
+    public Transform DefaultHoldPos;
+    [Range(0.001f,0.1f)]
+    public float BackHomeSpeed = 0.001f;
+    private float CurrBackHomeValue = 0f;
 
     private void Start()
     {
-        baseColorShaderID = Shader.PropertyToID("_EmissionColor");        // 获取Shader中_BaseColor属性的ID
+        EmissionShaderID = Shader.PropertyToID("_EmissionColor");        // 获取Shader中_EmissionColor属性的ID
+        BaseColorShaderID = Shader.PropertyToID("_BaseColor");        // 获取Shader中_BaseColor属性的ID
         materialPropertyBlock = new MaterialPropertyBlock();
     }
 
@@ -45,7 +55,6 @@ public class FukyPickUpAndInteract : PickUpAndInteract
     {
         if (PlayerInputController.IsRotateHeld())
         {
-
             //更新UI的颜色
             UpdateMaterialColor();
             Fuky_Range.transform.position = data.handTarget.position;            //更新UI的位置
@@ -69,11 +78,20 @@ public class FukyPickUpAndInteract : PickUpAndInteract
                 Fuky_Range.transform.LookAt(Fuky_Ball.transform);
                 if (!InRotateActive)//如果初次进入循环
                 {
+
+                    // D                                                  A                           B                              A*D=B
+                    //1相对量                                        LookAt旋转               初始物体旋转        <===得到  LookAt旋转 乘相对量
+                    //2相对量                                        移动前的range旋转        移动后的range旋转   <===得到  移动前的range旋转 乘相对量
+                    Init_Delta_Rotation = Quaternion.Inverse(Fuky_Range.transform.rotation) * data.holdPos.rotation;
                     Init_Rota_Range_LookAt = Fuky_Range.transform.rotation;
+                    //data.holdPos.rotation = Fuky_Range.transform.rotation * Init_Delta_Rotation;
                     InRotateActive = true;
                     return;
                 }
-                Adj_Rotation = Fuky_Range.transform.rotation * Quaternion.Inverse(Init_Rota_Range_LookAt);
+                //quaternion CurrPointerRotation_Delta = Quaternion.Inverse(Init_Rota_Range_LookAt) * Fuky_Range.transform.rotation;
+                quaternion CurrHoldRotation_Delta = Init_Delta_Rotation * (Quaternion.Inverse(Init_Rota_Range_LookAt) * Fuky_Range.transform.rotation);
+
+                Adj_Rotation = Fuky_Range.transform.rotation * CurrHoldRotation_Delta * Quaternion.Inverse(Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation);
                 data.holdPos.rotation = Adj_Rotation * Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
                 return;
             }
@@ -100,6 +118,19 @@ public class FukyPickUpAndInteract : PickUpAndInteract
         data.holdPos.rotation = PlayerCameraeraSpaceRotation;
 
     }
+
+    protected override void DefaultControl()
+    {
+        Vector3 CurrDistance = DefaultHoldPos.position - data.handTarget.position;
+        if (CurrDistance.magnitude > 0.001f)
+        {
+            CurrBackHomeValue = math.min(1f, CurrBackHomeValue + BackHomeSpeed * Time.deltaTime);
+            data.handTarget.position = Vector3.Lerp(data.handTarget.position, DefaultHoldPos.position, CurrBackHomeValue);
+        }
+        CurrBackHomeValue = 0f;
+
+    }
+
     private void HandleScreenEdgeRotation()
     {
 
@@ -147,7 +178,8 @@ public class FukyPickUpAndInteract : PickUpAndInteract
         // 应用颜色到材质
 
         TargetRenderer.GetPropertyBlock(materialPropertyBlock);
-        materialPropertyBlock.SetColor(baseColorShaderID, targetColor);
+        materialPropertyBlock.SetColor(BaseColorShaderID, targetColor);
+        materialPropertyBlock.SetColor(EmissionShaderID, targetColor);
         TargetRenderer.SetPropertyBlock(materialPropertyBlock);
     }
 

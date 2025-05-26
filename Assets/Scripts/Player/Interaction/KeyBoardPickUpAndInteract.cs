@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class KeyBoardPickUpAndInteract : PickUpAndInteract
 {
+    protected override void DefaultControl()
+    {
+        return;
+    }
+
     protected override void MoveHandTarget()
     {
         if (PlayerInputController.IsRotateHeld())

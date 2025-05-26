@@ -70,6 +70,10 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
 
     void Update()
     {
+        if(FUKYMouse.Instance!=null && !FUKYMouse.Instance.isMouseFloating)
+        {
+            DefaultControl();
+        }
         // 控制 handTarget 的移动
         if (PlayerInputController.IsMoveHandHeld())
         {
@@ -119,6 +123,9 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     }
 
     protected abstract void MoveHandTarget();
+
+    protected abstract void DefaultControl();
+
 
     /// <summary>
     /// 处理拾取输入
