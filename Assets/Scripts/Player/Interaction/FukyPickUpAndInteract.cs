@@ -24,9 +24,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
     public float Range = 0.5f;
     [Range(0.5f,0.9f)]
     public float StartRotateThershold = 0.7f;
-    //private Vector3 initialDirection; // 记录初始方向
-    //private quaternion initialRotation; // 记录初始旋转差
-    Vector3 LastFukyDirection = Vector3.zero;
+    private quaternion Init_Rota_Range_LookAt; // 记录初始旋转差
     [Tooltip("旋转的纠正量")]
     public quaternion Adj_Rotation = quaternion.identity;
     [Header("FUKYBALL颜色控制")]
@@ -34,6 +32,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
     public Renderer TargetRenderer; // 关联的渲染器组件
     public Color minColor = Color.green;
     public Color maxColor = Color.red;
+    private int _EmissionShaderID; // Shader中_EmissionColor属性的ID
     private int baseColorShaderID; // Shader中_BaseColor属性的ID
 
     private void Start()
@@ -49,6 +48,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
 
             //更新UI的颜色
             UpdateMaterialColor();
+            Fuky_Range.transform.position = data.handTarget.position;            //更新UI的位置
             //移动小球
             Vector3 NewPos = Fuky_Ball.transform.localPosition + FUKYMouse.Instance.deltaTranslate * FUKYMouse.Instance.PressureValue;
             Vector3 offset = NewPos - data.handTarget.localPosition;
@@ -58,7 +58,6 @@ public class FukyPickUpAndInteract : PickUpAndInteract
             if (!InRotate)
             {
                 Fuky_Ball.transform.position = data.handTarget.position;
-                Fuky_Range.transform.position = data.handTarget.position;
                 Fuky_Ball.SetActive(true);
                 Fuky_Range.SetActive(true);
                 InRotate =true;
@@ -67,23 +66,15 @@ public class FukyPickUpAndInteract : PickUpAndInteract
             //如果在按左键过程中按下了右键，就计算当前手持物品到小球的向量，并保存向量到手持物体forward的相对旋转
             if (FUKYMouse.Instance.Right_pressed)
             {
-
-                Vector3 currentFukyDirection;
-
-                currentFukyDirection = (Fuky_Ball.transform.position - data.handTarget.position).normalized;
-                if (!InRotateActive)
+                Fuky_Range.transform.LookAt(Fuky_Ball.transform);
+                if (!InRotateActive)//如果初次进入循环
                 {
-                    //initialDirection = data.holdPos.forward;
-                    //initialRotation = Quaternion.FromToRotation(data.holdPos.forward, currentFukyDirection);
+                    Init_Rota_Range_LookAt = Fuky_Range.transform.rotation;
                     InRotateActive = true;
-                    LastFukyDirection = currentFukyDirection;
                     return;
                 }
-                
-                Adj_Rotation = Adj_Rotation * Quaternion.FromToRotation(LastFukyDirection, currentFukyDirection);
-
-                data.holdPos.rotation = Adj_Rotation * Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation ;
-                LastFukyDirection = currentFukyDirection.normalized;
+                Adj_Rotation = Fuky_Range.transform.rotation * Quaternion.Inverse(Init_Rota_Range_LookAt);
+                data.holdPos.rotation = Adj_Rotation * Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
                 return;
             }
             InRotateActive =false;
@@ -102,13 +93,12 @@ public class FukyPickUpAndInteract : PickUpAndInteract
             NewPos.y = Mathf.Clamp(NewPos.y, data.yMinMax.x, data.yMinMax.y);
             NewPos.z = Mathf.Clamp(NewPos.z, data.zMinMax.x, data.zMinMax.y);
             data.handTarget.localPosition = NewPos;
-
-            // 将世界空间的旋转转换到相机空间
-            Quaternion PlayerCameraeraSpaceRotation = Adj_Rotation * Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
-            data.holdPos.rotation = PlayerCameraeraSpaceRotation;
-
             HandleScreenEdgeRotation();
         }
+        // 将世界空间的旋转转换到相机空间
+        Quaternion PlayerCameraeraSpaceRotation = Adj_Rotation * Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
+        data.holdPos.rotation = PlayerCameraeraSpaceRotation;
+
     }
     private void HandleScreenEdgeRotation()
     {
