@@ -39,13 +39,65 @@ public class SFXManager : SingletonMono<SFXManager>
             }
         }
     }
+    /// <summary>
+    /// 播放指定 SFX，指定持续时间（秒）后自动停止并回收，
+    /// 不修改任何 Burst 数量设置。
+    /// </summary>
+    /// <param name="sfxName">SFX 名称</param>
+    /// <param name="position">播放位置</param>
+    /// <param name="duration">持续时间（秒）——小于等于 0 时按预制体自身时长播放</param>
+    /// <param name="color">可选：覆盖粒子 StartColor</param>
+    public ParticleSystem PlaySfx(SFXName sfxName, Vector3 position, float duration, Color color = default)
+    {
+        if (!sfxDict.TryGetValue(sfxName, out var sfxData))
+        {
+            Debug.LogError($"无法找到 SFX: {sfxName}");
+            return null;
+        }
 
+        ParticleSystem psInstance = GetFromPool(sfxName, sfxData.prefab);
+        if (psInstance == null)
+        {
+            Debug.LogError($"实例化 SFX 失败: {sfxName}");
+            return null;
+        }
+
+        psInstance.transform.position = position;
+        if (!color.Equals(default)) psInstance.startColor = color;
+
+        psInstance.gameObject.SetActive(true);
+        psInstance.Play();
+
+        // 若 duration <= 0，则继续用预制体原本的生命周期
+        if (duration > 0f)
+            StartCoroutine(StopAndReturnAfterDuration(psInstance, sfxName, duration));
+        else
+            StartCoroutine(ReturnToPoolWhenFinished(psInstance, sfxName));
+
+        return psInstance;
+    }
+
+    /// <summary>
+    /// 协程：在指定持续时间后停止粒子播放并回收到对象池
+    /// </summary>
+    private IEnumerator StopAndReturnAfterDuration(ParticleSystem psInstance, SFXName sfxName, float duration)
+    {
+        yield return new WaitForSeconds(duration);
+
+        // 停止发射并清除现有粒子
+        psInstance.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        // 等待彻底停止（含子粒子）后回收
+        yield return new WaitUntil(() => !psInstance.IsAlive(true));
+        psInstance.gameObject.SetActive(false);
+        ReturnToPool(sfxName, psInstance);
+    }
     /// <summary>
     /// 播放指定名称的 SFX，并在播放结束后将实例回收到对象池中
     /// </summary>
     /// <param name="sfxName">SFX 名称，对应 sfxList 中的项</param>
     /// <param name="position">播放位置</param>
-    public ParticleSystem PlaySfx(SFXName sfxName, Vector3 position, Color color, int count = -1)
+    public ParticleSystem PlaySfx(SFXName sfxName, Vector3 position, Color color = default, int count = -1)
     {
         if (!sfxDict.ContainsKey(sfxName))
         {
@@ -63,12 +115,12 @@ public class SFXManager : SingletonMono<SFXManager>
 
         // 设置播放位置，并激活对象
         psInstance.transform.position = position;
-        psInstance.startColor = color;
+        if(!color.Equals(default))psInstance.startColor = color;
 
         var emission = psInstance.emission;
         ParticleSystem.Burst[] bursts = new ParticleSystem.Burst[emission.burstCount];
         emission.GetBursts(bursts);
-        if (bursts.Length > 0)
+        if (bursts.Length > 0 && count>0)
         {
             // 修改 Burst Count
             bursts[0].count = count;

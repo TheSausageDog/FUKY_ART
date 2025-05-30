@@ -3,11 +3,6 @@ using UnityEngine;
 public class PlayerInputController : MonoBehaviour
 {
     protected static bool isUplift = false;
-    protected static bool isRotating = false;
-
-    protected static bool isLeftClick;
-    protected static bool isRightClick;
-
 
     // public 
 
@@ -16,7 +11,6 @@ public class PlayerInputController : MonoBehaviour
         if(FUKYMouse.Instance != null)
         {
             isUplift = FUKYMouse.Instance.isMouseFloating;
-            isRotating = FUKYMouse.Instance.isMouseFloating;
             return;
         }
 
@@ -25,7 +19,6 @@ public class PlayerInputController : MonoBehaviour
             isUplift = !isUplift;
         }
 
-        isRotating = Input.GetKey(KeyCode.LeftAlt);
     }
 
     public static bool IsInteractPressed()
@@ -95,7 +88,8 @@ public class PlayerInputController : MonoBehaviour
     {
         if (FUKYMouse.Instance != null)
         {
-            return Input.GetKeyDown(KeyCode.Mouse0) || FUKYMouse.Instance.Left_pressed;
+            if(FUKYMouse.Instance.isMouseFloating) return Input.GetKeyDown(KeyCode.G);
+            return Input.GetKeyDown(KeyCode.Mouse0);
         }
         return Input.GetKeyDown(KeyCode.Mouse0);
     }
@@ -103,7 +97,11 @@ public class PlayerInputController : MonoBehaviour
     // 检查是否按住旋转键temp
     public static bool IsRotateHeld()
     {
-        return isRotating;
+        if (FUKYMouse.Instance != null && FUKYMouse.Instance.isMouseFloating)
+        {
+            return FUKYMouse.Instance.Left_pressed;
+        }
+        return Input.GetKey(KeyCode.LeftAlt);
     }
     // 检查是否移动手
     public static bool IsMoveHandHeld()

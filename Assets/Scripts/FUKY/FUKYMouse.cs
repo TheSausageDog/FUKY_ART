@@ -116,8 +116,6 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
 #endregion
 
 
-
-
     void Start()
     {
         try
@@ -187,7 +185,7 @@ public class FUKYMouse : SingletonMono<FUKYMouse>
                     data2.CoordZ * Z_Scale
                 ) * Scaler;
             }
-            Debug.Log("定位器坐标数据:" + rawTranslate);
+            //Debug.Log("定位器坐标数据:" + rawTranslate);
 
             // 读取按钮数据 
             byte buttonState = _BTN_Accessor.ReadByte(0);
