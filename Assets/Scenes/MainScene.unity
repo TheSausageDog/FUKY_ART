@@ -17414,7 +17414,7 @@ MonoBehaviour:
   highLightMaterial: {fileID: 2100000, guid: 1c901dd45b1cbf6498f425c418a9c50e, type: 2}
   uiDialog: {fileID: 976294127}
   areaTrigger: {fileID: 1972598770}
-  startLevelName: TutorialTestLevel
+  startLevelName: TutorialLevel0
 --- !u!114 &1651822396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24920,6 +24920,5 @@ SceneRoots:
   - {fileID: 565383992}
   - {fileID: 1047405891}
   - {fileID: 1831173807}
-  - {fileID: 170386321517330593}
   - {fileID: 1591582552}
   - {fileID: 482751259}

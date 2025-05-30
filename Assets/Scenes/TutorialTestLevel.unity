@@ -263,8 +263,9 @@ MonoBehaviour:
   dialogText: 
   taskName: 
   taskStepName: 
-  tipsWord: tips1
-  spriteFrames: []
+  tipsWord: 
+  spriteFrames:
+  - {fileID: 21300000, guid: 9b47b03657e61784abb9e0534660e272, type: 3}
   duration: 2
 --- !u!114 &740148223
 MonoBehaviour:
