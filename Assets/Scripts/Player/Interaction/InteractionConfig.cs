@@ -10,8 +10,6 @@ public class InteractionConfig : MonoBehaviour
 
     public float pickUpRange = 5f; // 拾取范围
 
-    public GameObject uiCursor;
-
     [Header("手部相关")]
     public Transform holdPos; // 物品持有位置
     public Transform handTarget;

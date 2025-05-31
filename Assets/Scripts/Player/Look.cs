@@ -16,10 +16,10 @@ public class Look : MonoBehaviour
     private void Update()
     {
 
-        if (PlayerInputController.IsMoveHandHeld()) return;
+        if (PlayerInputController.Instance.IsMoveHandHeld()) return;
 
         // 获取鼠标输入
-        var input = PlayerInputController.GetMouseInput() * (sensitivity * Time.deltaTime);
+        var input = PlayerInputController.Instance.GetMouseInput() * (sensitivity * Time.deltaTime);
         float currentXRotation = playerCamera.localEulerAngles.x;
         if (currentXRotation > 180) currentXRotation -= 360;
 

@@ -16,7 +16,7 @@ public class HandInteractionController : MonoListener
         base.Awake();
         // normalCursor.SetActive(!PlayerInputController.IsMoveHandHeld());
         // fukyCursor.SetActive(PlayerInputController.IsMoveHandHeld());
-        normalCursor.SetActive(true);
+        // normalCursor.SetActive(true);
     }
 
     // void Update()

@@ -1,14 +1,15 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerInputController : MonoBehaviour
+public class PlayerInputController : SingletonMono<PlayerInputController>
 {
-    protected static bool isUplift = false;
+    protected bool isUplift = false;
 
-    // public 
+    public InputActionReference tirgger_Action;
 
     void Update()
     {
-        if(FUKYMouse.Instance != null)
+        if (FUKYMouse.Instance != null)
         {
             isUplift = FUKYMouse.Instance.isMouseFloating;
             return;
@@ -18,10 +19,9 @@ public class PlayerInputController : MonoBehaviour
         {
             isUplift = !isUplift;
         }
-
     }
 
-    public static bool IsInteractPressed()
+    public bool IsInteractPressed()
     {
         if (FUKYMouse.Instance != null)
         {
@@ -30,13 +30,13 @@ public class PlayerInputController : MonoBehaviour
         return Input.GetKeyDown(KeyCode.Mouse1);
     }
 
-    public static bool IsRecipePressed()
+    public bool IsRecipePressed()
     {
         return Input.GetKeyDown(KeyCode.R);
     }
 
     // 获取移动输入
-    public static Vector2 GetMovementInput()
+    public Vector2 GetMovementInput()
     {
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
@@ -45,19 +45,19 @@ public class PlayerInputController : MonoBehaviour
 
 
     // 检查是否按下跳跃键
-    public static bool IsJumping()
+    public bool IsJumping()
     {
         return Input.GetButtonDown("Jump");
     }
 
     // 检查是否按下下蹲键
-    public static bool IsCrouching()
+    public bool IsCrouching()
     {
         return Input.GetKey(KeyCode.LeftControl);
     }
 
     // 获取鼠标输入
-    public static Vector2 GetMouseInput()
+    public Vector2 GetMouseInput()
     {
         float mouseX = Input.GetAxis("Mouse X");
         float mouseY = Input.GetAxis("Mouse Y");
@@ -65,37 +65,46 @@ public class PlayerInputController : MonoBehaviour
     }
 
     // 获取鼠标滚轮输入
-    public static float GetScrollInput()
+    public float GetScrollInput()
     {
         return Input.GetAxis("Mouse ScrollWheel");
     }
     // 检查是否按下拾取键
-    public static bool IsPickUpPressed()
+    public bool IsPickUpPressed()
     {
+        bool pressed = Input.GetKeyDown(KeyCode.Mouse0);
+        if (tirgger_Action != null)
+        {
+            pressed |= tirgger_Action.action.WasPerformedThisFrame();
+        }
         if (FUKYMouse.Instance != null)
         {
-            return Input.GetKeyDown(KeyCode.Mouse0)||FUKYMouse.Instance.Left_pressed;
+            pressed |= FUKYMouse.Instance.Left_pressed;
         }
-        return Input.GetKeyDown(KeyCode.Mouse0);
+        return pressed;
     }
-    public static bool IsPickUpPressing()
+    public bool IsPickUpPressing()
     {
         return Input.GetKey(KeyCode.Mouse0);
     }
 
     // 检查是否按下投掷键
-    public static bool IsThrowPressed()
+    public bool IsThrowPressed()
     {
+        bool pressed = Input.GetKeyDown(KeyCode.Mouse0);
+        if (tirgger_Action != null)
+        {
+            pressed |= tirgger_Action.action.WasPerformedThisFrame();
+        }
         if (FUKYMouse.Instance != null)
         {
-            if(FUKYMouse.Instance.isMouseFloating) return Input.GetKeyDown(KeyCode.G);
-            return Input.GetKeyDown(KeyCode.Mouse0);
+            if (FUKYMouse.Instance.isMouseFloating) pressed |= Input.GetKeyDown(KeyCode.G);
         }
-        return Input.GetKeyDown(KeyCode.Mouse0);
+        return pressed;
     }
 
     // 检查是否按住旋转键temp
-    public static bool IsRotateHeld()
+    public bool IsRotateHeld()
     {
         if (FUKYMouse.Instance != null && FUKYMouse.Instance.isMouseFloating)
         {
@@ -104,12 +113,12 @@ public class PlayerInputController : MonoBehaviour
         return Input.GetKey(KeyCode.LeftAlt);
     }
     // 检查是否移动手
-    public static bool IsMoveHandHeld()
+    public bool IsMoveHandHeld()
     {
         return isUplift;
     }
 
-    public static bool IsLeftShiftPressed()
+    public bool IsLeftShiftPressed()
     {
         return Input.GetKeyDown(KeyCode.LeftShift);
     }

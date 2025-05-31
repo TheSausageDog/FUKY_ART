@@ -86,7 +86,7 @@ public class OrderManager : SingletonMono<OrderManager>
             }
 
 
-            if (orderItem != null && PlayerInputController.IsRecipePressed())
+            if (orderItem != null && PlayerInputController.Instance.IsRecipePressed())
             {
                 if (orderItem.isHolding)
                 {

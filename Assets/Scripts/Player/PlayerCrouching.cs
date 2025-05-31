@@ -29,7 +29,7 @@ public class PlayerCrouching : MonoBehaviour
     private void HandleCrouching()
     {
         // 检测是否按下下蹲键
-        if (PlayerInputController.IsCrouching())
+        if (PlayerInputController.Instance.IsCrouching())
         {
             isCrouching = true;
         }

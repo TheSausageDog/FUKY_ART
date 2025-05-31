@@ -15,7 +15,9 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     protected InteractionConfig data;
 
     protected GameObject selectedObj; // 当前手部范围内的物体
-    // private float pickUpTimer = 0f; // 长按拾取计时器
+                                      // private float pickUpTimer = 0f; // 长按拾取计时器
+
+    protected abstract Ray GetPickUpRay { get; }
 
 
     protected void Awake()
@@ -50,10 +52,8 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
     RaycastHit[] hits = new RaycastHit[128];
     private void FixedUpdate()
     {
-        Vector3 dir = Camera.main.transform.forward;
         // funkyControl ? (fukyCursor.transform.position - Camera.main.transform.position) : Camera.main.transform.forward;
-        int count = Physics.RaycastNonAlloc(Camera.main.transform.position, dir, hits, data.pickUpRange);
-
+        int count = Physics.RaycastNonAlloc(GetPickUpRay, hits, data.pickUpRange);
         Array.Sort(hits, 0, count, Comparer<RaycastHit>.Create((a, b) => a.distance.CompareTo(b.distance)));
 
         for (int i = 0; i < count; i++)
@@ -68,27 +68,10 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         OnHandTriggerExit();
     }
 
-    void Update()
+    protected virtual void Update()
     {
+        MoveHandTarget();
         // 控制 handTarget 的移动
-        if (PlayerInputController.IsMoveHandHeld())
-        {
-            if (PlayerInputController.IsLeftShiftPressed())
-            {
-                data.handTarget.position = data.holdPos.position;
-            }
-            else
-            {
-                MoveHandTarget();
-            }
-        }
-        else
-        {
-            if (PlayerInputController.IsLeftShiftPressed())
-            {
-                data.handTarget.localPosition = data.handTargetOffset;
-            }
-        }
 
         if (PlayerBlackBoard.isHeldObj)
         {
@@ -103,11 +86,11 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
             data.holdPos.position = data.handTarget.position;
             // }
 
-            if (PlayerInputController.IsInteractPressed() && PlayerBlackBoard.heldItem.isInteractable)
+            if (PlayerInputController.Instance.IsInteractPressed() && PlayerBlackBoard.heldItem.isInteractable)
             {
                 PlayerBlackBoard.heldItem.OnInteract();
             }
-            else if (PlayerInputController.IsThrowPressed())
+            else if (PlayerInputController.Instance.IsThrowPressed())
             {
                 DropObject();
             }
@@ -164,7 +147,7 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
             //     // Debug.LogWarning("物体超出拾取范围！");
             //     return;
             // }
-            if (PlayerInputController.IsPickUpPressed())
+            if (PlayerInputController.Instance.IsPickUpPressed())
             {
                 if (selectedObj.TryGetComponent<HoldableItem>(out var holdItemScript))
                 {
@@ -173,16 +156,15 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
                 }
                 else if (selectedObj.TryGetComponent<InteractItemBase>(out var interactItemScript)) { interactItemScript.OnInteract(); }
             }
-            else if (PlayerInputController.IsInteractPressed())
+            else if (PlayerInputController.Instance.IsInteractPressed())
             {
                 if (selectedObj.TryGetComponent<InteractItemBase>(out var interactItemScript)) { interactItemScript.OnInteract(); }
             }
         }
     }
 
-    public void PickObject(HoldableItem pickItem)
+    public virtual void PickObject(HoldableItem pickItem)
     {
-        data.uiCursor.SetActive(false);
         data.holdPos.position = pickItem.transform.position;
         pickItem.OnPickup(data.holdPos);
         data.holdPos.rotation = pickItem.transform.rotation;
@@ -195,9 +177,8 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         Camera.main.DOFieldOfView(data.CameraFieldOfViewOffset, 0.5f);
     }
 
-    public void DropObject()
+    public virtual void DropObject()
     {
-        data.uiCursor.SetActive(true);
         PlayerBlackBoard.heldItem.OnThrow();
         Physics.IgnoreCollision(PlayerBlackBoard.heldItem.itemCollider, GetComponent<Collider>(), false);
         PlayerBlackBoard.heldItem.gameObject.tag = "canInteract";
@@ -207,7 +188,7 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
         Camera.main.DOFieldOfView(data.CameraFieldOfViewOrgin, 0.5f);
     }
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         if (data == null) { data = GetComponent<InteractionConfig>(); }
         Gizmos.color = Color.yellow;
@@ -228,5 +209,39 @@ public abstract class PickUpAndInteract : SingletonMono<PickUpAndInteract>
             Gizmos.color = Color.blue;
             Gizmos.DrawSphere(data.holdPos.position, 0.05f);
         }
+    }
+}
+
+public abstract class MousePickUpAndInteract : PickUpAndInteract
+{
+    public GameObject uiCursor;
+
+    protected override Ray GetPickUpRay => new Ray(Camera.main.transform.position, Camera.main.transform.forward);
+
+    protected override void MoveHandTarget()
+    {
+        if (PlayerInputController.Instance.IsLeftShiftPressed())
+        {
+            if (PlayerInputController.Instance.IsMoveHandHeld())
+            {
+                data.handTarget.position = data.holdPos.position;
+            }
+            else
+            {
+                data.handTarget.localPosition = data.handTargetOffset;
+            }
+        }
+    }
+
+    public override void PickObject(HoldableItem pickItem)
+    {
+        uiCursor.SetActive(false);
+        base.PickObject(pickItem);
+    }
+
+    public override void DropObject()
+    {
+        uiCursor.SetActive(true);
+        base.DropObject();
     }
 }

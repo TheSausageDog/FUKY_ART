@@ -10,7 +10,7 @@ public class CheckItem : PickableItem
 
     void Update()
     {
-        if (isHolding && !PlayerInputController.IsMoveHandHeld())
+        if (isHolding && !PlayerInputController.Instance.IsMoveHandHeld())
         {
             transform.position = Camera.main.transform.position + objectSize * Camera.main.transform.forward;
             transform.LookAt(transform.position - Camera.main.transform.right, -Camera.main.transform.forward);

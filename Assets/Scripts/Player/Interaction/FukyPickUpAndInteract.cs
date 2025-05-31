@@ -3,12 +3,12 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Windows;
 
-public class FukyPickUpAndInteract : PickUpAndInteract
+public class FukyPickUpAndInteract : MousePickUpAndInteract
 {
     //摄像机控制参数
     [Header("屏幕边缘控制")]
     [Tooltip("距离屏幕边缘开始旋转的像素阈值")]
-    [Range(0.05f,0.5f)]
+    [Range(0.05f, 0.5f)]
     public float borderThreshold = 0.1f;
     [Tooltip("旋转速度系数")]
     public float rotationSpeed = 1f;
@@ -22,7 +22,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
     public bool InRotate = false;
     public bool InRotateActive = false;
     public float Range = 0.5f;
-    [Range(0.5f,0.9f)]
+    [Range(0.5f, 0.9f)]
     public float StartRotateThershold = 0.7f;
     private quaternion Init_Rota_Range_LookAt; // 记录初始旋转差
     [Tooltip("旋转的纠正量")]
@@ -43,16 +43,16 @@ public class FukyPickUpAndInteract : PickUpAndInteract
 
     protected override void MoveHandTarget()
     {
-        if (PlayerInputController.IsRotateHeld())
+        base.MoveHandTarget();
+        if (PlayerInputController.Instance.IsRotateHeld())
         {
-
             //更新UI的颜色
             UpdateMaterialColor();
             Fuky_Range.transform.position = data.handTarget.position;            //更新UI的位置
             //移动小球
             Vector3 NewPos = Fuky_Ball.transform.localPosition + FUKYMouse.Instance.deltaTranslate * FUKYMouse.Instance.PressureValue;
             Vector3 offset = NewPos - data.handTarget.localPosition;
-            if (offset.magnitude > Range){NewPos = data.handTarget.localPosition + offset.normalized * Range; }// 超出半径时，强制到球体表面
+            if (offset.magnitude > Range) { NewPos = data.handTarget.localPosition + offset.normalized * Range; }// 超出半径时，强制到球体表面
             Fuky_Ball.transform.localPosition = NewPos;
             //在第一次进入旋转状态的时候，把两个当UI的3D物体移动到操控对象上
             if (!InRotate)
@@ -60,7 +60,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
                 Fuky_Ball.transform.position = data.handTarget.position;
                 Fuky_Ball.SetActive(true);
                 Fuky_Range.SetActive(true);
-                InRotate =true;
+                InRotate = true;
                 return;
             }
             //如果在按左键过程中按下了右键，就计算当前手持物品到小球的向量，并保存向量到手持物体forward的相对旋转
@@ -77,7 +77,7 @@ public class FukyPickUpAndInteract : PickUpAndInteract
                 data.holdPos.rotation = Adj_Rotation * Quaternion.AngleAxis(Player.eulerAngles.y, transform.up) * FUKYMouse.Instance.rawRotation;
                 return;
             }
-            InRotateActive =false;
+            InRotateActive = false;
             return;
         }
         if (InRotate)

@@ -10,8 +10,6 @@ public class PourableItem : PickupInteractableItem
 
     protected float slope = 0;
 
-    protected override Quaternion rotateOffset { get { return Quaternion.Euler(Mathf.Lerp(0, endSlope, slope), 0, 0); } }
-
     public override void OnInteract()
     {
         isPour = !isPour;
@@ -43,5 +41,6 @@ public class PourableItem : PickupInteractableItem
                 slope = Mathf.Max(slope, 0);
             }
         }
+        rotateOffset = new Vector3(Mathf.Lerp(0, endSlope, slope), 0, 0);
     }
 }

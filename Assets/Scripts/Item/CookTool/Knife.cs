@@ -9,7 +9,10 @@ public class Knife : AttachedPickableItem
 {
     public Collider bladeCollider;
 
-    protected override Quaternion rotateOffset { get { return Quaternion.Euler(-90, 0, 0); } }
+    void Awake()
+    {
+        rotateOffset = new Vector3(-90, 0, 0);
+    }
 
     public override void OnPickup(Transform _holdPos)
     {

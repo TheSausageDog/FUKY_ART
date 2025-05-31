@@ -1,13 +1,14 @@
 using UnityEngine;
 
-public class KeyBoardPickUpAndInteract : PickUpAndInteract
+public class KeyBoardPickUpAndInteract : MousePickUpAndInteract
 {
     protected override void MoveHandTarget()
     {
-        if (PlayerInputController.IsRotateHeld())
+        base.MoveHandTarget();
+        if (PlayerInputController.Instance.IsRotateHeld())
         {
-            Vector2 mouseInput = PlayerInputController.GetMouseInput() * data.rotationSensitivity;
-            float scrollInput = PlayerInputController.GetScrollInput() * 10;
+            Vector2 mouseInput = PlayerInputController.Instance.GetMouseInput() * data.rotationSensitivity;
+            float scrollInput = PlayerInputController.Instance.GetScrollInput() * 10;
 
             data.holdPos.transform.Rotate(Vector3.up, mouseInput.x, Space.Self);
             data.holdPos.transform.Rotate(Vector3.right, mouseInput.y, Space.Self);
@@ -19,8 +20,8 @@ public class KeyBoardPickUpAndInteract : PickUpAndInteract
             // if (!PlayerBlackBoard.isHeldObj || PlayerBlackBoard.holdingKnife)
             // {
             // 获取鼠标输入
-            Vector2 mouseInput = PlayerInputController.GetMouseInput();
-            float scrollInput = PlayerInputController.GetScrollInput();
+            Vector2 mouseInput = PlayerInputController.Instance.GetMouseInput();
+            float scrollInput = PlayerInputController.Instance.GetScrollInput();
             // 计算基于相机本地坐标系的移动量
             Vector3 screen_move = new Vector3(mouseInput.x * data.mouseSensitivity, scrollInput * data.scrollSensitivity, mouseInput.y * data.mouseSensitivity);
             // Vector3 world_move = new Vector3(0, scrollInput * scrollSensitivity, 0);

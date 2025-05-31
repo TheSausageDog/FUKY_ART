@@ -589,7 +589,7 @@
                 float depth = input.positionNDC.z / input.positionNDC.w;
                 //float depth = LoadSceneDepth(input.positionCS.xy);
                 float linearEyeDepth = LinearEyeDepth(depth, _ZBufferParams); // 离相机越近越小
-                float offsetDepth = SAMPLE_TEXTURE2D_X(_CameraDepthTexture, sampler_CameraDepthTexture, samplePositionVP).r; // _CameraDepthTexture.r = input.positionNDC.z / input.positionNDC.w
+                float offsetDepth = SAMPLE_TEXTURE2D(_CameraDepthTexture, sampler_CameraDepthTexture, samplePositionVP).r; // _CameraDepthTexture.r = input.positionNDC.z / input.positionNDC.w
                 float linearEyeOffsetDepth = LinearEyeDepth(offsetDepth, _ZBufferParams);
                 float depthDiff = linearEyeOffsetDepth - linearEyeDepth;
                 float edgeFactor = step(_Threshold, depthDiff);

@@ -35,7 +35,7 @@ public class Movement : MonoBehaviour
         }
 
         // 获取输入
-        var input = PlayerInputController.GetMovementInput();
+        var input = PlayerInputController.Instance.GetMovementInput();
 
         // 计算移动方向
         var direction = transform.right * input.x + transform.forward * input.y;
@@ -45,7 +45,7 @@ public class Movement : MonoBehaviour
         controller.Move(direction * speed * Time.deltaTime);
 
         // 跳跃逻辑
-        if (isGrounded && PlayerInputController.IsJumping())
+        if (isGrounded && PlayerInputController.Instance.IsJumping())
         {
             velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity); // 计算跳跃初速度
         }
