@@ -31,6 +31,8 @@ public class CanvasSwitcher : MonoBehaviour
     // 引用UI控制器组件
     private StartCanvasController _startCanvasController;
     private UIAnimationController _uiAnimationController;
+    private SimpleTweenAnimation _tweenAnimationController;
+    private StartCanvasUIAnimation _startCanvasUIAnimation;
     
     private void Start()
     {
@@ -42,22 +44,49 @@ public class CanvasSwitcher : MonoBehaviour
             return;
         }
         
-        // 获取UI动画控制器组件
-        _uiAnimationController = startCanvas.GetComponent<UIAnimationController>();
-        if (_uiAnimationController == null)
+        // 优先获取StartCanvasUIAnimation组件（最新的动画控制器）
+        _startCanvasUIAnimation = startCanvas.GetComponent<StartCanvasUIAnimation>();
+        if (_startCanvasUIAnimation != null)
         {
-            Debug.Log("CanvasSwitcher: 尝试查找UIAnimationController失败，将尝试使用StartCanvasController");
-            
-            // 获取StartCanvasController组件
-            _startCanvasController = startCanvas.GetComponent<StartCanvasController>();
-            if (_startCanvasController == null)
-            {
-                Debug.LogWarning("CanvasSwitcher: Start_Canvas对象上没有找到UI动画控制器组件。UI动画将无法播放。");
-            }
+            Debug.Log("CanvasSwitcher: 已找到StartCanvasUIAnimation组件");
         }
         else
         {
-            Debug.Log("CanvasSwitcher: 已找到UIAnimationController组件");
+            // 如果没有StartCanvasUIAnimation，尝试获取SimpleTweenAnimation
+            _tweenAnimationController = startCanvas.GetComponent<SimpleTweenAnimation>();
+            if (_tweenAnimationController != null)
+            {
+                Debug.Log("CanvasSwitcher: 已找到SimpleTweenAnimation组件");
+            }
+            else
+            {
+                // 如果没有SimpleTweenAnimation，尝试获取UIAnimationController
+                _uiAnimationController = startCanvas.GetComponent<UIAnimationController>();
+                if (_uiAnimationController != null)
+                {
+                    Debug.Log("CanvasSwitcher: 已找到UIAnimationController组件");
+                }
+                else
+                {
+                    Debug.Log("CanvasSwitcher: 尝试查找动画控制器失败，将尝试使用StartCanvasController");
+                    
+                    // 获取StartCanvasController组件
+                    _startCanvasController = startCanvas.GetComponent<StartCanvasController>();
+                    if (_startCanvasController == null)
+                    {
+                        // 最后尝试寻找UIAnimationTrigger组件
+                        UIAnimationTrigger animationTrigger = startCanvas.GetComponent<UIAnimationTrigger>();
+                        if (animationTrigger != null)
+                        {
+                            Debug.Log("CanvasSwitcher: 已找到UIAnimationTrigger组件，将通过它触发动画");
+                        }
+                        else
+                        {
+                            Debug.LogWarning("CanvasSwitcher: Start_Canvas对象上没有找到任何UI动画控制器组件。UI动画将无法播放。");
+                        }
+                    }
+                }
+            }
         }
         
         // 确保Start_Canvas初始禁用
@@ -147,8 +176,28 @@ public class CanvasSwitcher : MonoBehaviour
             }
         }
         
-        // 优先使用UIAnimationController
-        if (_uiAnimationController != null)
+        // 优先使用StartCanvasUIAnimation
+        if (_startCanvasUIAnimation != null)
+        {
+            _startCanvasUIAnimation.TriggerUIAnimation();
+            
+            if (enableDebugLogs)
+            {
+                Debug.Log("CanvasSwitcher: 已调用StartCanvasUIAnimation.TriggerUIAnimation()");
+            }
+        }
+        // 其次使用SimpleTweenAnimation
+        else if (_tweenAnimationController != null)
+        {
+            _tweenAnimationController.PlayAnimation();
+            
+            if (enableDebugLogs)
+            {
+                Debug.Log("CanvasSwitcher: 已调用SimpleTweenAnimation.PlayAnimation()");
+            }
+        }
+        // 再次使用UIAnimationController
+        else if (_uiAnimationController != null)
         {
             _uiAnimationController.StartUIAnimation();
             
@@ -157,7 +206,7 @@ public class CanvasSwitcher : MonoBehaviour
                 Debug.Log("CanvasSwitcher: 已调用UIAnimationController.StartUIAnimation()");
             }
         }
-        // 如果没有UIAnimationController，尝试使用StartCanvasController
+        // 再次尝试使用StartCanvasController
         else if (_startCanvasController != null)
         {
             _startCanvasController.TriggerUIAnimation();
@@ -167,9 +216,22 @@ public class CanvasSwitcher : MonoBehaviour
                 Debug.Log("CanvasSwitcher: 已调用StartCanvasController.TriggerUIAnimation()");
             }
         }
+        // 最后尝试使用UIAnimationTrigger
         else
         {
-            if (enableDebugLogs)
+            UIAnimationTrigger animationTrigger = startCanvas.GetComponent<UIAnimationTrigger>();
+            if (animationTrigger != null)
+            {
+                // 重置触发器状态，确保可以触发
+                animationTrigger.ResetTrigger();
+                animationTrigger.TriggerAnimation();
+                
+                if (enableDebugLogs)
+                {
+                    Debug.Log("CanvasSwitcher: 已调用UIAnimationTrigger.TriggerAnimation()");
+                }
+            }
+            else if (enableDebugLogs)
             {
                 Debug.LogWarning("CanvasSwitcher: 未找到任何UI动画控制器，无法播放UI动画");
             }

@@ -353,30 +353,34 @@ public class CameraSwitchController : MonoBehaviour
                 startCanvas.SetActive(true);
                 Debug.Log("CameraSwitchController: 确认阶段再次启用Start_Canvas");
                 
-                // 首先尝试获取并调用SimpleTweenAnimation
+                // 确认阶段不再重复触发UI动画，避免冲突
+                // 只检查是否需要补救性措施
                 SimpleTweenAnimation tweenAnimation = startCanvas.GetComponent<SimpleTweenAnimation>();
                 if (tweenAnimation != null)
                 {
-                    tweenAnimation.PlayAnimation();
-                    Debug.Log("CameraSwitchController: 确认阶段再次调用SimpleTweenAnimation.PlayAnimation()");
-                }
-                // 如果没有SimpleTweenAnimation，尝试UIAnimationController
-                else
-                {
-                    UIAnimationController uiAnimator = startCanvas.GetComponent<UIAnimationController>();
-                    if (uiAnimator != null)
+                    // 检查是否所有元素都在正确位置，如果不是，尝试修复
+                    bool needFix = false;
+                    
+                    if (tweenAnimation.IsAnimating())
                     {
-                        uiAnimator.StartUIAnimation();
-                        Debug.Log("CameraSwitchController: 确认阶段再次调用UIAnimationController.StartUIAnimation()");
+                        Debug.Log("CameraSwitchController: 确认阶段检测到动画正在播放中，不再重复触发");
                     }
-                    // 如果设置了直接调用StartCanvasController
-                    else if (directlyCallStartCanvasController)
+                    else
                     {
-                        StartCanvasController startCanvasController = startCanvas.GetComponent<StartCanvasController>();
-                        if (startCanvasController != null)
+                        foreach (var element in tweenAnimation.animatedElements)
                         {
-                            startCanvasController.TriggerUIAnimation();
-                            Debug.Log("CameraSwitchController: 确认阶段再次调用StartCanvasController.TriggerUIAnimation()");
+                            if (element.targetElement != null && 
+                                Vector2.Distance(element.targetElement.anchoredPosition, element.finalPosition) > 1f)
+                            {
+                                needFix = true;
+                                break;
+                            }
+                        }
+                        
+                        if (needFix)
+                        {
+                            Debug.Log("CameraSwitchController: 确认阶段检测到UI元素位置异常，尝试修复");
+                            tweenAnimation.CompleteAnimation();
                         }
                     }
                 }

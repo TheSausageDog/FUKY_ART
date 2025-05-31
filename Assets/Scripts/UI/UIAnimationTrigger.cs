@@ -2,8 +2,8 @@ using UnityEngine;
 
 /// <summary>
 /// UI动画触发器
-/// 自动触发UIAnimationController的StartUIAnimation方法
-/// 解决UIAnimationController动画可能没有被正确触发的问题
+/// 自动触发UI动画控制器（兼容UIAnimationController和SimpleTweenAnimation）
+/// 解决UI动画可能没有被正确触发的问题
 /// </summary>
 public class UIAnimationTrigger : MonoBehaviour
 {
@@ -20,29 +20,50 @@ public class UIAnimationTrigger : MonoBehaviour
     [Tooltip("是否启用调试日志")]
     public bool enableDebugLogs = true;
     
+    // 支持两种动画控制器
     private UIAnimationController _uiAnimator;
+    private SimpleTweenAnimation _tweenAnimator;
     private bool _hasTriggered = false;
     
     private void Awake()
     {
-        // 获取UIAnimationController组件
-        _uiAnimator = GetComponent<UIAnimationController>();
-        if (_uiAnimator == null)
+        // 首先尝试获取SimpleTweenAnimation组件（优先使用新控制器）
+        _tweenAnimator = GetComponent<SimpleTweenAnimation>();
+        if (_tweenAnimator == null)
         {
             // 尝试在父对象上查找
-            _uiAnimator = GetComponentInParent<UIAnimationController>();
-            
+            _tweenAnimator = GetComponentInParent<SimpleTweenAnimation>();
+        }
+        
+        // 如果没有找到SimpleTweenAnimation，则尝试获取UIAnimationController组件
+        if (_tweenAnimator == null)
+        {
+            _uiAnimator = GetComponent<UIAnimationController>();
             if (_uiAnimator == null)
             {
-                Debug.LogWarning("UIAnimationTrigger: 未找到UIAnimationController组件。");
-                enabled = false;
-                return;
+                // 尝试在父对象上查找
+                _uiAnimator = GetComponentInParent<UIAnimationController>();
             }
+        }
+        
+        // 检查是否找到任一动画控制器
+        if (_tweenAnimator == null && _uiAnimator == null)
+        {
+            Debug.LogWarning("UIAnimationTrigger: 未找到SimpleTweenAnimation或UIAnimationController组件。");
+            enabled = false;
+            return;
         }
         
         if (enableDebugLogs)
         {
-            Debug.Log("UIAnimationTrigger: 已找到UIAnimationController组件。");
+            if (_tweenAnimator != null)
+            {
+                Debug.Log("UIAnimationTrigger: 已找到SimpleTweenAnimation组件。");
+            }
+            else
+            {
+                Debug.Log("UIAnimationTrigger: 已找到UIAnimationController组件。");
+            }
         }
     }
     
@@ -69,7 +90,7 @@ public class UIAnimationTrigger : MonoBehaviour
     /// </summary>
     public void TriggerAnimation()
     {
-        if (_uiAnimator != null && !_hasTriggered)
+        if (!_hasTriggered)
         {
             _hasTriggered = true;
             
@@ -78,7 +99,26 @@ public class UIAnimationTrigger : MonoBehaviour
                 Debug.Log("UIAnimationTrigger: 触发UI动画");
             }
             
-            _uiAnimator.StartUIAnimation();
+            // 优先使用SimpleTweenAnimation
+            if (_tweenAnimator != null)
+            {
+                _tweenAnimator.PlayAnimation();
+                
+                if (enableDebugLogs)
+                {
+                    Debug.Log("UIAnimationTrigger: 已调用SimpleTweenAnimation.PlayAnimation()");
+                }
+            }
+            // 如果没有SimpleTweenAnimation，则使用UIAnimationController
+            else if (_uiAnimator != null)
+            {
+                _uiAnimator.StartUIAnimation();
+                
+                if (enableDebugLogs)
+                {
+                    Debug.Log("UIAnimationTrigger: 已调用UIAnimationController.StartUIAnimation()");
+                }
+            }
         }
     }
     
