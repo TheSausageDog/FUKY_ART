@@ -917,6 +917,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!54 &62885335
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1250,6 +1251,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
   attachPoint: {fileID: 672018345}
   keepRigbody: 1
 --- !u!4 &106603081 stripped
@@ -3242,6 +3244,52 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.1, y: 0.09, z: 0.4}
   m_Center: {x: 0, y: 0.03, z: 0}
+--- !u!1 &282309297
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 282309299}
+  - component: {fileID: 282309298}
+  m_Layer: 0
+  m_Name: BurstCollisionWorld
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &282309298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282309297}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellSpans:
+    m_AlignBytes: 16
+--- !u!4 &282309299
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282309297}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &313252296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3902,6 +3950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 1
+  rotateOffset: {x: 0, y: 0, z: 0}
   attachPoint: {fileID: 1565647616}
   keepRigbody: 0
   bladeCollider: {fileID: 371496097}
@@ -4009,52 +4058,6 @@ MonoBehaviour:
   filter: -65535
   m_SourceCollider: {fileID: 418148630}
   m_DistanceField: {fileID: 0}
---- !u!1 &427486858
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 427486860}
-  - component: {fileID: 427486859}
-  m_Layer: 0
-  m_Name: BurstCollisionWorld
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &427486859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427486858}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f1a161c4294214a4fbcb7e9e94800494, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cellSpans:
-    m_AlignBytes: 16
---- !u!4 &427486860
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427486858}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &452771922
 GameObject:
   m_ObjectHideFlags: 0
@@ -4206,6 +4209,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 1
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &462528355 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4374757939463148173, guid: ad24f5aec7939454f92a548523cbc647,
@@ -4934,6 +4938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &505378169 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6345635123599572078, guid: 6d863ea5c24f3d14292fe118392663b7,
@@ -6882,6 +6887,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &657932645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7468,6 +7474,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
   attachPoint: {fileID: 2050784882}
   keepRigbody: 1
 --- !u!1 &672598460
@@ -9571,6 +9578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &853951203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12277,6 +12285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1112065631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13065,6 +13074,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d667936e94781ba42aa336aa0557f2bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tirgger_Action: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f,
+    type: 3}
 --- !u!114 &1197080928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13222,7 +13233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   VRRightHand: {fileID: 1871248143}
-  offset: {x: 0, y: 0, z: 1}
+  offset: {x: 0, y: 0, z: 0.5}
 --- !u!1001 &1198120769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13439,6 +13450,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1214886868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14454,6 +14466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
   endSlope: 75
 --- !u!1 &1303615258
 GameObject:
@@ -18699,6 +18712,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
   attachPoint: {fileID: 2050784882}
   keepRigbody: 1
 --- !u!114 &1652461560
@@ -19353,6 +19367,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4827622655594311218, guid: ad24f5aec7939454f92a548523cbc647,
+        type: 3}
+      propertyPath: rotateOffset.y
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 4841985884231256399, guid: ad24f5aec7939454f92a548523cbc647,
         type: 3}
       propertyPath: m_Enabled
@@ -19654,6 +19673,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1720318062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23400,6 +23420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &1989009663
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23598,6 +23619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resetRotate: 0
+  rotateOffset: {x: 0, y: 0, z: 0}
 --- !u!114 &2005874184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26554,4 +26576,4 @@ SceneRoots:
   - {fileID: 1047405891}
   - {fileID: 1831173807}
   - {fileID: 749089925}
-  - {fileID: 427486860}
+  - {fileID: 282309299}
